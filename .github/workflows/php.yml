@@ -22,9 +22,20 @@ jobs:
       run:
         sudo apt update && sudo apt install sshpass
 
-    - name: my server
-      run:
-        sshpass -e ssh -o stricthostkeychecking=no {{ secrets.APP_HOST }}@${{ secrets.APP_USER }}@${{ secrets.APP_KEY }}
+    - name: ssh key passphrase
+      uses: ./
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.APP_USER }}
+        key: ${{ secrets.APP_KEY }}
+        port: ${{ secrets.APP_PORT }}
+        script: |
+          whoami
+          ls -al
+
+    #- name: my server
+     # run:
+      #  sshpass -e ssh -o stricthostkeychecking=no {{ secrets.APP_HOST }}@${{ secrets.APP_USER }}@${{ secrets.APP_USER }}
         #echo ${{ secrets.APP_USER }}
         #sshpass -e ssh -o stricthostkeychecking=no {{ secrets.APP_HOST }}@${{ secrets.APP_USER }}
 
