@@ -1,4 +1,4 @@
-name: CD
+name: TEST ci et cd
 on:
   push:
     branches: [ main ]
