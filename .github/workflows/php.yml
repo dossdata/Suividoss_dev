@@ -6,9 +6,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
     env:
-      SSHPASS: ${{ secrets.APP_PASS }}
+      APP_USER: bitnami
 
     steps:
       - uses: actions/checkout@v2
@@ -19,4 +18,5 @@ jobs:
           
       - name: deploy
         run: 
-          sshpass -e ssh -o stricthostkeychecking=no ${{ secrets.APP_USER }}@${{ secrets.APP_HOST }}@${{ secrets.APP_KEY }}@${{ secrets.APP_PORT }}
+          echo $APP_USER
+        #  sshpass -e ssh -o stricthostkeychecking=no ${{ APP_USER }}@${{ APP_HOST }}@${{ APP_KEY }}@${{ APP_PORT }}
