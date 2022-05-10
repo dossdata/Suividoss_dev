@@ -13,23 +13,19 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    env:
-      APP_USER: bitnami
 
     steps:
     - uses: actions/checkout@v3
-      env:
-        APP_HOST: 3.122.72.29
 
    
     - name : APT UPDATE
       run:
         sudo apt update && sudo apt install sshpass
-
-    - name: my server
+    
+    - name: cd repertoir
       run:
-        sshpass -e ssh -o stricthostkeychecking=yes ${{ APP_USER }}@${{ APP_HOST }}
-          
+       cd /home
+       
         #sshpass -e ssh -o stricthostkeychecking=no {{ secrets.APP_HOST }}@${{ secrets.APP_USER }}
 
     
