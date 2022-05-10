@@ -1,21 +1,39 @@
-name: TEST ci et cd
+name: PHP Composer
+
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
 
 jobs:
-  deploy:
+  build:
+
     runs-on: ubuntu-latest
     env:
       APP_USER: bitnami
 
     steps:
-      - uses: actions/checkout@v2
-      
-      - name: APT UPDATE and INSTALL SSHPASS
-        run: 
-          sudo apt update && sudo apt install sshpass
+    - uses: actions/checkout@v3
+      env:
+        APP_HOST: 3.122.72.29
+
+   
+    - name : APT UPDATE
+      run:
+        sudo apt update && sudo apt install sshpass
+
+    - name: my server
+      run:
+        sshpass -e ssh -o stricthostkeychecking=yes ${{ APP_USER }}@${{ APP_HOST }}
           
-      - name: deploy
-        run: 
-          sshpass -e ssh -o stricthostkeychecking=no ${{ APP_USER }}@${{ APP_HOST }}@${{ APP_KEY }}@${{ APP_PORT }}
+        #sshpass -e ssh -o stricthostkeychecking=no {{ secrets.APP_HOST }}@${{ secrets.APP_USER }}
+
+    
+    # Docs: https://getcomposer.org/doc/articles/scripts.md
+
+    # - name: Run test suite
+    #   run: composer run-script test
