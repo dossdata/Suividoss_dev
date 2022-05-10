@@ -24,8 +24,11 @@ jobs:
 
     - name: my server
       run:
-        sshpass -e ssh -o stricthostkeychecking=yes {{ secrets.APP_HOST }}@${{ secrets.APP_USER }}@${{ secrets.APP_PORT }}@${{ secrets.APP_KEY }}
-        #echo ${{ secrets.APP_USER }}
+        #sshpass -e ssh -o stricthostkeychecking=yes {{ secrets.APP_HOST }}@${{ secrets.APP_USER }}@${{ secrets.APP_PORT }}@${{ secrets.APP_KEY }}
+        echo ${{ secrets.APP_USER }}
+        echo ${{ secrets.APP_PORT }}
+        echo ${{ secrets.APP_KEY }}
+        echo ${{ secrets.APP_HOST }}
         #sshpass -e ssh -o stricthostkeychecking=no {{ secrets.APP_HOST }}@${{ secrets.APP_USER }}
 
     
