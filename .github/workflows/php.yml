@@ -24,7 +24,11 @@ jobs:
     
     - name: cd repertoir
       run:
-       cd /home/bitnami/htdocs/SuiviKARLIT
+       cd /home
+
+    - name: ls
+      run:
+       ls
         #sshpass -e ssh -o stricthostkeychecking=no {{ secrets.APP_HOST }}@${{ secrets.APP_USER }}
 
     
