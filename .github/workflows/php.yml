@@ -14,7 +14,9 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      APP_HOST: 3.122.72.29
+      host: 3.122.72.29
+      user: bitnami
+      port: 22
 
 
     steps:
@@ -27,8 +29,7 @@ jobs:
     
     - name: cd repertoir
       run:
-       cd /home
-       echo $APP_HOST
+       echo ${{ env.host }}
         #sshpass -e ssh -o stricthostkeychecking=no {{ APP_HOST }}@${{ secrets.APP_USER }}
 
     
