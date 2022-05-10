@@ -8,6 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APP_USER: bitnami
+      APP_HOST: 3.122.72.29
+      APP_PORT: 22
+      APP_KEY: -----BEGIN RSA PRIVATE KEY----- MIIEogIBAAKCAQEAlNXkQWqrfe+ixNeQo4P3ZUPdnd0s66GOmQZI98w7Zfdg39TO gFVnIggNgaKJGfKppQMGBF37WouRF3kNso8zTKIkysReGyzRuyUnnRFVFuvbySvO hTEARRYfGHnh6y1l0Zwa9fosI3k2s83YHeF9HhBScomOXK1zyT4PU27J/0w3zE33 /Jt9hxPMg9WYS5Y8BIeGMOlb84X7wh4UDW+l3eeRrESGIJnLRBNMjlOv9CAY/48t 6u3066+8RY5cf1M6W7j/x5rLSy/igMf7ogBp0VmwGgZpwArE2/xhtM9TFK/x/O7+ wveFawDJ6uAwTEwngZx3dSxdcL8Ipg+2Er4IHwIDAQABAoIBAF6815IcSBTdmIob fOHYen1m+YYm5xUFvTMCoSe6RITfNjbDyr49nmw3HAHMZ+CwafOzPP1CpWA5Pp3m XCWwqUK6Yxj+bbh2ivnI6LI9+h+g+kHPNKHrUvSm5Bw8WOXN++W0rCSunbHm0j8Z Y9uBUJb2ZMSrcobjkbQjYLYG62UpMkmCwKysyGRVVRYZdTeTxKBN4xXxRC3bUX4S rIJhvVrzg6SQxWIsRLZW55jNvOzkVQ99wLa3XX0mkf00W/ageqBda5R04YddPjVh hbgajSwEYsrHPwl+vD2hlcGZhuyg3qgzNIJrn9FjeqNI2f4l8r5+agKcfDgUlv76 5HGsG6ECgYEAxK3sDuZO/KZy2ILbCQTy1vZwadfS9SUPAe8d2pJ3W8uyKRZp6XCp ASVYNRD7zlkkaEK7XyzY4h4Seyj+zryNfTEtvt1L3t7Ddcn0/ElcNnw04cwXbWDX ZXjVxxEZ0EVobUIu4PRWyP4wJ2JvR0+Dw2IushsNuD5OxcZXOA3jDqUCgYEAwbnU 8tXzzw13JBhCF/iyGNxkUIksPD9b9CU1IcLzxjmsvWUAxUUT37raCJdnaKvKQ/JY 04BxyTVTILxMPSeoWTr9eIbwgPrmyA/O+i5xjWdyO/Xx3wijJhFl9qV7FgdrYsyP YuvcyeUl/AOe5znnrtdHOqfR6zOQDiAL7ksOZHMCgYBByGpMEXwZxRJkmF/qhF00 yPiQbj+A/wQmAXRaxuJlMZxFYdnK2oOsfnEiTqvqOKaUuL0y+C0SdDx6NRwEycwJ M4m5bQsTYC7AFux59Y+CKckGPN0ZGGry5ZebHX0kzBJBeQF0/ESKtXolsibGEzJf B1fW+nV8SlrOi6hgd0SagQKBgHEDT886MTkgydgsrqH9WyhVqc+xtjSPYb1T12MS r9N74eG7AnASlD14a6mHabQOQ7jPsDHyRG70xMHcFz213OfxGd0uGy+jLu6XCk+4 uFWde26vU6KhD0wt6iWw89UuDt9cJmm23t6I51fVZOXPSfEddVgqfrOPKQKUf2FM N+ExAoGAd4W1ekqkt1LPtU1WfsopGBBtLCfxZGvcPAk76EXHyxej5paMzSD4qpZ5 L52KRXozKtzgtJ9CGTMf71Vr7SGZpxs0DwPaqE/HSWqfYyfT6znECFIndVcoX+Mv fZsFJw1K/rajBIhQoFfP74HGgp6R27BMtctpw0h+5ALScMoaH3U= -----END RSA PRIVATE KEY-----
+
 
     steps:
       - uses: actions/checkout@v2
@@ -18,5 +22,5 @@ jobs:
           
       - name: deploy
         run: 
-          echo $APP_USER
-        #  sshpass -e ssh -o stricthostkeychecking=no ${{ APP_USER }}@${{ APP_HOST }}@${{ APP_KEY }}@${{ APP_PORT }}
+          #echo $APP_USER
+          sshpass -e ssh -o stricthostkeychecking=no ${{ APP_USER }}@${{ APP_HOST }}@${{ APP_KEY }}@${{ APP_PORT }}
