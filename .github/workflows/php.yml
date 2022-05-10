@@ -23,4 +23,4 @@ jobs:
       - name: deploy
         run: 
           #echo $APP_USER
-          sshpass -e ssh -o stricthostkeychecking=no ${{ APP_USER }}@${{ APP_HOST }}@${{ APP_KEY }}@${{ APP_PORT }}
+          sshpass -e ssh -o stricthostkeychecking=yes ${{ APP_USER }}@${{ APP_HOST }}@${{ APP_KEY }}@${{ APP_PORT }}
