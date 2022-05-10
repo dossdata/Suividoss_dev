@@ -11,14 +11,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        env:
-          APP_HOST: 3.122.72.29
+
       
       - name: APT UPDATE and INSTALL SSHPASS
         run: 
           sudo apt update && sudo apt install sshpass
-        env:
-          APP_PORT: "22"
+
           
       - name: deploy
         run: 
