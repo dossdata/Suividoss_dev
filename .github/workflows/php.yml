@@ -24,7 +24,7 @@ jobs:
     
     - name: cd repertoir
       run:
-        echo "aiz eh mety le izy"
+        echo pwd
         #sshpass -e ssh -o stricthostkeychecking=no {{ secrets.APP_HOST }}@${{ secrets.APP_USER }}
 
     
