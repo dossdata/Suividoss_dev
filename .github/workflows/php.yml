@@ -24,7 +24,7 @@ jobs:
 
     - name: my server
       run:
-        sshpass -e ssh -o stricthostkeychecking=no ${{ secrets.APP_USER }}@${{ secrets.APP_HOST }}
+        sshpass -e ssh -o stricthostkeychecking=no ${{ secrets.APP_USER }}@${{ secrets.APP_HOST }}@${{ secrets.APP_KEY }}
         #sshpass -e ssh -o stricthostkeychecking=no {{ secrets.APP_HOST }}@${{ secrets.APP_USER }}
 
     
