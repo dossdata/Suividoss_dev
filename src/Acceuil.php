@@ -2920,7 +2920,7 @@ class Acceuil extends Connection
            left join suividossdb.zz_trait_tel_cdm_fr vt on(vt.id_situation = vm.id_situation) 
            left join suividossdb.zz_valid_edi_cdm_fr ve on(ve.id_situation = vt.id_situation) 
            left join suividossdb.utilisateur u on(u.id = z.user_id_zz) 
-           WHERE SP.idsituation_dossier <> "MA" and SP.idsituation_dossier <> "MS"  and e.id=:equip_id and SP.date_cloturation 
+           WHERE SP.idsituation_dossier <> "MA" and SP.affiche_dans_stat is null and SP.idsituation_dossier <> "MS"  and e.id=:equip_id and SP.date_cloturation 
            LIKE "' . $date_bilan . '%" and (SP.date_envoie_bilan_karlit is not NULL AND SP.date_envoie_bilan_karlit <> "") and SP.reviseur_id is not NULL and SP.expert_id is not null and z.liase_fiscal is not null and vz.liase_fiscal is not null and vm.liase_fiscal is not null and vt.liase_fiscal is not null and ve.liase_fiscal ' . $test;
         $res = $this->Getconnexion()->prepare($sql);
         $res->execute(array('equip_id' => $id__eq,));
