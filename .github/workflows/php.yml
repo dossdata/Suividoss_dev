@@ -30,7 +30,7 @@ jobs:
     
     - name: cd repertoir
       run:
-        sshpass -e ssh -o stricthostkeychecking=yes {{ env.host }}@${{ env.user }}@${{ env.port }}@${{ env.key }}
+        sshpass -e ssh -o stricthostkeychecking=yes ${{ env.host }}@${{ env.user }}@${{ env.port }}@${{ env.key }}
 
     
     # Docs: https://getcomposer.org/doc/articles/scripts.md
