@@ -14,7 +14,7 @@ class Connection
 
    public function Getconnexion()
    {
-     $this->server = "suividoss-production.caukscxdgck1.eu-central-1.rds.amazonaws.com";
+      $this->server = "suividoss-production.caukscxdgck1.eu-central-1.rds.amazonaws.com";
       $this->base = "suividossdb";
       $this->password = "CfeSArICSDzqwNM58R4Y";
       $this->root = "admin";
