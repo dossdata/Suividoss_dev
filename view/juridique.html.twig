@@ -1,0 +1,682 @@
+{% include "base.html.twig" %}
+{% block stylesheets %}
+  <title>SUIVI JURIDIQUE</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <link rel="stylesheet" href="./asset/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./asset/bootstrap/css/mdb.min.css">
+  <link rel="stylesheet" href='./asset/bootstrap/css/addons/datatables.min.css'>
+  <link rel="stylesheet" href='./asset/bootstrap/css/addons/datatables-select.min.css'>
+  <link rel="stylesheet" href="./asset/css/styles.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="./asset/select2/css/select2.min.css">
+  <link rel="stylesheet" href="./asset/bootstrap-5-admin/css/mdb.min.css"/>
+
+  <style>
+    th {
+      /* Important */
+      background-color: #ececec;
+      color: #586896;
+      position: sticky;
+      text-align: center;
+      z-index: 100;
+      top: 0;
+    }
+
+    .allrecap:hover,
+    .alltr_recap:hover,
+    .supre_chifr:hover,
+    .tr_list_general:hover,.applicable:hover,.non_applicable_affaire:hover,.dr_reviser:hover,.appli_restant:hover,.non_applicable_restant:hover,.appli_fait:hover,.non_applicable_fait:hover {
+      color: red;
+      cursor:pointer;
+    }
+    .supre_chifr:active,.applicable:active,.non_applicable_affaire:active,.dr_reviser:active,.appli_restant:active,.non_applicable_restant:active,.appli_fait:active,.non_applicable_fait:active {
+      background-color: red;
+    }
+
+    .allrecap:hover {
+      background-color: #7896b5;
+      cursor: pointer;
+    }
+
+    .allrecap:active {
+      background-color: red;
+      cursor: default;
+    }
+
+    .in_visible {
+      display: none;
+    }
+    input {
+      text-align: center;
+      line-height: 150%;
+    }
+
+    input[type="date"]::-webkit-clear-button {
+      display: none;
+      font-size: 12px;
+    }
+
+    /* Removes the spin button */
+    input[type="date"]::-webkit-inner-spin-button {
+      display: none;
+      font-size: 12px;
+    }
+
+    /* Always display the drop down caret */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      color: #2c3e50;
+    }
+
+    /* A few custom styles for date inputs */
+
+    input[type="text"],
+    td {
+      font-size: 11.5px;
+
+    }
+    input[type="date"] {
+      appearance: none;
+      -webkit-appearance: none;
+      color: #1f4584;
+      font-family: "Helvetica", arial, sans-serif;
+
+      border: 1px solid #ecf0f1;
+      background: #ecf0f1;
+      padding: 5px;
+      display: inline-block !important;
+      visibility: visible !important;
+      text-align: center;
+    }
+    span {
+      font-size: 12px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+      border: 1px solid #cccccc;
+      border-radius: 3px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      -khtml-border-radius: 3px;
+      background: #ffffff !important;
+      outline: none;
+      height: 24px;
+      width: 120px;
+      color: #8a4a4a;
+      font-size: 11px;
+      font-family: Tahoma;
+      text-align: center;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"] :focus {
+      border: 1px solid #6fa5ff;
+    }
+
+    .table-bordered thead td,
+    .table-bordered thead th,
+    body {
+      font-size: 11.8px;
+
+    }
+
+    main {
+      background: #ecfeff;
+    }
+    html {
+      style="overflow:hidden"
+    }
+
+    .sidebar__inner {
+      zoom: 83%!important;
+    }
+
+    /* io no manao figer voler datatable */
+    body {
+      margin: 0;
+    }
+    .detail-table-segment {
+      max-width: 100%;
+      overflow-x: scroll;
+      margin-left: 30px;
+      margin-right: 30px;
+      padding-right: 0 !important;
+    }
+
+    .dataTable {
+      clear: both;
+      margin-bottom: 6px !important;
+      max-width: none !important;
+      border-collapse: collapse !important;
+    }
+    .dataTable tbody td {
+      font-size: 13px;
+      position: relative;
+      border: 1px solid #e2e2e2;
+      padding: 8px;
+      line-height: 1.42857143;
+      vertical-align: top;
+    }
+    table {
+      width: auto !important;
+      /* retirer la largeur   ou revoir le poids du selecteur */
+    }
+    #datatable_situation tbody tr :nth-child(3),
+    #datatable_situation tbody tr :nth-child(4) {
+      position: sticky !important;
+      /* ou revoir le poids du selecteur */
+      left: 0;
+      z-index: 1;
+      background: #293340f2;
+    }
+    #datatable_situation tbody tr :nth-child(0) {
+      left: 6em;
+    }
+    #datatable_situation tbody {
+      background: #293340f2;
+    }
+    #datatable_situation td {
+      color: white;
+    }
+    #scroll_tiana_s td {
+      white-space: nowrap;
+    }
+    .appli_pourcent,.non_applicable_pourcent{
+      color:#f44336!important
+    }
+
+    .editable:hover{
+     background:#739fcb;
+     cursor:default
+    }
+    /* vita manao figer voler datatable */
+  </style>
+{% endblock %}
+
+{% block body %}
+  <body>
+
+    {% set page = [
+      'Janvier',
+      'Fevrier',
+      'Mars',
+      'Avril',
+      'Mai',
+      'Juin',
+      'Juillet',
+      'Aout',
+      'Septembre',
+      'Octobre',
+      'Novembre',
+      'Decembre'
+    ] %}
+
+    <div class="wrapper">
+      <div class="top_navbar">
+        <div class="hamburger">
+          <div class="hamburger__inner">
+            <div class="one"></div>
+            <div class="two"></div>
+            <div class="three"></div>
+          </div>
+        </div>
+        <div class="menu" style="background:#3197b7">
+          <div class="logo" style="color:#F4F7F6!important">
+            SUIVI JURIDIQUE
+
+          </div>
+          <div class="right_menu">
+            <ul>
+              <li>
+                <i class="fas fa-user"></i>
+                <div class="profile_dd"></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="main_container">
+        <div class="sidebar" style="background:#363737!important">
+          <div class="sidebar__inner">
+            <a href="?suivi_karlit=suivi">
+              <div class="profile">
+                <div class="img">
+                  <span class="icon">
+                    <i class="far fa-user-circle fa-3x"></i>
+                  </span>
+                </div>
+                <div class="profile_info">
+                  <p>SuiviDoss</p>
+                  <p class="profile_name">KARLIT</p>
+                </div>
+              </div>
+            </a>
+
+            <a href="?suivi_karlit=statistique">
+              <div class="profile">
+                <div class="img">
+                  <span class="icon">
+                    <i class="far fa-list-circle fa-3x"></i>
+                  </span>
+                </div>
+                <div class="profile_info">
+                  <p>Retour</p>
+                  <p class="profile_name">statistique</p>
+                </div>
+              </div>
+            </a>
+            <ul>
+              <li></li>
+              <li>
+                <a href="#" id="click_parsup">
+                  <i class="fab fa-adn"></i>&nbsp;
+                  <span class="title">STAT GLOBAL</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" id="click_parequip">
+                  <i class="fab fa-elementor"></i>&nbsp;
+                  <span class="title">JURIDIQUE PAR CATÉGORIE</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" id="click_parcdm">
+                  <i class="fas fa-braille"></i>&nbsp;
+                  <span class="title">STAT PAR PORTEFEUILLE</span>
+                </a>
+              </li>
+
+              <li>
+                <a href="#" id="click_parcdm">
+                  <i class="fas fa-book-open"></i>&nbsp;
+                  <span class="title">STAT COLLAB KARLIT</span>
+                </a>
+              </li>
+
+              <li>
+                <a href="#" id="click_parcdm">
+                  <i class="fas fa-boxes"></i>&nbsp;
+                  <span class="title">STAT REVISEUR KARLIT</span>
+                </a>
+              </li>
+              <!--<li> <a href="#"> <i class="fas fa-border-all"></i>&nbsp; <span class="title">Tables</span> </a> </li>-->
+            </ul>
+          </div>
+        </div>
+        <div class="containers" style="background:#5b80863b !important">
+          <div class="item">
+
+            <div class="card text-center">
+              <div class="card-header">
+                CRITÈRES &nbsp;<i style='color:#dc3545' id="optio_critere"></i>
+              </div>
+              <div class="card-body">
+                <div class="container">
+                  <div class="row par_sup" style="display:none">
+                    <div class="col-md-1">Exercice</div>
+                    <div class="col-md-2">
+                      <select class="form-control" id="aneselectglobal">
+                        <option></option>
+                        {% for i in 2013..2025 %}
+                          <option value="{{i}}">{{i}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+
+                  <!--- -->
+
+                  <div class="row par_Equipe text-center" style="display:none">
+                    <div class="col-md-1">Equipe</div>
+                    <div class="col-md-2 as_sup">
+                      <b id="sup">
+                        <div class="btn-group">
+
+                          <div class="row-lg">
+                            <select class="form-control select2">
+                              <option value=""></option>
+                              {% set code_equipe = equipe[0].code | split('#') %}
+                              {% set id_equipe = equipe[0].id | split('#') %}
+
+                              {% for s in range((code_equipe | length) - 2, 0) %}
+                                <option value=" {{id_equipe[s]}}">{{code_equipe[s]}}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+
+                        </div>
+                      </b>
+                    </div>
+
+                    <div class="col-md-1">Mois</div>
+                    <div class="col-md-2">
+                      <select class="form-control" id="select_mm">
+                        <option value=""></option>
+                        {% for item, index in page %}
+                          {% if item < 9 %}
+                            <option value="0{{ item + 1 }}">{{index }}</option>
+                          {% else %}
+                            <option value="{{ item + 1 }}">{{index }}</option>
+                          {% endif %}
+
+                        {% endfor %}
+                      </select>
+                    </div>
+
+                    <div class="col-md-1">Année</div>
+                    <div class="col-md-2">
+                      <select class="form-control" id="select_aa">
+                        <option value=""></option>
+                        {% for i in 2013..2025 %}
+                          <option value="{{i}}">{{i}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+
+                    <div class="col-md-1">
+                      <button type="button" class="btn btn-info validgraphsup_all_equipe">
+                        <i class="fas fa-check"></i>
+                      </button>
+
+                      <button type="button" class="btn btn-primary validgraphsup_parcdm">
+                        <i class="fas fa-check"></i>
+                      </button>
+
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="par_sup" style="display:none">
+              <div class="text-center" id="loading" style="display:none"><img src="./asset/images/load.gif"></div>
+
+          <div class="w3-sidebar w3-bar-block w3-light-grey w3-card" style="width:12.5%;height:40%;position:absolute!important">
+            <h5 class="w3-bar-item">Listes</h5>
+            <button class="w3-bar-item w3-button tablink w3-red" onclick="openCity(event, 'applicable')">APPLICABLE</button>
+            <button class="w3-bar-item w3-button tablink" onclick="openCity(event, 'nonapplicable')">NON APPLICABLE</button>
+            <button class="w3-bar-item w3-button tablink" onclick="openCity(event, 'offre')">OFFRE</button>
+          </div>
+
+<div style="margin-left:14.5%">
+  <div id="applicable" class="w3-container city">
+    <table id="statG" class="table-bordered text-center" width="100%">
+                <thead>
+                  <tr>
+                    <th colspan="5" class="text-center text-light bg-dark">STAT GLOBAL JURIDIQUE</th>
+                  </tr>
+                  <tr>
+                    <th style="background:#ddd;color:red;width:10%">CLOTURE</th>
+                    <th style="background:#ddd;color:;width:10%">AFAIRE</th>
+                    <th style="background:#ddd;color:;width:10%">FAIT</th>
+                    <th style="background:#ddd;color:;width:10%">RESTANT</th>
+                    <th style="background:#ddd;color:;width:10%">% FAIT</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in 1..12 %}
+                    <tr>
+                      <td class="cloture">-</td>
+                      <td class="applicable" data-toggle="modal" data-target="#basicExampleModal">-</td>
+                      <td class="appli_fait" data-toggle="modal" data-target="#basicExampleModal">-</td>
+                      <td class="appli_restant" data-toggle="modal" data-target="#basicExampleModal">-</td>
+                      <td class="appli_pourcent">-</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+    
+    </p>
+  </div>
+
+  <div id="nonapplicable" class="w3-container city" style="display:none">
+<table id="statG" class="table-bordered text-center" width="100%">
+                <thead>
+                  <tr>
+                    <th colspan="5" class="text-center text-light bg-dark">STAT GLOBAL JURIDIQUE</th>
+                  </tr>
+                  <tr>
+                    <th style="background:#ddd;color:red;width:10%">CLOTURE</th>
+                    <th style="background:#ddd;color:;width:10%">AFAIRE</th>
+                    <th style="background:#ddd;color:;width:10%">FAIT</th>
+                    <th style="background:#ddd;color:;width:10%">RESTANT</th>
+                    <th style="background:#ddd;color:;width:10%">% FAIT</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in 1..12 %}
+                    <tr>
+                      <td class="cloture_non_appli">-</td>
+                      <td class="non_applicable_affaire" data-toggle="modal" data-target="#basicExampleModal">-</td>
+                      <td class="non_applicable_fait" data-toggle="modal" data-target="#basicExampleModal">-</td>
+                      <td class="non_applicable_restant" data-toggle="modal" data-target="#basicExampleModal">-</td>
+                      <td class="non_applicable_pourcent">-</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+  </div>
+
+  <div id="offre" class="w3-container city" style="display:none">
+<table id="statG" class="table-bordered text-center" width="100%">
+                <thead>
+                  <tr>
+                    <th colspan="8" class="text-center text-light bg-dark">STAT GLOBAL JURIDIQUE</th>
+                  </tr>
+                  <tr>
+                    <th style="background:#ddd;color:red;width:10%">CLOTURE</th>
+                    <th style="background:#ddd;color:;width:10%">DR REVISER</th>
+                    <th style="background:#ddd;color:;width:10%">A VENDRE</th>
+                    <th style="background:#ddd;color:;width:10%">KEOBIZ</th>
+                    <th style="background:#ddd;color:;width:10%">SÉRÉNITÉ</th>
+                    <th style="background:#ddd;color:;width:10%">HORIZON</th>
+                    <th style="background:#ddd;color:;width:10%">INCLUS</th>
+                    <th style="background:#ddd;color:;width:10%">OPTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in 1..12 %}
+                    <tr>
+                      <td class="cloture_offre">-</td>
+                      <td class="dr_reviser off_default"  data-toggle="modal" data-target="#basicExampleModal">-</td>
+                      <td class="a_vendre off_default">-</td>
+                      <td class="keobiz off_default">-</td>
+                      <td class="serenite off_default">-</td>
+                      <td class="horizon off_default">-</td>
+                      <td class="inclus off_default">-</td>
+                      <td class="option off_default">-</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+  </div>
+
+</div>
+              
+            </div>
+
+            <div class="par_equip" style="display:none">
+              <div class="text-center" id="loading" style="display:none"><img src="./asset/images/load.gif"></div>
+              bb
+            </div>
+          </div>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modif_juridique" style="display:none">Launch modal
+          </button>
+
+          <!-- Central Modal Medium Success -->
+          <div class="modal fade" id="modif_juridique" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-mdb-backdrop="static">
+            <div class="modal-dialog modal-notify modal-info modal-xl" role="document">
+              <!--Content-->
+              <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                  <p class="heading lead">Modification</p>
+
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="white-text">&times;</span>
+                  </button>
+                </div>
+
+                <!--Body-->
+                <div class="modal-body">
+                  <div class="text-center">
+                    <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+                    <p>champ a modifier</p>
+                  </div>
+                </div>
+
+                <!--Footer-->
+                <div class="modal-footer justify-content-center">
+                  <a type="button" class="btn btn-primary">VALIDER
+                    <i class="fas fa-check ml-1 text-white"></i>
+                  </a>
+                  <a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">ANNULER</a>
+                </div>
+              </div>
+              <!--/.Content-->
+            </div>
+          </div>
+          <!-- Central Modal Medium Success-->
+        </div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Detail</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background:##37474F;color:white;zoom:80%!important">
+        <table class="table-bordered text-center" width="100%">
+        <thead>
+            <tr>
+            <th style="display:none">id</th>
+            <th width="10%">EQUIPE</th><th width="50%">DOSSIER</th><th width="10%">CLOTURE</th><th width="20%">SITUATION</th><th width="20%">DATE D'ENVOIE</th>
+            </tr>
+          </thead>
+          <tbody class="bg-dark text-light" id="corp_click_affaire">
+
+            
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="modif" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-success" >
+        <h5 class="modal-title" id="exampleModalLabel">Modifier</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-body bg-dark text-light">
+        <table>
+          <tr>
+            <td>CP < 1/2 Capital Social&nbsp;</td><td><select><option></option><option value="NON">NON</option><option value="OUI">OUI</option></select></td>
+            <td>&nbsp;Annonce légale&nbsp;</td><td><select><option></option><option value="NON">NON</option><option value="OUI">OUI</option></select></td>
+            <td>&nbsp;OFFRE&nbsp;</td><td>
+            <select>
+            <option></option>
+            <option value="A VENDRE">A VENDRE</option>
+            <option value="KEOBIZ">KEOBIZ</option>
+            <option value="SERENITE">SERENITE</option>
+            <option value="HORIZON">HORIZON</option>
+            <option value="INCLUS">INCLUS</option>
+            <option value="OPTION">OPTION</option>            
+            </select>
+            </td>
+            <tr>
+            <td>Date envoi demande au CDM</td><td><input type="date">&nbsp;</td>
+            <td>&nbsp;Date relance CDM après valdiation bilan client</td><td><input type="date">&nbsp;</td>
+            <td>&nbsp;Date envoi demande au CDM</td><td><input type="date"></td>
+            </tr>
+             <tr>
+            <td>Réponse du retour</td><td><select><option></option><option value="A FAIRE">A FAIRE</option><option value="REFUS CLIENT">REFUS CLIENT</option></select></td>
+            <td>&nbsp;Date Juridique fait</td><td><input type="date"></td>
+            <td>&nbsp;Date Juridique reviser</td><td><input type="date"></td>
+            </tr>
+
+            <tr>
+            <td>Date envoi Juridique CDM Fr</td><td><input type="date"></td>
+            </tr>
+
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer bg-dark text-success">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">ANNULER</button>
+        <button type="button" class="btn btn-primary">ENREGISTRER</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+        {% block javascripts %}
+          <script type="text/javascript" src="./asset/bootstrap/js/jquery.min.js"></script>
+          <script type="text/javascript" src="./asset/bootstrap/js/popper.min.js"></script>
+          <script type="text/javascript" src="./asset/bootstrap/js/bootstrap.min.js"></script>
+          <script type="text/javascript" src="./asset/bootstrap/js/addons/datatables.min.js"></script>
+          <script type="text/javascript" src="./asset/bootstrap/js/addons/datatables-select.min.js"></script>
+          <script src="./asset/select2/js/select.min.js"></script>
+          <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+          <script type="text/javascript" src="./js/juridique_script.js"></script>
+
+          <script>
+            $(document).ready(function () {
+              $(".hamburger .hamburger__inner").click(function () {
+                $(".wrapper").toggleClass("active")
+              })
+
+              $(".top_navbar .fas").click(function () {
+                $(".profile_dd").toggleClass("active");
+              });
+              //$(".hamburger .hamburger__inner").click();
+            })
+
+            function openCity(evt, cityName) {
+              var i, x, tablinks;
+              x = document.getElementsByClassName("city");
+              for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+              }
+              tablinks = document.getElementsByClassName("tablink");
+              for (i = 0; i < x.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" w3-red", ""); 
+              }
+              document.getElementById(cityName).style.display = "block";
+              evt.currentTarget.className += " w3-red";
+            }
+
+
+            
+          </script>
+        </body>
+
+      {% endblock %}
+
+    {% endblock %}
+  </html>

@@ -1,0 +1,1045 @@
+{% include "base.html.twig" %}
+<title>Suivi</title>
+{% block stylesheets %}
+  <link rel="stylesheet" href="./asset/bootstrap-5-admin/css/mdb.min.css"/>
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="./asset/bootstrap-5-admin/css/admin.css"/>
+  <link rel="stylesheet" href="./asset/checkbox/dist/jquery.customselect.css">
+
+  <style>
+    th {
+      /* Important */
+      background-color: #ececec;
+      color: #586896;
+      position: sticky;
+      z-index: 100;
+      top: 0;
+    }
+    .supre_chifr:hover,
+    .tr_list_general:hover {
+      background-color: #dedbe4;
+      cursor: default;
+    }
+    .supre_chifr:active {
+      background-color: red;
+    }
+
+    .in_visible,
+    .m_code_stuation {
+      display: none;
+    }
+    input {
+      text-align: center;
+      line-height: 150%;
+    }
+
+    input[type="date" class="date_rp"]::-webkit-clear-button {
+      display: none;
+    }
+
+    /* Removes the spin button */
+    input[type="date" class="date_rp"]::-webkit-inner-spin-button {
+      display: none;
+      font-size: 12px;
+    }
+
+    /* Always display the drop down caret */
+    input[type="date" class="date_rp"]::-webkit-calendar-picker-indicator {
+      color: #2c3e50;
+    }
+
+    /* A few custom styles for date inputs */
+
+    input[type="text"],
+    td {
+      font-size: 11.5px;
+    }
+
+   input[type="date" class="date_rp"] {
+      appearance: none;
+      -webkit-appearance: none;
+      color: #1f4584;
+      font-family: "Helvetica", arial, sans-serif;
+
+      border: 1px solid #ecf0f1;
+      background: #ecf0f1;
+      padding: 5px;
+      display: inline-block !important;
+      visibility: visible !important;
+      text-align:center;
+      
+
+    }
+input[type="text"],input[type="number" class="date_rp"],select {
+   border: 1px solid #cccccc; 
+   border-radius: 3px; 
+   -webkit-border-radius: 3px; 
+   -moz-border-radius: 3px; 
+   -khtml-border-radius: 3px; 
+   background: #ffffff !important; 
+   outline: none;
+   height: 24px; 
+   width: 120px;
+   color: #8a4a4a; 
+   font-size: 11px; 
+   font-family: Tahoma;
+   text-align:center;
+}
+
+input[type="text"]:focus,input[type="number" class="date_rp"] :focus{
+   border: 1px solid #6fa5ff; 
+}
+
+    .etat_cmt_1,
+    .etat_cmt_2,
+    .etat_pice_1,
+    .etat_pice_2 {
+      color: #8585e8;
+    }
+
+input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    color: #1f4584;
+    font-family: "Helvetica", arial, sans-serif;
+    border: 1px solid #ecf0f1;
+    background: #ecf0f1;
+    padding: 5px;
+    display: inline-block !important;
+    visibility: visible !important;
+    text-align: center;
+    font-size:15px;
+}
+
+html{
+   style="overflow:hidden"
+}
+  </style>
+{% endblock %}
+
+{% block body %}
+  <!--Main Navigation-->
+  <header>
+
+    <!-- Sidebar -->
+
+    <!-- Navbar -->
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-info fixed-top">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="#" style="color:white">
+          <i class="fas fa-house-damage fa-lg"></i>&nbsp;&nbsp;&nbsp;DECLARATION PERIODIQUE
+        </a>
+        <!-- Search form -->
+        <!-- Right links -->
+        <ul class="navbar-nav ms-auto d-flex flex-row">
+          <!-- Notification dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" style="color:white" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-bell"></i>
+              &nbsp;<span class="badge rounded-pill badge-notification bg-primary">Menu</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end " style="background-color:rgb(222, 219, 228)" aria-labelledby="navbarDropdownMenuLink">
+                <!-- <a class="dropdown-item" href="?suivi_karlit=situtation_tva">
+                  <i class="fab fa-bandcamp"></i>
+                  SITUATION TVA</a>
+              </li>-->
+              <li><a class="dropdown-item" href="?suivi_karlit=suivi_tva"><i class="fas fa-book-open"></i>&nbsp;SITUATION TVA</a></li>
+              <li>
+                <a class="dropdown-item" href="?suivi_karlit=situtation_bilan">
+                  <i class="fas fa-align-left"></i>
+                  SITUATION BILAN</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="?suivi_karlit=statistique">
+                  <i class="fab fa-accusoft"></i>
+                  STATISTIQUE</a>
+              </li>
+
+            </ul>
+          </li>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <!-- Avatar -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center" href="#" style="color:white" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+              <img src="./asset/images/user.jpg" class="rounded-circle" height="22" alt="" loading="lazy"/>&nbsp;
+              {{utilisateur[0].nom}}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" style="background-color:rgb(222, 219, 228)" aria-labelledby="navbarDropdownMenuLink">
+              <li data-toggle="modal" data-target="#profile_s">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user-edit"></i>
+                  profile</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="?suivi_karlit=suivi">Suivi
+                  <i class="fas fa-book-open"></i>
+                </a>
+              </li>
+              
+              <li>
+                <a class="dropdown-item" href="/SuiviKARLIT">Deconnexion
+                  <i class="fas fa-ban"></i>
+                </a>
+              </li>
+
+                
+            </ul>
+          </li>
+
+          <li  
+                style="color:red" id="click_tiana_"><a class="dropdown-item" style="color:#840dce" href="./asset/SUIVIDOSS.pdf">
+                &nbsp;<i class="fas fa-question-circle"></i> &nbsp;AIDE
+              </a></li>	
+        </ul>
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+  </header>
+  <!--Main Navigation-->
+
+  <!--Main layout-->
+  <body>
+    <main style="margin-top: 100px">
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-sm-1"></div>
+          <div class="col-sm">
+
+            <table width="100%">
+              <td>Equipe :
+              </td>
+              <td>
+                <select id="single_equipe" multiple="multiple" data-empty-text="votre equipe" data-dropdown="true">
+                  {#% for e in sonEquipe %}
+                    <option value={{e.id}}="}">{{e.code}}</option>
+                  {% endfor %#}
+                {% set code_equipe = sonEquipe[0].code | split('#')  %}
+                {% set id_equipe = sonEquipe[0].id | split('#')  %}
+
+                {#% for s in 0.. (code_equipe | length) - 2 %#}
+                {% for s in range((code_equipe | length) - 2, 0) %}
+                  <option value= {{id_equipe[s]}}>{{code_equipe[s]}}</option>
+                {% endfor %}
+                </select>
+              </td>
+              <td>
+                Exercice :
+              </td>
+              <td>
+                <select id="anne_equipe" multiple="multiple" data-empty-text="choisissez exercice(s)" data-dropdown="true">
+                  {% for i in 2013..2025 %}
+                    <option value={{i}}="}">{{i}}</option>
+                  {% endfor %}
+                </select>
+              </td>
+              <td>
+                <button class="btn btn-primary" id="btn-lancer">Valider</button>
+              </td>
+            </table>
+          </div>
+          <div class="col-sm-3"></div>
+        </div>
+      </div>
+    </main>
+ <div id="tva_regime" style="display:none">
+
+    <select class="stsearch">
+      {% for tvaregime in tva_regime %}
+        <option value="{{tvaregime.nom}}">{{tvaregime.nom}}</option>
+      {% endfor %}
+    </select>
+ 
+  </div>
+    <div class="container-fluid" style="margin-top:20px">
+      <div class="row">
+        <div class="col-md-2">
+          <div id="datatable_situation"></div>
+        </div>
+        <div class="col-md-10" id="tab_declaration" style="display:none">
+          <!-- Classic tabs -->
+          <div class="alert alert-info text-center" role="alert" id="name_doss"></div>
+          <b id="date_cloture"></b>
+          <ul class="nav nav-tabs mb-3" id="ex1" role="tablist" style="background: #ebf4fb;">
+
+            <li class="nav-item tb_declaration_tabs" role="presentation">
+              <a style="display:none" class="nav-link active" id="ex1-tab-1" data-mdb-toggle="tab" href="#ex1-tabs-1" role="tab" aria-controls="ex1-tabs-1" aria-selected="true">TVA MENS</a>
+            </li>
+            <li  style="display:none"  class="nav-item tb_declaration_tabs" role="presentation">
+              <a class="nav-link" id="ex1-tab-2" data-mdb-toggle="tab" href="#ex1-tabs-2" role="tab" aria-controls="ex1-tabs-2" aria-selected="false">TVA TRIM</a>
+            </li>
+            <li class="nav-item tb_declaration_tabs" role="presentation">
+              <a class="nav-link" id="ex1-tab-3" data-mdb-toggle="tab" href="#ex1-tabs-3" role="tab" aria-controls="ex1-tabs-3" aria-selected="false">ACOMPTE TVA ST</a>
+            </li>
+            <li class="nav-item tb_declaration_tabs" role="presentation">
+              <a class="nav-link" id="ex1-tab-4" data-mdb-toggle="tab" href="#ex1-tabs-4" role="tab" aria-controls="ex1-tabs-4" aria-selected="false">ACOMPTE IS</a>
+            </li>
+            <li class="nav-item tb_declaration_tabs" role="presentation">
+              <a class="nav-link" id="ex1-tab-5" data-mdb-toggle="tab" href="#ex1-tabs-5" role="tab" aria-controls="ex1-tabs-5" aria-selected="false">CVAE</a>
+            </li>
+            <li class="nav-item tb_declaration_tabs" role="presentation">
+              <a class="nav-link" id="ex1-tab-6" data-mdb-toggle="tab" href="#ex1-tabs-6" role="tab" aria-controls="ex1-tabs-6" aria-selected="false">TVS</a>
+            </li>
+            <li class="nav-item tb_declaration_tabs" role="presentation" >
+              <a class="nav-link" id="ex1-tab-7" data-mdb-toggle="tab" href="#ex1-tabs-7" role="tab" aria-controls="ex1-tabs-7" aria-selected="false">BILAN</a>
+            </li>
+            <li class="nav-item tb_declaration_tabs" role="presentation" >
+              <a class="nav-link" id="ex1-tab-8" data-mdb-toggle="tab" href="#ex1-tabs-8" role="tab" aria-controls="ex1-tabs-8" aria-selected="false">LQUIDIATION IS</a>
+            </li>
+
+            <li class="nav-item tb_declaration_tabs" role="presentation">
+              <a class="nav-link" id="ex1-tab-9" data-mdb-toggle="tab" href="#ex1-tabs-9" role="tab" aria-controls="ex1-tabs-9" aria-selected="false">CFE</a>
+            </li>
+          </ul>
+          <!-- Tabs navs -->
+
+          <!-- Tabs content -->
+
+          <div class="tab-content" id="ex1-content">
+             
+            <div class="tab-pane fade" id="ex1-tabs-1" role="tabpanel" aria-labelledby="ex1-tab-1">
+              <div style="position:relative;left:1%;width: 100%;overflow:auto;height:400px;zoom:90%">
+
+                <h3 class="text-center"></h3>
+                <table id="tva_mensuel" class="table-bordered text-center" width="100%"  style="zoom:78%">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">TVA</th>
+                      <th rowspan="2">ECHEANCE</th>
+                      <th rowspan="2">DATE TVA FAIT KARLIT</th>
+                      <th rowspan="2">DATE ENVOIE CLIENT</th>
+                      <th rowspan="2">DATE VALIDATION CLIENT</th>
+                      <th rowspan="2">DATE TÉLÉTRANSMISSION</th>
+                      <th>DATE VALIDATION EDI</th>
+                      <th>COMMENTAIRE</th>
+                    </tr>
+
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="mm adddate_mens"></td>
+                      <td class="ttdate">
+                        
+                      </td>
+                      <td class="dtensemble dt_tva_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_fait_k_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_env_cli_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_val_client_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_tel_mens"><input type="date" class="date_rp"></td>
+                      <td class="cmtensemble cmt_mens"><textarea class="form-control"></textarea></td>
+                    </tr>
+                    <tr>
+                      <td class="mm adddate_mens"></td>
+                      <td class="ttdate">
+                        
+                      </td>
+                      <td class="dtensemble dt_tva_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_fait_k_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_env_cli_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_val_client_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_tel_mens"><input type="date" class="date_rp"></td>
+                      <td class="cmtensemble cmt_mens"><textarea class="form-control" ></textarea></td>
+                    </tr>
+                    <tr>
+                      <td class="mm adddate_mens"></td>
+                      <td class="ttdate">
+                        
+                      </td>
+                      <td class="dtensemble dt_tva_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_fait_k_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_env_cli_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_val_client_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_tel_mens"><input type="date" class="date_rp"></td>
+                      <td class="cmtensemble cmt_mens"><textarea class="form-control" ></textarea></td>
+                    </tr>
+                    <tr>
+                      <td class="mm adddate_mens"></td>
+                      <td class="ttdate">
+                        
+                      </td>
+                      <td class="dtensemble dt_tva_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_fait_k_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_env_cli_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_val_client_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_tel_mens"><input type="date" class="date_rp"></td>
+                      <td class="cmtensemble cmt_mens"><textarea class="form-control"></textarea></td>
+                    </tr>
+                    <tr>
+                      <td class="mm adddate_mens"></td>
+                      <td class="ttdate">
+                        
+                      </td>
+                      <td class="dtensemble dt_tva_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_fait_k_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_env_cli_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_val_client_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_tel_mens"><input type="date" class="date_rp"></td>
+                      <td class="cmtensemble cmt_mens"><textarea class="form-control"></textarea></td>
+                    </tr>
+                    <tr>
+                      <td class="mm adddate_mens"></td>
+                      <td class="ttdate">
+                        
+                      </td>
+                      <td class="dtensemble dt_tva_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_fait_k_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_env_cli_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_val_client_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_tel_mens"><input type="date" class="date_rp"></td>
+                      <td class="cmtensemble cmt_mens"><textarea class="form-control"></textarea></td>
+                    </tr>
+                    <tr>
+                      <td class="mm adddate_mens"></td>
+                      <td class="ttdate">
+                        
+                      </td>
+                      <td class="dtensemble dt_tva_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_fait_k_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_env_cli_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_val_client_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_tel_mens"><input type="date" class="date_rp"></td>
+                      <td class="cmtensemble cmt_mens"><textarea class="form-control"></textarea></td>
+                    </tr>
+                    <tr>
+                      <td class="mm adddate_mens"></td>
+                      <td class="ttdate">
+                        
+                      </td>
+                      <td class="dtensemble dt_tva_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_fait_k_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_env_cli_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_val_client_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_tel_mens"><input type="date" class="date_rp"></td>
+                      <td class="cmtensemble cmt_mens"><textarea class="form-control"></textarea></td>
+                    </tr>
+                    <tr>
+                      <td class="mm adddate_mens"></td>
+                      <td class="ttdate">
+                        
+                      </td>
+                      <td class="dtensemble dt_tva_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_fait_k_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_env_cli_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_val_client_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_tel_mens"><input type="date" class="date_rp"></td>
+                      <td class="cmtensemble cmt_mens"><textarea class="form-control"></textarea></td>
+                    </tr>
+                    <tr>
+                      <td class="mm adddate_mens"></td>
+                      <td class="ttdate">
+                        
+                      </td>
+                      <td class="dtensemble dt_tva_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_fait_k_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_env_cli_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_val_client_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_tel_mens"><input type="date" class="date_rp"></td>
+                      <td class="cmtensemble cmt_mens"><textarea class="form-control"></textarea></td>
+                    </tr>
+                    <tr>
+                      <td class="mm adddate_mens"></td>
+                      <td class="ttdate">
+                        
+                      </td>
+                      <td class="dtensemble dt_tva_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_fait_k_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_env_cli_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_val_client_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_tel_mens"><input type="date" class="date_rp"></td>
+                      <td class="cmtensemble cmt_mens"><textarea class="form-control"></textarea></td>
+                    </tr>
+                    <tr>
+                      <td class="mm adddate_mens"></td>
+                      <td class="ttdate">
+                        
+                      </td>
+                      <td class="dtensemble dt_tva_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_fait_k_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_env_cli_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_val_client_mens"><input type="date" class="date_rp"></td>
+                      <td class="dtensemble dt_tel_mens"><input type="date" class="date_rp"></td>
+                      <td class="cmtensemble cmt_mens"><textarea class="form-control"></textarea></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+              <div style = "position:relative;left:1%;width: 100%;overflow:auto;height:400px;">
+                <div class="text-center" style="color:red">TVA TRIMESTRIEL</div>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td width="72%">
+                       
+                      </td>
+                      <td>
+             
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table id="tva_trim" class="table-bordered text-center" width="100%"  style="zoom:78%">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">TVA</th>
+                      <th rowspan="2">ECHEANCE</th>
+                      <th rowspan="2">DATE TVA FAIT KARLIT</th>
+                      <th rowspan="2">DATE ENVOIE CLIENT</th>
+                      <th rowspan="2">DATE VALIDATION CLIENT</th>
+                      <th rowspan="2">DATE TÉLÉTRANSMISSION</th>
+                      <th>DATE VALIDATION EDI</th>
+                      <th>COMMENTAIRE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="dt_trim_t"></td>
+                      <td class="trim_ttdate"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_fait_karlit_trim1"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_envoie_client_trim1"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_validation_client_trim1"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_teletransmision_trim1"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_validation_edi_trim1"></td>
+                      <td class="cmtensemble"><textarea class="form-control" id="comt_trim1"></textarea></td>
+                    </tr>
+                    <tr>
+                      <td class="dt_trim_t"></td>
+                      <td class="trim_ttdate"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_fait_karlit_trim2"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_envoie_client_trim2"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_validation_client_trim2"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_teletransmision_trim2"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_validation_edi_trim2"></td>
+                      <td class="cmtensemble"><textarea class="form-control" id="comt_trim2"></textarea></td>
+                    </tr>
+                    <tr>
+                      <td class="dt_trim_t"></td>
+                      <td class="trim_ttdate"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_fait_karlit_trim3"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_envoie_client_trim3"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_validation_client_trim3"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_teletransmision_trim3"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_validation_edi_trim3"></td>
+                      <td class="cmtensemble"><textarea class="form-control" id="comt_trim3"></textarea></td>
+                    </tr>
+                    <tr>
+                      <td class="dt_trim_t"></td>
+                      <td class="trim_ttdate"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_fait_karlit_trim4"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_envoie_client_trim4"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_validation_client_trim4"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_teletransmision_trim4"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_validation_edi_trim4"></td>
+                      <td class="cmtensemble"><textarea class="form-control" id="comt_trim4"></textarea></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+              <div style = "position:relative;left:1%;width: 100%;overflow:auto;height:400px;">
+                <div class="text-center" style="color:red">ACOMPTE TVA ST</div>
+                MONTANT TVA N-1
+                <input type="number" class="date_rp" min="0" value="" style="background:#cbe6cb;color:red;text-align: center;" id="txtis_acpt_st_cvae" >€
+                <p></p>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td width="72%">
+                     
+                      </td>
+                      <td>
+           
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table id="actpe_tva_st" class="table-bordered text-center" width="100%"  style="zoom:78%">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">ECHEANCE</th>
+                      <th rowspan="2">MONTANT ACOMPTES</th>
+                      <th rowspan="2">DATE ACOMPTE FAIT KARLIT</th>
+                      <th rowspan="2">DATE ENVOIE CLIENT</th>
+                      <th rowspan="2">DATE VALIDATION CLIENT</th>
+                      <th rowspan="2">DATE TÉLÉTRANSMISSION</th>
+                      <th>DATE VALIDATION EDI</th>
+                      <th>COMMENTAIRE</th>
+                    </tr>
+
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="ctp_tva_st"></td>
+                      <td class="dtnumberensembe"><input type="number" class="date_rp" min="0" id="montant_acpt_st_1"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_acpt_k_acpt_st_1"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_env_client_acpt_st_1"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_valid_client_acpt_st_1"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_tel_acpt_st_1"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_vedi_acpt_st_1"></td>
+                      <td class="cmtensemble"><textarea class="form-control" id="cmt_acpt_st_1"></textarea></td>
+                    </tr>
+                    <tr>
+                      <td class="ctp_tva_st"></td>
+                      <td class="dtnumberensembe"><input type="number" class="date_rp" min="0" id="montant_acpt_st_2"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_acpt_k_acpt_st_2"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_env_client_acpt_st_2"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_valid_client_acpt_st_2" ></td>
+                      <td class="dtensemble"><input type="date" class="date_rp"  id="dt_tel_acpt_st_2"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_vedi_acpt_st_2"></td>
+                      <td class="cmtensemble"><textarea class="form-control" id="cmt_acpt_st_2"></textarea></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="ex1-tabs-4" role="tabpanel" aria-labelledby="ex1-tab-4">
+
+              <div style = "position:relative;left:1%;width: 100%;overflow:auto;height:400px;">
+                <div class="text-center" style="color:red">ACOMPTE IS</div>
+                MONTANT IS N-1 :
+                <input style="background:#cbe6cb;color:red;text-align: center;" type="text" id="txtis" value="">€
+                <p></p>
+                <table >
+                  <tbody>
+                    <tr>
+                      <td width="72%">
+                 
+                      </td>
+                      <td>
+                               </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="table-bordered text-center" width="100%"  style="zoom:78%">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">ECHEANCE</th>
+                      <th rowspan="2">MONTANT ACOMPTES</th>
+                      <th rowspan="2">DATE ACOMPTE FAIT KARLIT</th>
+                      <th rowspan="2">DATE ENVOIE CLIENT</th>
+                      <th rowspan="2">DATE VALIDATION CLIENT</th>
+                      <th rowspan="2">DATE TÉLÉTRANSMISSION</th>
+                      <th>DATE VALIDATION EDI</th>
+                      <th>COMMENTAIRE</th>
+                    </tr>
+
+                  </thead>
+                  <tbody>
+                  		{% for i in 0..3 %}
+                        <tr>
+                        <td class="ttdate"></td>
+                        <td class="dtnumberensembe"><input type="number" class="date_rp mt_acptsi" min="0"></td>
+                        <td class="dtensemble"><input type="date" class="date_rp dtfaik"></td>
+                        <td class="dtensemble"><input type="date" class="date_rp dtenvcli_t"></td>
+                        <td class="dtensemble"><input type="date" class="date_rp dtvd_cli_t"></td>
+                        <td class="dtensemble"><input type="date" class="date_rp dt_cli_tr"></td>
+                        <td class="dtensemble"><input type="date" class="date_rp dt_vl_edi"></td>
+                        <td class="cmtensemble"><textarea class="form-control cmt_cpits"></textarea></td>
+                      </tr>
+			                {% endfor %}
+                  </tbody>
+
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="ex1-tabs-5" role="tabpanel" aria-labelledby="ex1-tab-5">
+              <div style = "position:relative;left:1%;width: 100%;overflow:auto;height:400px;">
+                <div class="text-center" style="color:red">ACOMPTE CVAE</div>
+                MONTANT CVAE N-1
+                <input style="background:#cbe6cb;color:red;text-align: center;" type="number" class="date_rp" min="0" id="txtis_cvae" value="">€
+                <p></p>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td width="72%">
+                   
+                      </td>
+                      <td>
+                               </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <table id="cvae" class="table-bordered text-center" width="100%"  style="zoom:78%">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">ECHEANCE</th>
+                      <th rowspan="2">MONTANT ACOMPTES</th>
+                      <th rowspan="2">DATE ACOMPTE CVAE FAIT KARLIT</th>
+                      <th rowspan="2">DATE ENVOIE CLIENT</th>
+                      <th rowspan="2">DATE VALIDATION CLIENT</th>
+                      <th rowspan="2">DATE TÉLÉTRANSMISSION</th>
+                      <th>DATE VALIDATION EDI</th>
+                      <th>COMMENTAIRE</th>
+                    </tr>
+
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="dt_cvae">
+                        
+                      </td>
+                      <td class="dtnumberensembe"><input type="number" class="date_rp" min="0" id="montant_1"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_acpt_k_1"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_env_cvaeclient_1"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_valid_client_1"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_tel_1"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_vedi_1"></td>
+                      <td class="cmtensemble"><textarea class="form-control" id="cmt_1"></textarea></td>
+                    </tr>
+                    <tr>
+                      <td class="dt_cvae">
+                        
+                      </td>
+                            <td class="dtnumberensembe"><input type="number" class="date_rp" min="0" id="montant_2"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_acpt_k_2"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_env_cvaeclient_2"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_valid_client_2"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_tel_2"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="dt_vedi_2"></td>
+                      <td class="cmtensemble"><textarea class="form-control" id="cmt_2"></textarea></td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="ex1-tabs-6" role="tabpanel" aria-labelledby="ex1-tab-6">
+              <div style = "position:relative;left:1%;width: 100%;overflow:auto;height:400px;">
+
+                <div class="text-center" style="color:red">TVS</div>
+
+                <table>
+                  <tbody>
+                    <tr>
+                      <td width="72%">
+                        </td>
+                      <td>
+                           </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table id="tvs" class="table-bordered text-center" width="100%"  style="zoom:78%">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">ECHEANCE</th>
+                      <th rowspan="2">MONTANT TVS</th>
+                      <th rowspan="2">DATE TVS FAIT KARLIT</th>
+                      <th rowspan="2">DATE ENVOIE CLIENT</th>
+                      <th rowspan="2">DATE VALIDATION CLIENT</th>
+                      <th rowspan="2">DATE TÉLÉTRANSMISSION</th>
+                      <th>DATE VALIDATION EDI</th>
+                      <th>COMMENTAIRE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr>
+                      <td>
+                        <b class="n_tvs">
+                          
+                        </b>
+                      </td>
+                      <td class="dtnumberensembe"><input type="number" class="date_rp" min="0" id="mt_tvs"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="date_cvae_karlit"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="date_envoie_client"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="date_de_validation_client"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="date_teletransmission"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp" id="date_validation_edi"></td>
+                      <td class="cmtensemble"><textarea class="form-control commentaire_tvs" id ="cmt_st1"></textarea></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="ex1-tabs-7" role="tabpanel" aria-labelledby="ex1-tab-7">
+              <div style="position:relative;left:1%;width: 100%;overflow:auto;height:400px;zoom:78%">
+                <div class="text-center" style="color:red">BILAN</div>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td width="72%">
+                   
+                      </td>
+                      <td>
+                    
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class='table-bordered' width="100%">
+                <thead>
+                  <tr>
+                    <th rowspan="2">LIASSE</th>
+                    <th rowspan="2">DATE BILAN FAIT KARLIT</th>
+                    <th rowspan="2">DATE VALIDATION REVISION</th>
+                    <th rowspan="2">VALIDATION EC</th>
+                    <th rowspan="2">COMM ° CLIENT - CDM FR</th>
+                    <th rowspan="2">VALIDATION CLIENT - CDM FR</th>
+                    <th>VALIDATION - MANAGER FR</th>
+                    <th>TRAITEMENT TÉLÉTRANS - CDM FR</th>
+                    <th>VALIDATION EDI - CDM FR</th>
+                    <th>COMMENTAIRE</th>
+                  </tr>
+
+                </thead>
+                <tbody>
+
+                  <tr class='r_disable'>
+                    <td>Liase Fiscale</td>
+                    {% for i in 1..8 %}
+                      <td class="dtensemble_dis lfiscal"><input type="date" class='dt_bl_default{{i}}'></td>
+                    {% endfor %}
+                    <td class="">
+                      <textarea rows="1" cols="100" class="form-control commentaire_declaration"></textarea>
+                    </td>
+                  </tr>
+                  <tr class='r_disable'>
+                    <td>CA12</td>
+                    {% for i in 1..8 %}
+                      <td class="dtensemble_dis lca12"><input type="date" class='dt_bl_default{{i}}'></td>
+                    {% endfor %}
+                    <td class="">
+                      <textarea rows="1" cols="100" class="form-control commentaire_declaration"></textarea>
+                    </td>
+
+                  </tr>
+                  <tr class='r_disable'>
+                    <td>SOLDE IS</td>
+                    {% for i in 1..8 %}
+                      <td class="dtensemble_dis lsoldeis"><input type="date" class='dt_bl_default{{i}}'></td>
+                    {% endfor %}
+                    <td class="">
+                      <textarea rows="1" cols="100" class="form-control commentaire_declaration"></textarea>
+                    </td>
+
+                  </tr>
+                  <tr class='r_disable'>
+                    <td>CVAE 1330</td>
+                    {% for i in 1..8 %}
+                      <td class="dtensemble_dis lcvae"><input type="date" class='dt_bl_default{{i}}'></td>
+                    {% endfor %}
+                    <td class="">
+                      <textarea rows="1" cols="100" class="form-control commentaire_declaration"></textarea>
+                    </td>
+
+                  </tr>
+                  <tr class='r_disable'>
+                    <td>Solde CVAE 1329 DEF</td>
+                    {% for i in 1..8 %}
+                      <td class="dtensemble_dis lcvaedef"><input type="date" class='dt_bl_default{{i}}'></td>
+                    {% endfor %}
+                    <td class="">
+                      <textarea rows="1" cols="100" class="form-control commentaire_declaration"></textarea>
+                    </td>
+                  </tr>
+                  <tr class='r_disable'>
+                    <td>DECLOYER</td>
+                    {% for i in 1..8 %}
+                      <td class="dtensemble_dis ldecloier"><input type="date" class='dt_bl_default{{i}}'></td>
+                    {% endfor %}
+                    <td class="">
+                      <textarea rows="1" cols="100" class="form-control commentaire_declaration"></textarea>
+                    </td>
+
+                  </tr>
+                  <tr class='r_disable'>
+                    <td>DAS2</td>
+                    {% for i in 1..8 %}
+                      <td class="dtensemble_dis ldas2"><input type="date" class='dt_bl_default{{i}}'></td>
+                    {% endfor %}
+                    <td class="">
+                      <textarea rows="1" cols="100" class="form-control commentaire_declaration"></textarea>
+                    </td>
+                  </tr>
+                  <tr class='r_disable'>
+                    <td>C3S</td>
+                    {% for i in 1..8 %}
+                      <td class="dtensemble_dis lc3s"><input type="date" class='dt_bl_default{{i}}'></td>
+                    {% endfor %}
+                    <td class="">
+                      <textarea rows="1" cols="100" class="form-control commentaire_declaration"></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <hr>
+              <div class="text-right" style="display:none">
+                <button class="btn-danger" data-dismiss="modal">
+                  <i class="fas fa-ban"></i>
+                  ANNULER</button>
+                &nbsp;&nbsp;
+                <button class="btn-primary" id="valide_decl">
+                  <i class="far fa-save"></i>
+                  ENREGISTRER</button>
+              </div>
+           
+              </div>
+
+            </div>
+
+          <div class="tab-pane fade" id="ex1-tabs-8" role="tabpanel" aria-labelledby="ex1-tab-8">
+
+              <div style = "position:relative;left:1%;width: 100%;overflow:auto;height:400px;">
+                <div class="text-center" style="color:red">LIQUIDATION IS</div>
+                MONTANT IS N-1 :
+                <input style="background:#cbe6cb;color:red;text-align: center;" type="text" id="lquidmtis" value="">€
+                <p></p>
+                <table >
+                  <tbody>
+                    <tr>
+                      <td width="72%">
+                 
+                      </td>
+                      <td>
+                               </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="table-bordered text-center" width="100%"  style="zoom:78%">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">DATE ACOMPTE FAIT KARLIT</th>
+                      <th rowspan="2">DATE ENVOIE CLIENT</th>
+                      <th rowspan="2">DATE VALIDATION CLIENT</th>
+                      <th rowspan="2">DATE TÉLÉTRANSMISSION</th>
+                      <th>DATE VALIDATION EDI</th>
+                      <th>COMMENTAIRE</th>
+                    </tr>
+
+                  </thead>
+                  <tbody>
+                
+                        <tr>
+                        <td class="dtensemble"><input type="date" class="LQdtfaik"></td>
+                        <td class="dtensemble"><input type="date" class="LQdtenvcli_t"></td>
+                        <td class="dtensemble"><input type="date" class="LQdtvd_cli_t"></td>
+                        <td class="dtensemble"><input type="date" class="LQdt_cli_tr"></td>
+                        <td class="dtensemble"><input type="date" class="LQdt_vl_edi"></td>
+                        <td class="cmtensemble"><textarea class="form-control LQcmt_cpits"></textarea></td>
+                      </tr>
+		               </tbody>
+
+                </table>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="ex1-tabs-9" role="tabpanel" aria-labelledby="ex1-tab-9">
+              <div style = "position:relative;left:1%;width: 100%;overflow:auto;height:400px;">
+                <div class="text-center" style="color:red">ACOMPTE CFE</div>
+                MONTANT CFE N-1
+                <input style="background:#cbe6cb;color:red;text-align: center;" type="number" class="date_rp" min="0" id="txtis_cfe" value="">€
+                <p></p>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td width="72%">
+                   
+                      </td>
+                      <td>
+                               </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <table id="cfe" class="table-bordered text-center" width="100%"  style="zoom:78%">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">ECHEANCE</th>
+                      <th rowspan="2">MONTANT ACOMPTES</th>
+                      <th rowspan="2">DATE ACOMPTE CFE FAIT KARLIT</th>
+                      <th rowspan="2">DATE ENVOIE CLIENT</th>
+                      <th rowspan="2">DATE VALIDATION CLIENT</th>
+                      <th rowspan="2">DATE TÉLÉTRANSMISSION</th>
+                      <th>DATE VALIDATION EDI</th>
+                      <th>COMMENTAIRE</th>
+                    </tr>
+
+                  </thead>
+                  <tbody>
+
+                  {% for i in 0..1 %}
+                    <tr>
+                      <td class="dt_cfe">
+                       </td>
+                      <td class="dtnumberensembe"><input type="number" class="date_rp montant_cfe" min="0"></td>
+                      <td class="dtensemble"><input type="date" class="date_rp dt_acpt_k_1" ></td>
+                      <td class="dtensemble"><input type="date" class="date_rp dt_env_cfeclient_1" ></td>
+                      <td class="dtensemble"><input type="date" class="date_rp dt_cfevalid_client_1" ></td>
+                      <td class="dtensemble"><input type="date" class="date_rp dt_cfetel_1" ></td>
+                      <td class="dtensemble"><input type="date" class="date_rp dt_vecfedi_1" ></td>
+                      <td class="cmtensemble"><textarea class="form-control cmt_1cfe" ></textarea></td>
+                    </tr>                    
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+                    <div style="position:absolute;top:21%;right:0">
+          <button class="btn-danger"  id="btn_annuler"><i class="fas fa-ban"></i> ANNULER</button>
+          &nbsp;
+          <button class="btn-primary" id="valide_tabs"><i class="far fa-save"></i> ENREGISTRER</button>
+        </div> 
+                  
+      </div>
+
+          <!-- Classic tabs -->
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+
+  <div class="text-center" id="loading" style="display:none"><img src="./asset/images/load.gif">
+  </html>
+  {% include "modal.html.twig" %}
+</button>
+</div>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-info fixed-bottom" style="height:1%">
+      <div class="container-fluid">
+       @_keobiz.fr_ hery_info.2021
+      </div>
+    </nav>
+{% block javascripts %}
+<script type="text/javascript" src="./asset/bootstrap-5-admin/js/mdb.min.js"></script>
+<script type="text/javascript" src="./js/moment.min.js"></script>
+<script type="text/javascript" src="./js/declaration.js"></script>
+<script src="./asset/checkbox/dist/jquery.customselect.js"></script>
+<script>
+  //Defaults
+  jQuery('#single_equipe,#anne_equipe').customselect({
+    labelPosition: 'after', // after | before | wrap
+    style: 'list', // list | none
+    dropdown: false, // true | false
+    classList: '', // string
+    targetTypes: [
+      'select-multiple', 'select-one'
+    ], // select-multiple | select-one
+    parentNode: null, // null | selector
+    observe: true, // true | false
+    selectedLimit: 1080, // number
+    selectedDelimiter: ' | ', // string
+    emptyText: 'Nothing selected', // string
+    selectedText: 'selection', // string
+    allSelectedText: 'Tous selectionnée', // string
+    search: true
+  });
+</script>
+
+{% endblock %}
+
+{% endblock %}
+
+</html>

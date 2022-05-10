@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Authentification!{% endblock %}
+
+
+{% block body %}
+<style>
+#txtlogin{text-align:center}
+</style>
+    {% import "form.html.twig" as forms %}
+
+    <div class="d-flex justify-content-center" style="padding-top:10%">
+        <div class="card  text-center">
+            <form method="Post" action="/SuiviKARLIT/?suivi_karlit=accesslogin">
+
+            <div class="card-body">
+                <h2 class="card-title">Authentification</h2>
+                <hr>
+                <div class="md-form">
+                   <label for="form1">Login : </label><br>
+                    {{forms.input('login','','text','form-control','txtlogin') }}
+                 
+                </div>
+                <div class="md-form">
+                    : {{forms.input('password','','password','form-control','txtpassword') }}
+                    <label for="form2">Mdp :</label>
+                </div>
+                    <button class="btn btn-primary px-3" id="btnvalider" type="submit">
+                        <i class="fas fa-check" aria-hidden="true"></i>
+                        VALIDER</button>
+                <button class="btn btn-danger px-3" id="btnannuler">ANNULER
+                    <i class="fas fa-times-circle"></i>
+                </button>
+            </div>
+                 <i style="color:red">{{message}}</i>
+            </form>
+               
+        </div>
+    </div>
+{% endblock %}

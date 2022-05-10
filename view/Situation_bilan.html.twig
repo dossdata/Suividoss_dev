@@ -1,0 +1,442 @@
+{% include "base.html.twig" %}
+<title>Suivi</title>
+{% block stylesheets %}
+  <link rel="stylesheet" href="./asset/bootstrap-5-admin/css/mdb.min.css"/>
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="./asset/bootstrap-5-admin/css/admin.css"/>
+  <link rel="stylesheet" href="./asset/checkbox/dist/jquery.customselect.css">
+
+  <style>
+    th {
+      /* Important */
+      background-color: #ececec;
+      color: #586896;
+      position: sticky;
+      z-index: 100;
+      top: 0;
+    }
+    .supre_chifr:hover,
+    .tr_list_general:hover {
+      background-color: #7896b5;
+      cursor: default;
+    }
+    .supre_chifr:active {
+      background-color: red;
+    }
+
+    .in_visible,
+    .m_code_stuation {
+      display: none;
+    }
+    input {
+      text-align: center;
+      line-height: 150%;
+    }
+
+    input[type="date"]::-webkit-clear-button {
+      display: none;
+      font-size:11.5px;
+    }
+
+    /* Removes the spin button */
+    input[type="date"]::-webkit-inner-spin-button {
+      display: none;
+      font-size:11.5px;
+    }
+
+    /* Always display the drop down caret */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      color: #2c3e50;
+    }
+
+    /* A few custom styles for date inputs */
+
+    input[type="text"],
+    td {
+      font-size: 11.5px;
+    }
+  input[type="date"] {
+      appearance: none;
+      -webkit-appearance: none;
+      color: #1f4584;
+      font-family: "Helvetica", arial, sans-serif;
+
+      border: 1px solid #ecf0f1;
+      background: #ecf0f1;
+      padding: 5px;
+      display: inline-block !important;
+      visibility: visible !important;
+      text-align:center
+
+    }
+
+input[type="text"],input[type="number"],select {
+   border: 1px solid #cccccc; 
+   border-radius: 3px; 
+   -webkit-border-radius: 3px; 
+   -moz-border-radius: 3px; 
+   -khtml-border-radius: 3px; 
+   background: #ffffff !important; 
+   outline: none;
+   height: 24px; 
+   width: 120px;
+   color: #8a4a4a; 
+   font-size: 11px; 
+   font-family: Tahoma;
+   text-align:center;
+}
+
+input[type="text"]:focus,input[type="number"] :focus{
+   border: 1px solid #6fa5ff; 
+}
+    .etat_cmt_1,
+    .etat_cmt_2,
+    .etat_pice_1,
+    .etat_pice_2 {
+      color: #8585e8;
+    }
+
+ 
+html{
+   style="overflow:hidden"
+}
+
+.detail-table-segment {
+  max-width: 100%;
+  overflow-x: scroll;
+  margin-left: 30px;
+  margin-right: 30px;
+  padding-right: 0px !important;
+}
+
+.dataTable {
+  clear: both;
+  margin-bottom: 6px !important;
+  max-width: none !important;
+  border-collapse: collapse !important;
+}
+.dataTable tbody td {
+  font-size: 13px;
+  position: relative;
+  border: 1px solid #3f5a6d;
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  color:#fff
+}
+table {
+  width: auto !important; /* retirer la largeur   ou revoir le poids du selecteur */
+}
+#datatable_situation tbody tr :nth-child(3),
+#datatable_situation tbody tr :nth-child(4) {
+  position: sticky !important; /* ou revoir le poids du selecteur */
+  left: 0em;
+  z-index: 1;
+  background: #293340f2;
+}
+#datatable_situation tbody tr :nth-child(0) {
+  left: 6em;
+}
+#datatable_situation tbody{
+  background:#293340f2
+}
+
+  </style>
+{% endblock %}
+
+{% block body %}
+  <!--Main Navigation-->
+  <header>
+
+    <!-- Sidebar -->
+
+    <!-- Navbar -->
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-info fixed-top">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="#" style="color:white">
+          <i class="fas fa-house-damage fa-lg"></i>&nbsp;&nbsp;&nbsp;SITUATION BILAN
+        </a>
+        <!-- Search form -->
+        <!-- Right links -->
+        <ul class="navbar-nav ms-auto d-flex flex-row">
+          <!-- Notification dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" style="color:white" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-bell"></i>
+              &nbsp;<span class="badge rounded-pill badge-notification bg-primary">Menu</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end " style="background-color:rgb(222, 219, 228)" aria-labelledby="navbarDropdownMenuLink">
+              <li>
+                <a class="dropdown-item" href="?suivi_karlit=declaration_periodique">
+                  <i class="fab fa-audible"></i>
+                  DECLARATION PERIODIQUE</a>
+              </li>
+                     <!-- <a class="dropdown-item" href="?suivi_karlit=situtation_tva">
+                  <i class="fab fa-bandcamp"></i>
+                  SITUATION TVA</a>
+              </li>-->
+              <li><a class="dropdown-item" href="?suivi_karlit=suivi_tva"><i class="fas fa-book-open"></i>&nbsp;SITUATION TVA</a></li>
+              <li>
+                <a class="dropdown-item" href="?suivi_karlit=statistique">
+                  <i class="fab fa-accusoft"></i>
+                  STATISTIQUE</a>
+              </li>
+     
+            </ul>
+          </li>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <!-- Avatar -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center" href="#" style="color:white" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+              <img src="./asset/images/user.jpg" class="rounded-circle" height="22" alt="" loading="lazy"/>&nbsp;
+              {{utilisateur[0].nom}}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" style="background-color:rgb(222, 219, 228)" aria-labelledby="navbarDropdownMenuLink">
+              <li data-toggle="modal" data-target="#profile_s">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user-edit"></i>
+                  profile</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="?suivi_karlit=suivi">Suivi
+                  <i class="fas fa-book-open"></i>
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/SuiviKARLIT">Deconnexion
+                  <i class="fas fa-ban"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li  
+                style="color:red" id="click_tiana_"><a class="dropdown-item" style="color:#840dce" href="./asset/SUIVIDOSS.pdf">
+                &nbsp;<i class="fas fa-question-circle"></i> &nbsp;AIDE
+              </a></li>	
+        </ul>
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+  </header>
+  <!--Main Navigation-->
+
+  <!--Main layout-->
+  <body>
+    <main style="margin-top: 100px">
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-sm-1"></div>
+          <div class="col-sm">
+
+            <table width="100%">
+              <td>Equipe :
+              </td>
+              <td>
+                <select id="single_equipe" multiple="multiple" data-empty-text="votre equipe" data-dropdown="true">
+                  {#% for e in sonEquipe %}
+                    <option value="{{e.id}}">{{e.code}}</option>
+                  {% endfor %#}
+                {% set code_equipe = sonEquipe[0].code | split('#')  %}
+                {% set id_equipe = sonEquipe[0].id | split('#')  %}
+
+                {#% for s in 0.. (code_equipe | length) - 2 %#}
+                {% for s in range((code_equipe | length) - 2, 0) %}
+                  <option value= {{id_equipe[s]}}>{{code_equipe[s]}}</option>
+                {% endfor %}
+                </select>
+              </td>
+              <td>
+                Exercice :
+              </td>
+              <td>
+                <select id="anne_equipe" multiple="multiple" data-empty-text="choisissez exercice(s)" data-dropdown="true">
+                  {% for i in 2013..2025 %}
+                    <option value="{{i}}">{{i}}</option>
+                  {% endfor %}
+                </select>
+              </td>
+              <td>
+                <button class="btn btn-primary" id="btn-lancer">Valider</button>
+              </td>
+            </table>
+          </div>
+          <div style="display:none" id="tablvirtuel_suivie"></div>
+          <div class="col-sm-3"></div>
+              <div class="text-right" id="ds_export" style="margin-right:2%">
+    &nbsp;<a href="#" class="datatablesituation text-left" onclick="tableToExcel('table_export_virtuel', 'Suivie')">
+      <i class="fas fa-file-excel">
+       Export Excel</i>
+    </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+        </div>
+      </div>
+    </main>
+ <div id="tva_regime" style="display:none">
+
+    <select class="stsearch">
+      {% for tvaregime in tva_regime %}
+        <option value="{{tvaregime.nom}}">{{tvaregime.nom}}</option>
+      {% endfor %}
+    </select>
+     </div>
+
+      <div id="etat_bilan" style="display:none">
+    <select class="stsearch">
+      {% for etbl in etat_bilan %}
+        <option value="{{etbl.nom}}">{{etbl.nom}}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+      <div id="sit_dossier" style="display:none">
+    <select class="stsearch">
+      {% for sit_dossier in sit %}
+        <option value="{{sit_dossier.nom}}">{{sit_dossier.nom}}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  
+    <div class="container-fluid" style="margin-top:20px">
+      <div id="datatable_situation"></div>
+      <div class="row">
+        <div class="col-md-10">
+          <!--<div id="datatable_situation"></div>
+        </div>
+        <div class="col-md-9" id="tab_declaration" style="display:none">
+          <div class="alert alert-info text-center" role="alert" id="name_doss"></div>-->
+          <div class="card">
+           <!-- <div class="card-body text-center" style="position:relative;left:1%;width: 100%;overflow:auto;" id="table_tabs">
+
+            <table  class="table-bordered text-center" width="100%" style="zoom:78%"> 
+              <thead>
+                <tr>
+                  <th>DOSSIER</th>
+                  <th>Dossier SIT</th>
+                  <th>ETAT BILAN</th>
+                  
+                  <th colspan="7">ELEMENTS BLOQUANT</th>
+                  <th>DERNIER DEPOT KEOBIZ</th>
+                  <th>DERNIER PES</th>
+                  <th>COMMENTAIRE</th>
+                  <th>DERNIER RELANCE</th>
+                  <th>DERNIER APPEL CLIENT</th>
+                  <th>DERNIER RELANCE PIECE OU BQ</th>
+                </tr>
+              </thead>
+              <tbody>
+          <tr>
+              <td rowspan = "15" class="n_om_doss" style="color: #00c4ff;"></td>
+              <td rowspan = "15" class="stdossier"></td>
+              <td rowspan = "15" id="etat_bll"></td>
+              <td colspan = "3">RELEVE BANCAIRE</td>
+              <td rowspan = "3">PIECES MANQUANTE</td>
+              <td  colspan = "3" rowspan = "2">COMMENTAIRES</td>
+              <td rowspan="14" id="d"><input type="date" class="form-control" id="date_dernierkeobiz"></td>
+               <td rowspan="14" class="dernierpes"></td>
+               <td rowspan="14">
+               <textarea class="form-control" id="commentaire_g" style="margin-top: 0px; margin-bottom: 0px; height: 370px;"></textarea>
+               </td>
+               <td rowspan="14" class="dernierrelance"></td>
+               <td rowspan="14" class="dernierappelclient"></td>
+               <td rowspan="14"></td>
+            </tr>
+
+                <tr><td rowspan="2">MOIS</td><td rowspan="2">ANNEE</td><td rowspan="2">ETAT</td></tr>
+   
+
+                <tr>
+                <td rowspan="12"><textarea class="form-control" id="commentaire" style="margin-top: 0px; margin-bottom: 0px; height: 290px;"></textarea></td></tr>
+                
+                {% set piecemanquant_v %}
+                  <select class="piece_st_bl">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select> 
+                {% endset %}
+
+              {% set etat_st_bl %}
+                <select class="etat_st_bl">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                  </select>
+                {% endset %}
+                
+                {% for row_tr in 1..12 %}
+                  <tr><td class="mois_bl"></td><td class="annee_bl"></td><td>{{etat_st_bl}}</td><td>{{piecemanquant_v}}</td></tr>
+                {% endfor %}
+               
+        
+                
+              </tbody>
+            </table>-->
+
+             </div>
+
+
+        </div>
+        </div>
+        <div class="modal-footer justify-content-center"></div>
+            </div>
+            </div>
+          </div>
+
+        </body>
+
+        <div class="text-center" id="loading" style="display:none"><img src="./asset/images/load.gif">
+        </html>
+        {% include "modal.html.twig" %}
+      </button>
+    </div>
+        <!--<div style="position:fixed;bottom:5%;right:0;display:none" id="btn_opt">
+        <button class="btn-danger"  id="btn_annuler"><i class="fas fa-ban"></i> ANNULER</button>
+        &nbsp;
+        <button class="btn-primary" id="valide_tabs"><i class="far fa-save"></i> ENREGISTRER</button>
+        </div>                   
+      </div>-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-info fixed-bottom" style="height:1%">
+      <div class="container-fluid">
+       @_keobiz.fr_ hery_info.2021
+      </div>
+    </nav>
+    {% block javascripts %}
+      <script type="text/javascript" src="./asset/bootstrap-5-admin/js/mdb.min.js"></script>
+      <script type="text/javascript" src="./js/situation_bilan.js"></script>
+      <script src="./asset/checkbox/dist/jquery.customselect.js"></script>
+      <script>
+        //Defaults
+        jQuery('#single_equipe,#anne_equipe').customselect({
+          labelPosition: 'after', // after | before | wrap
+          style: 'list', // list | none
+          dropdown: false, // true | false
+          classList: '', // string
+          targetTypes: [
+            'select-multiple', 'select-one'
+          ], // select-multiple | select-one
+          parentNode: null, // null | selector
+          observe: true, // true | false
+          selectedLimit: 1080, // number
+          selectedDelimiter: ' | ', // string
+          emptyText: 'Nothing selected', // string
+          selectedText: 'selection', // string
+          allSelectedText: 'Tous selectionnée', // string
+          search: true
+        });
+      </script>
+
+    {% endblock %}
+
+  {% endblock %}
+
+</html>

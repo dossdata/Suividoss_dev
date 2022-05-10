@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>GRAPH suiviDoss</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href="./asset/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./asset/bootstrap/css/mdb.min.css">
+    <link rel="stylesheet" href='./asset/bootstrap/css/addons/datatables.min.css'>
+    <link rel="stylesheet" href='./asset/bootstrap/css/addons/datatables-select.min.css'>
+    <link rel="stylesheet" href="./asset/css/styles.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+  </head>
+  <body>
+
+    <div class="wrapper">
+      <div class="top_navbar">
+        <div class="hamburger">
+          <div class="hamburger__inner">
+            <div class="one"></div>
+            <div class="two"></div>
+            <div class="three"></div>
+          </div>
+        </div>
+        <div class="menu" style="background:#3197b7">
+          <div class="logo" style="color:#F4F7F6!important">
+            EVOLUTION GRAPHIQUE
+
+          </div>
+          <div class="right_menu">
+            <ul>
+              <li>
+                <i class="fas fa-user"></i>
+                <div class="profile_dd"></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="main_container">
+        <div class="sidebar" style="background:#363737!important">
+          <div class="sidebar__inner">
+            <a href="?suivi_karlit=suivi">
+              <div class="profile">
+                <div class="img">
+                  <span class="icon">
+                    <i class="far fa-user-circle fa-3x"></i>
+                  </span>
+                </div>
+                <div class="profile_info">
+                  <p>SuiviDoss</p>
+                  <p class="profile_name">KARLIT</p>
+                </div>
+              </div>
+            </a>
+
+            <a href="?suivi_karlit=statistique">
+              <div class="profile">
+                <div class="img">
+                  <span class="icon">
+                    <i class="far fa-list-circle fa-3x"></i>
+                  </span>
+                </div>
+                <div class="profile_info">
+                  <p>Retour</p>
+                  <p class="profile_name">statistique</p>
+                </div>
+              </div>
+            </a>
+            <ul>
+              <li></li>
+              <li>
+                <a href="#" id="click_parsup">
+                  <i class="fab fa-adn"></i>&nbsp;
+                  <span class="title">Par Superviseur</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" id="click_parequip">
+                  <i class="fab fa-elementor"></i>&nbsp;
+                  <span class="title">Par Equipe</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" id="click_parcdm">
+                  <i class="fas fa-chart-pie"></i>&nbsp;
+                  <span class="title">Par Cdm</span>
+                </a>
+              </li>
+              <!--<li> <a href="#"> <i class="fas fa-border-all"></i>&nbsp; <span class="title">Tables</span> </a> </li>-->
+            </ul>
+          </div>
+        </div>
+        <div class="containers" style="background:#5b80863b !important">
+          <div class="item">
+
+            <div class="card text-center">
+              <div class="card-header">
+                CRITÈRES &nbsp;<i style='color:#dc3545' id="optio_critere"></i>
+              </div>
+              <div class="card-body">
+                <div class="container">
+                  <div class="row par_sup" style="display:none">
+                    <div class="col-md-1">PAYS</div>
+                    <div class="col-md-2">
+                      <select class="form-control" id="listpaysselect">
+                        <option value="1"></option>
+                        <option value="2">France</option>
+                        <option value="5">Mada</option>
+                        <option value="6"></option>
+                      </select>
+                    </div>
+                    <div class="col-md-2">Superviseur</div>
+                    <div class="col-md-3 as_sup">
+                      <b id="sup">
+                        <select class="form-control">
+                          <option></option>
+                        </select>
+                      </b>
+                    </div>
+                    <div class="col-md-1">Année</div>
+                    <div class="col-md-2">
+                      <select class="form-control" id="aneselect">
+                        <option></option>
+                        {% for i in 2013..2025 %}
+                          <option value="{{i}}">{{i}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+
+                    <div class="col-md-1">
+                      <button type="button" class="btn btn-info graphsup">
+                        <i class="fas fa-check"></i>
+                      </button>
+                    </div>
+
+                  </div>
+
+                  <!--- -->
+
+                  <div class="row par_Equipe text-center" style="display:none">
+
+                    {% set page = [
+                      'Janvier',
+                      'Fevrier',
+                      'Mars',
+                      'Avril',
+                      'Mai',
+                      'Juin',
+                      'Juillet',
+                      'Aout',
+                      'Septembre',
+                      'Octobre',
+                      'Novembre',
+                      'Decembre'
+                    ] %}
+                    <div class="col-md-1">Mois</div>
+                    <div class="col-md-2">
+                      <select class="form-control" id="select_mm">
+                        <option value=""></option>
+                        {% for item, index in page %}
+                          {% if item < 9 %}
+                            <option value="0{{ item + 1 }}">{{index }}</option>
+                          {% else %}
+                            <option value="{{ item + 1 }}">{{index }}</option>
+                          {% endif %}
+
+                        {% endfor %}
+                      </select>
+                    </div>
+
+                    <div class="col-md-1">Année</div>
+                    <div class="col-md-2">
+                      <select class="form-control" id="select_aa">
+                        <option value=""></option>
+                        {% for i in 2013..2025 %}
+                          <option value="{{i}}">{{i}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+
+                    <div class="col-md-1">
+                      <button type="button" class="btn btn-info validgraphsup_all_equipe">
+                        <i class="fas fa-check"></i>
+                      </button>
+
+                      <button type="button" class="btn btn-primary validgraphsup_parcdm">
+                        <i class="fas fa-check"></i>
+                      </button>
+
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="par_sup" style="display:none">
+              <a href="#" class="imprime">
+                <i class="fas fa-print"></i>&nbsp;Imprimer</a>
+              <div id="chartContainer" style="height: 350px; width: 100%;"></div>
+              <hr>
+              <div id="chartTeletransmission" style="height: 350px; width: 100%;"></div>
+              <hr>
+              <div id="chartvalidationedi" style="height: 350px; width: 100%;"></div>
+            </div>
+
+            <div class="par_Equipe" style="display:none">
+              <a href="#" class="imprime">
+                <i class="fas fa-print"></i>&nbsp;Imprimer</a>
+
+              <table class="w3-table w3-border w3-centered w3-hoverable w3-table-all w3-striped w3-animate-top">
+                 <thead>
+                  <tr class="w3-light-grey"  id="head_parequipe" style="display:none">
+                    <th>Rang</th>
+                    <th>Equipe</th>
+                    <th>Total Bilan</th>
+                    <th>Total Fait</th>
+                    <th>Graph</th>
+                  </tr>
+                  <tr class="w3-dark-grey"  id="head_parcdm" style="display:none">
+                    <th>Rang</th>
+                    <th>Nom</th>
+                    <th>Total Fait</th>
+                    <th>Graph</th>
+                  </tr>
+                </thead>              
+                <tbody id="tbody_parequip"></tbody>
+                <tbody id="tbody_parcdm"></tbody>
+              </table>
+              <div id="chartContainertableau" style="height: 350px; width: 100%;"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <script type="text/javascript" src="./asset/bootstrap/js/jquery.min.js"></script>
+        <script type="text/javascript" src="./asset/bootstrap/js/popper.min.js"></script>
+        <script type="text/javascript" src="./asset/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./asset/bootstrap/js/addons/datatables.min.js"></script>
+        <script type="text/javascript" src="./asset/bootstrap/js/addons/datatables-select.min.js"></script>
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        <script type="text/javascript" src="./js/chart_script.js"></script>
+
+        <script>
+          $(document).ready(function () {
+            $(".hamburger .hamburger__inner").click(function () {
+              $(".wrapper").toggleClass("active")
+            })
+
+            $(".top_navbar .fas").click(function () {
+              $(".profile_dd").toggleClass("active");
+            });
+            //$(".hamburger .hamburger__inner").click();
+          })
+        </script>
+      </body>
+    </html>

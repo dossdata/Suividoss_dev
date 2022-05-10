@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>HELP</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="style2.css">
+         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"></head>
+        <script src="https://kit.fontawesome.com/0e7fb4f509.js" crossorigin="anonymous"></script>
+       <script defer src="my.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css">
+    </head>
+        <meta charset="UTF-8">
+        <html lang="fr">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+          <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+            
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+        <link rel="stylesheet" href="../asset/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../asset/bootstrap/css/mdb.min.css">
+        <link rel="stylesheet" href="../asset/bootstrap/css/style.css">
+		<script src="https://cdn.rawgit.com/lingtalfi/simpledrag/master/simpledrag.js"></script>
+		<style>
+            html, body {
+                height: 50%;
+                font-family: Open Sans;
+            }
+
+            .bold{
+                font-weight: 1000;
+            }
+
+            h4{
+                font-weight: 1000;
+            }
+            p{
+                text-indent: initial;
+            }
+            div{
+                margin: 2%;
+                text-align: justify;
+            }
+
+            .content{
+                margin: 0%;
+                padding: 5%;
+            }
+            .panes-container {
+                display: flex;
+                width: 100%;
+                overflow: hidden;
+                border-radius: 10px;
+            }
+
+            .left-pane {
+                width: 80%;
+                background: rgb(252, 250, 250);
+                
+            }
+
+            .panes-separator {
+                width: 0.5%;
+                background: rgb(236, 234, 234);
+                position: relative;
+                cursor: col-resize;
+            } 
+
+            .right-pane {
+                flex: auto;
+                background: rgb(250, 249, 249);
+            }
+
+            .panes-container,
+            .panes-separator,
+            .left-pane,
+            .right-pane {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+            }
+            * {
+            box-sizing: border-box;
+            }
+
+            #myInput {
+            background-image: url('https://www.w3schools.com/css/searchicon.png');
+            background-position: 10px 12px;
+            background-repeat: no-repeat;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            }
+
+            #myUL {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            padding-top:9%;
+            }
+
+            #myUL li a {
+            border: 1px solid #ddd;
+            margin-top: -1px; /* Prevent double borders */
+            background-color: #ffffff;
+            padding: 12px;
+            text-decoration: none;
+            font-size: 18px;
+            color: black;
+            display: block;
+            overflow: auto;
+            border-radius: 5px;
+            }
+
+            #myUL li a:hover:not(.header) {
+            background-color: #eee;
+            }
+
+            #to_bottom{
+                position:fixed;
+                bottom:1%;
+                left:1%;
+                background-color: #33b5e5;
+                border-radius: 50%;
+                height: 50px;
+                width: 50px;
+                font-size: 15px;
+                text-align: center;
+                color: red;
+            }
+
+            #to_bottom:hover{
+                background-color: #ff0714;
+            }
+
+            #to_bottom:active{
+                background-color: rgb(248, 245, 245);
+            }
+
+            .image{
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                align-content: center;
+                justify-content: center;
+            }
+
+            
+           
+		</style>		
+    </head>
+        <body>
+     
+    <body style="position:absolute;overflow:auto;height:30000px" id="bodscroll">
+        <div class="panes-container">
+            <div class="left-pane" id="left-pane" style="padding-left: 2em;">
+            <hr>
+            <section class="content">
+                <h2 id="intro">Introduction </h2><br>
+                <div>
+                    <p> <b class="bold">Suividoss</b> est une plateforme web conçue pour  traiter les dossiers  de nos collaborateurs, ainsi qu’un suivi en temps réel de l’évolution du traitement des pièces comptables. Elle est aussi composée de statistique, notamment le pourcentage des dossiers déjà clôturés et  la proportion des dossiers à traiter. En général, une notion en comptabilité est nécessaire à son utilisation, particulièrement le Bilan, TVA, pièce comptable, facture, exercice comptable. La synchronisation du travail entre les  collaborateurs Malagasy et Français est primordiale, de cette manière  l’adoption de Suividoss devient incontournable pour les deux camps. </p>
+                </div>
+                <h4> AUTHENTIFICATION </h4>
+                <div>
+                    <p>La première page consiste à l’authentification de l’utilisateur, qui est déjà créer par l’administrateur du plateforme. Un login composé d’un nom d’utilisateur et un  mot de passe forte.</p>
+                </div>
+                <div class="image">
+                    <img src="IMAGE-TEMP/1-intro.jpg"><br>
+                </div>
+                        <!-- width="92.6%"-->
+                <h3 id="s_stat">STATISTIQUE</h3>
+                <div>
+                    <p>Après avoir pu s’authentifier correctement, l’utilisateur arrive sur une page d’accueil qui contiendra les détails pour chaque DOSSIER(ou PORTEFEUILLE). C’est-à-dire le BILAN, TVA MENSUEL, TVA TRIMESTRIEL, CA12, ACOMPTE, LIQUIDATION IS, ALERT PES, ETAT RELEVE BQ (ou ETAT RELEVE BANCAIRE) ainsi que les CDM (Chef De Mission) concernés.</p>
+                    <div class="image">
+                        <img src="IMAGE-TEMP/2-detatil.PNG"> <br>
+                    </div>
+                    <p><b class="bold">Un clic</b> sur l’un des PORTEFEUILLES permet<b class="bold"> d’afficher la liste des CDM </b>qui participent aux traitements de ce dernier ; à droite de l’écran.</p>
+                    <div class="image">
+                        <img src="IMAGE-TEMP/3-stat-general.PNG"> <br>
+                    </div>
+                    <p>Le menu déroulant sert à spécifier l’exercice (année)  correspondant à la statistique  voulue.</p>
+                    <div class="image">
+                        <img src="IMAGE-TEMP/4-annee.PNG"> <br>
+                    </div>
+                    <p>
+                        Après le chargement, on  obtient la statistique détaillée pour chaque portefeuille. <br>
+                        Telle que: <br>
+                    </p>
+                    <h4 id="bilan">BILAN</h4>
+                    <div class="image">
+                        <img src="IMAGE-TEMP/5-bilan.PNG"> <br>
+                    </div>
+                    <ul>
+                        <li><b class="bold"> Un clic</b> dans la colonne <b class="bold"> TOTAL BILAN A FAIRE HORS MA ET MS, FAIT et RESTANT </b> révèle les DETAILS de chaque nombre avec une option d’<b class="bold"> EXPORTATION EXCEL</b>.</li>
+                    </ul> 
+                    <div class="image">
+                        <img src="IMAGE-TEMP/6-detail(export).PNG"> <br>
+                    </div>
+                    <h4 id="s_tvmes">TVA MENSUEL</h4>
+                    <div class="image">
+                        <img src="IMAGE-TEMP/7-TVA-Mensuel.PNG"> <br>
+                    </div>
+                    <h4 id="s_tvtrim">TVA TRIMESTRIEL</h4>
+                    <div class="image">
+                        <img src="IMAGE-TEMP/8-TVA-trimestriel.PNG"> <br>
+                    </div>
+                    <h4 id="s_ca12">CA 12</h4>
+                    <div class="image">
+                        <img src="IMAGE-TEMP/9-CA12.PNG"> <br>
+                    </div>
+                    <h4 id="s_actis">ACOMPTE IS</h4>
+                    <div class="image">
+                        <img src="IMAGE-TEMP/10-ACOMPTE-IS.PNG"> <br>
+                    </div>
+                    <h4 id="s_liquidation">LIQUIDATION IS</h4>
+                    <div class="image">
+                        <img src="IMAGE-TEMP/11-LIQUIDATION.PNG"> <br>
+                    </div>
+                    <h4 id="s_alpes">ALERTE PES</h4>
+                    <ul>
+                        <li>En cliquant sur <b class="bold"> ALERTE PES et en attendant environ 5 secondes</b>, on obtient la statistique complète pour chaque dossier contenant le portefeuille.</li>
+                    </ul>
+                    <div class="image">
+                        <img src="IMAGE-TEMP/12-ALERT-PES_1.PNG"> <br>
+                    </div>
+                    <ul>
+                        <li>L’icône  <i class="fas fa-eye"></i> permet d’afficher les détails  d’un dossier sur un <b class="bold"> Slide</b> du côté droit de l’écran</li>
+                    </ul>
+                    <div class="image">
+                        <img src="IMAGE-TEMP/13-ALERT-PES_2.PNG"> <br>
+                    </div>
+                    <h4 id="etat_bilan">ETAT BILAN BQ (BANCAIRE)</h4>
+                    <p>En <b class="bold"> cliquant sur ETAT BILAN BQ</b> et en attendant environ <b class="bold"> 5 secondes</b>, on obtient la statistique complète pour chaque dossier contenant le portefeuille. </p>
+                    <div class="image">
+                        <img src="IMAGE-TEMP/14-ETAT-BILAN-BQ_1.PNG"> <br>
+                    </div>
+                    <p>Cliquer sur l’icône <i class="fas fa-eye"></i> pour voir les détails de chaque dossier. </p>
+                    <div class="image">
+                        <img src="IMAGE-TEMP/15-ETAT-BILAN-BQ_2.PNG"> <br>
+                    </div>
+                    <h6>REMARQUES:</h6>
+                    <ul>
+                        <li>Spécialement pour l’<b class="bold"> ALERTE PES et ETAT BILAN BQ</b>, il y a une <b class="bold"> Barre de recherche</b> qui permet de trouver rapidement le dossier ciblé. </li>
+                    </ul>
+                    <div class="image">
+                        <img src="IMAGE-TEMP/16-ETAT-BILAN-BQS_3.PNG"> <br>
+                    </div>
+                    <p>Afin de pouvoir afficher les statistiques correspondantes au dossier, il est essentiel de respecter l’ordre de  manipulation suivante : <b class="bold"> choix EQUIPE(ou portefeuille) > EXERCICES (date)</b>. Si cet ordre n’est pas respecté, le message d’erreur vous invitera à refaire la manipulation (par exemple si vous n’avez pas choisi une équipe).</p>
+                </div>
+            </section>
+            <h4 id="stat_ge">STATISTIQUE GENERALE</h4>
+            <section class="content">
+                <p>Afin de révéler la <b class="bold"> statistique générale </b> (toute portefeuille ), rendez-vous dans le <b class="bold"> Menu > Stat General</b>.</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/17-STATISTIQUE-GENERAL_1.PNG"> <br>
+                </div>
+                <div class="image">
+                    <img src="IMAGE-TEMP/18-SATISTIQUE-GENEREAL_2.PNG"> <br>
+                </div>
+                <p>Une fenêtre affichant la statistique générale de Karlit apparaîtra avec les dates de clôture des exercices et tous les détails concernant le Bilan. On peut <b class="bold"> choisir l’année de l’exercice (1)</b> a affiché dans le menu déroulant et aussi <b class="bold"> sélectionner une statistique de Total bilan à faire Hors MA et MS ou Total Bilan à faire Hors MA (2)</b>.</p>
+                <br>
+                <p>Enfin, on peut exporter le résultat en cliquant sur <b class="bold"> Export (3)</b></p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/19-STATISTIQUE-GENERAL_3.PNG"> <br>
+                </div>
+            </section>
+
+            <h4 id="s_stat_sup">STATISTIQUE PAR SUPERVISEUR</h4>
+            <section class="content">
+                <p>Cliquer sur <b class="bold"> Menu > Stat par Sup</b> pour se rendre dans la statistique par superviseur.</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/20-STATISTIQUE-PAR-SUPERVISEUR_1.PNG"> <br>
+                </div>
+                <div class="image">
+                    <img src="IMAGE-TEMP/21-STATISTIQUE-PAR-SUP_2.PNG"> <br>
+                </div>
+                <p>La première manipulation consiste à choisir le pays d’origine du superviseur sur le menu déroulant <b class="bold"> pays (1)</b>, après le <b class="bold"> nom du Superviseur (2)</b> et enfin le choix de <b class="bold"> l’exercice (3)</b>. Le bouton <b class="bold"> Export (4) </b>permet d’exporter le résultat en fichier Excel. La liste des portefeuilles du superviseur choisi s’affiche sur la droite de l’écran <b class="bold"> (5)</b>.</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/22-STATISTIQUE-PAR-SUP_3.PNG"> <br>
+                </div>
+            </section>
+            
+            <h4 id="s_stat_cdm">STATISTIQUE BILAN FAITS PAR CDM</h4>
+            <section class="content">
+                <p>En ce qui concerne les <b class="bold"> statistiques des bilans effectués par les CDM</b>, il faut se rendre dans 
+                    <b class="bold"> Menu > Stat bilan par Cdm</b>.</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/23-STAT-BILAN-PAR-CDM_1.PNG" "> <br>
+                </div>
+                <div class="image">
+                    <img src="IMAGE-TEMP/24-STAT-BILAN-PAR-CDM_2.PNG"> <br>
+                </div>
+                <p>On peut choisir l’<b class="bold"> exercice (1)</b> sur le menu déroulant, et le <b class="bold"> mois correspondant (2)</b>. Les CDM Malagasy sont à gauche de l’écran, tandis que les CDM Français sont de l’autre côté de l’écran. L’option <b class="bold"> Export Excel (3)</b> est toujours disponible. Les détails à propos de chaque bilan fait par le CDM sont révélés avec leur TOTAL.</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/25-STAT-BILAN-PAR-CDM_3.PNG"> <br>
+                </div>
+            </section>
+            
+            <h4 id="s_stat_ma_etc">STATISTIQUE : MA (Mise en Attente), ACTIF, TOTAL DOSSIER</h4>
+            <section class="content">
+                <p>Au sujet des clients mis en attente(MA), actif, MS et mis en sommeil il faut naviguer dans 
+                    <b class="bold"> Menu > Stat (MA – ACTIF – TOTAL DOSSIER)</b></p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/26-STATISTIQUE-MA_1.PNG"> <br>
+                </div>
+                <p>On obtient ensuite le nombre total de <b class="bold"> dossiers pour chaque portefeuille, suivi des nombres de dossiers actifs, MA, MS, MISE EN SOMMEIL, CABINET, REV, CREA, BLOQUE PAR ANCIEN E-C et enfin XVIDE</b> qui s’adressent à un cas exceptionnel <b class="bold"> (intrus)</b>, par exemple le cas d’un dossier sans clôture. </p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/27-STATISTIQUE-MA_2.PNG"> <br>
+                </div>
+            </section>
+            
+            <h4 id="s_stat_regmtva" >STATISTIQUE REGIME TVA </h4>
+            <section class="content">
+                <p>Toutes les informations concernant le TVA sont rassemblées  dans cette statistique, notamment le <b class="bold"> RM, EM, RT, ET, CA12, EXO, FD, NON, NS</b> suivi des <b class="bold"> Totaux</b>. Pour se rendre dans cette statistique, il faut aller dans  <b class="bold"> Menu > Stat Régime tva</b></p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/28-STAT-REGIME-TVA_1.PNG"> <br>
+                </div>
+                <p>Le statistique à afficher peut varier entre une statistique <b class="bold"> HORS MA</b> ou <b class="bold"> Hors MA ET MS (1)</b> en cliquant sur le bouton. Enfin, l’<b class="bold"> Export Excel (2)</b> est toujours disponible.</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/29-STAT-REGIM-TVA_2.PNG"> <br>
+                </div>
+            </section>
+            
+            <h4 id="tiana_alex">MENU POUR Mr TIANA ET Mr ALEX</h4>
+            <section class="content">
+                <ul>
+                    <li>EXPORT DE BASE DE DONNEES</li>
+                </ul>
+                <p>Afin de permettre l’exportation de la base de données, cliquer sur <b class="bold"> EXPORT BASE DE DONNEES</b>.</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/30-MENU-TIANA-ALEX_1.PNG"> <br>
+                </div>
+                <p>On peut choisir le type de base de donnée a exporté, <br>
+                    <ul>
+                        <li>En choisissant l’année de l’exercice (1)</li>
+                        <li>En cochant ou en décochant MA (2)</li>
+                        <li>En cochant ou en décochant MS (3)</li>
+                    </ul>
+                    Enfin, en cliquant sur <b class="bold"> Valider</b>.<br>
+                    Une fois que la base de données apparaît, l’option <b class="bold"> Sélectionnez Tout (4)</b>  sert à copier notre base de données qui peut être collée sur Excel
+                </p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/31-MENU-TIANA-ALEX_2.PNG"> <br>
+                </div>
+                <ul>
+                    <li id="stat_nb_ligne">STAT NB LIGNE ET CHIFFRE D’AFFAIRE</li>
+                </ul>
+                <p>Afin d’accéder au nombre de ligne par équipe et aux chiffres d’affaire, il suffit de cliquer sur  <b class="bold">  STAT NB LIGNE ET CHIFFRE D’AFFAIRE</b></p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/32-STAT-NB-LIGNE-CHIFF_1.PNG"> <br>
+                </div>
+                <p>Sélectionner l’équipe dans le menu déroulant  <b class="bold"> votre équipe (1)</b>, puis sur <b class="bold"> choisissez votre exercice(s)(2)</b> afin de sélectionner l’année correspondante. La statistique peut être<b class="bold">  affichée avec ou sans le MA et MS en cochant ou en décochant les checkbox (3) et (4)</b>. Enfin, le bouton <b class="bold">  Valider (5)</b> permet d’afficher la statistique</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/33-STAT-NB-LIGNE-CHIFF_2.PNG"> <br>
+                </div>
+                <p>Une fois affiché, on peut  trier la statistique par ordre alphabétique ou par ordre croissant ou décroissant par l’intermédiaire des <b class="bold"> flèches (6)</b>. L’option <b class="bold"> Sélectionnez tout (7)</b>  est toujours disponible afin de la copier et de l’afficher dans EXCEL. Enfin on a une <b class="bold"> barre de recherche (8)</b> pour interroger un mot clé</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/34-STAT-NB-LIGNE-CHIFF_3.PNG"> <br>
+                </div>
+            </section>
+            
+
+            <h3 id="suivi">SUIVI</h3>
+            <, class="content">
+                <p>A part l’affichage des statistiques, <b class="bold"> Suividoss</b>  est aussi conçu pour <b class="bold"> traiter et éditer les informations</b> concernant les pièces comptables. Principalement les dossiers actifs, date de clôture des exercices et le bilan.<br>Pour se rendre dans l’interface de modification des informations, cliquer dans <b class="bold"> le champ où se trouvent l’icône et le nom de votre profil (1)</b> puis sur <b class="bold"> Suivi (2)</b>.</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/35-SUIVI_1.PNG"> <br>
+                </div>
+                <div class="image">
+                    <img src="IMAGE-TEMP/36-SUIVI_2.PNG"> <br>
+                </div>
+                <p>Ensuite, on a un champ  <b class="bold"> votre équipe (3)</b> pour choisir l’équipe à exposer, un champ pour <b class="bold"> choisir l’exercices (4)</b>. Et enfin un checkbox  <b class="bold"> Dernier_exercice (5)</b> pour permettre l’affichage du dernier exercice effectué par l’équipe. <br>La <b class="bold"> sélection multiple</b> est faisable dans le choix <b class="bold"> d’équipe (1)</b> et choix <b class="bold"> d’exercices (2)</b>.</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/37-SUIVI_3.PNG"  style="zoom: 80%"> <br>
+                </div>
+                <ul>
+                    <li id="last_ex"><b class="bold"> Affichage du dernier exercice</b> </li>
+                </ul>
+                <p><b class="bold"> Choisissez l’équipe(1)</b> et cochez sur<b class="bold"> Dernier_exercice(2)</b> pour montrer le dernier exercice de l’équipe.  </p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/38-DERNIER-EXERCICE_1.PNG"  style="zoom: 80%"> <br>
+                </div>
+                <p>On obtient ensuite tous les détails concernant l’équipe choisie et les dossiers traités par ce dernier. <br>
+                La visualisation des détails de chaque dossier s’effectue en <b class="bold"> double cliquant</b> sur la ligne du dossier concerné ou en cliquant sur l’icône <i class="fas fa-eye"></i></p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/39-DERNIER-EXERCICE_2.PNG"  style="zoom: 80%"> <br>
+                </div>
+                <p>Les détails apparaissent sans possibilité de modification, <b class="bold"> juste une Visualisation</b>.</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/40-DERNIER-EXERCICE_3.PNG"> <br>
+                </div>
+                <ul>
+                    <li id="tous_dossier"><b class="bold"> Affichage de tous les dossiers complets d’une équipe </b></li>
+                </ul>
+                <p>Choisissez votre <b class="bold"> équipe (1)</b> et <b class="bold"> votre exercice (2)</b> avec possibilité de <b class="bold"> choix multiple</b>.</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/41-DOSSIER-COMPLET_1.PNG"> <br>
+                </div>
+                <p>On peut <b class="bold"> modifier</b> les informations de chaque dossier en<b class="bold"> double cliquant sur la ligne ou en cliquant sur l’icône</b> <i class="fas fa-eye"></i>  (5).<br>
+                    Dans la colonne <b class="bold"> EQUIPE, dossier, cmt, frm_juridique, dt_etech, sit_karlit ,date_maj, dt_d_envoi_bl_krlt, cdm </b>on peut effectuer des recherches distinguées dans la colonne concernée pour faire un triage sur les <b class="bold"> barres de recherche (3)</b>.<br>
+                    Parmi les colonnes <b class="bold"> sit_dossier, rg_d_imp1, rg_d_imp2, dp_coala, regime, etar_bl</b> on a une <b class="bold"> barre de filtrages de mots clés (4)</b>.</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/42-DOSSIER-COMPLET_2.PNG"> <br>
+                </div>
+                <div class="image">
+                    <img src="IMAGE-TEMP/43-DOSSIER-COMPLET_3.PNG"> <br>
+                </div>
+                <p>Pour ajouter plus d’informations à chaque dossier traité, cliquer sur l’icône <i class="far fa-edit"></i> <b class="bold"> (6) </b>pour faire apparaître les <b class="bold"> options </b>supplémentaires</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/44-OPTION_1.PNG"> <br>
+                </div>
+                <div class="image">
+                    <img src="IMAGE-TEMP/45-OPTION_2.PNG"> <br>
+                </div>
+                <p>Ensuite la liste des options supplémentaires jaillis, telle que le <b class="bold"> Contact client, Contact sie, Renseignement juridique, Pes et Relance, Relance Pes et Relance banque, Pôle juridique, chiffre d’affaire et nb_line, Nouvelle clôture et Supprimer</b>.<br></p>
+                <ul>
+                    <li id="cont_cli" >Contact client:</li>
+                </ul>
+                <div class="image">
+                    <img src="IMAGE-TEMP/46-CONTACTCLIENTS.PNG"> <br>
+                </div>
+                <ul>
+                    <li id="cont_si">Contact sie</li>
+                </ul>
+                <div class="image">
+                    <img src="IMAGE-TEMP/47-CONTACT-SIE.PNG"> <br>
+                </div>
+                <ul>
+                    <li id="re_ju">Renseignements juridiques:</li>
+                </ul>
+                <div class="image">
+                    <img src="IMAGE-TEMP/48-RENSEIGNEMENT-JURIDIQUE.PNG"> <br>
+                </div>
+                <ul>
+                    <li id="pes_re">Pes et Relance</li>
+                </ul>
+                <p>L’ajout d’un PES s’effectue en  <b class="bold"> choisissant la date (1)</b> puis en cliquant sur l’icône <i class="fas fa-save"></i> pour <b class="bold">enregistrer (2)</b>.  On a aussi le droit d’ajouter une <b class="bold">date retour (3)</b>, mais l’<b class="bold">enregistrement (4)</b> n’est possible que si la date du retour est bien définie. <b class="bold"> La suppression (5)</b> est aussi valable.<br>
+                    Même manipulation pour la RELANCE. Par contre, on peut <b class="bold"> modifier le nom (6)</b> de la relance en cas d’exception.</p>
+                <div class="image" style="zoom: 90%">
+                    <img src="IMAGE-TEMP/49-PES-ET-RELANCE.PNG"> <br>
+                </div>
+                <ul>
+                    <li id="pes_bq">Relance Pièce  et Relance Banque</li>
+                </ul>
+                <p>L’ajout d’un Relance Pièce s’effectue en  <b class="bold"> choisissant la date (1)</b> puis en cliquant sur l’icône d’enregistrement pour <b class="bold"> enregistrer (2)</b>.  On a aussi le droit d’ajouter une <b class="bold"> date retour (3)</b>, mais l’<b class="bold"> enregistrement (4) </b>n’est possible que si la date du retour est bien définie. La <b class="bold"> suppression (5)</b> est aussi valable.<br>
+                    Même manipulation pour la RELANCE BANQUE. Par contre, on peut <b class="bold"> modifier le nom (6)</b> de la relance en cas d’exception.</p>
+                <div class="image" style="zoom: 90%">
+                    <img src="IMAGE-TEMP/50-RELANCE-PIECE-ET-BANQUE.PNG"> <br>
+                </div>
+                <ul>
+                    <li id="po_ju">Pôle juridique</li>
+                </ul>
+                <p>L’ajout de DATE DEMANDE RECUE  France et DATE DEMANDE FAIT KARLIT se feront en cliquant sur la <b class="bold"> zone où il y a la date (1)</b> et <b class="bold"> SITUATION (2)</b> contenant un menu <b class="bold"> déroulant (3)</b> pour ajouter une précision.</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/51-POLE-JURIDIQUE.PNG"> <br>
+                </div>
+                <ul>
+                    <li id="chiff">Chiffre d’affaire et nb_line</li>
+                </ul>
+                <p>L’insertion du chiffre d’affaire d’un dossier s’effectue en choisissant  <b class="bold"> l’année (1)le nombre de ligne (2)</b> et le chiffre d’affaire <b class="bold"> correspondant (3)</b>, et enfin en cliquant sur <b class="bold"> Enregistrer</b>. On peut aussi <b class="bold"> supprimer (4)</b> la ligne </p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/52-NB-LIGNE-CHIFFRE.PNG"> <br>
+                </div>
+                <ul>
+                    <li id="nouv_clo">Nouvelle clôture</li>
+                </ul>
+                <p>Cette option consiste à mettre en place une nouvelle date de clôture pour le dossier, ainsi la date n’est valide que si la date insérée est différente de la date déjà inscrite. Sinon, un message d’erreur vous informera que la date est déjà existante. </p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/53-NOUVEAU-CLOTURE.PNG"> <br>
+                </div>
+                <ul>
+                    <li id="sup">Supprimer</li>
+                </ul>
+                <p>Enfin, un bouton <b class="bold"> Supprimer</b> autorise l’utilisateur à faire une suppression définitive.</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/54-SUPPRIMER.PNG"> <br>
+                </div>
+                <p>Une barre de <b class="bold"> recherche globale </b> est placée en haut et à droite de l’écran afin de  fouiller le mot clé dans l’intégralité de tous les documents</p>
+                <div class="image">
+                    <img src="IMAGE-TEMP/55-RECHERCHE-GLOBAL.PNG"> <br>
+                </div>
+                <p>Le résultat présent peut être <b class="bold"> Exporté en fichier Excel (1)</b>  dans le but de le conserver facilement.</p>
+                <div class="image" style="zoom: 90%">
+                    <img src="IMAGE-TEMP/56-Export.PNG"> <br>
+                </div>
+            </section>
+
+            <h4 id="import">IMPORTATION ECXEL</h4>
+                <section class="content">
+                <p>L’importation d’un fichier Excel vers Suividoss est faisable en cliquant sur le bouton <b class="bold"> Import Excel (2)</b>.</p>
+                <div class="image" style="zoom: 90%">
+                    <img src="IMAGE-TEMP/57-Import_1.PNG" > <br>
+                </div>
+                <p>REMARQUES:<br>
+                    Le fichier Excel a importé doit <b class="bold"> adopter une structure  adéquate</b> à la structure affichée dans suividoss, il doit être aussi complété de façon qu’il n’y ait pas de case vide. Afin de correspondre votre fichier Excel à celui de suividoss, il est important d’utiliser le modèle situé dans <b class="bold"> Import Excel (2) > Aide structure Excel à importer (3)</b>. Ce modèle peut être téléchargé et utilisé en tant que modèle, l’utilisateur devrait juste remplir le document  pour pouvoir l’importer après.</p>
+                <div class="image" style="zoom: 90%">
+                    <img src="IMAGE-TEMP/58-Import_2.PNG"> <br>
+                </div>
+                <p>Le modèle ci-dessous peut être utilisé comme  une « template ».</p>
+                <div class="image" style="zoom: 80%">
+                    <img src="IMAGE-TEMP/59-Import_3.PNG" > <br>
+                </div>
+                <p>Une fois que les informations sont entrées correctement, l’importation se fera en naviguant dans 
+                    <b class="bold"> Import Excel (2)</b> et en cliquant sur <b class="bold"> parcourir (4)</b>. </p>
+                <div class="image" style="zoom: 80%">
+                    <img src="IMAGE-TEMP/60-Import_4.PNG"> <br>
+                </div>
+            </section>
+        </div>
+        <div class="panes-separator" id="panes-separator"></div>
+        <div class="right-pane" id="right-pane" style="width: 25%;">
+            <section style="position:fixed;padding-top:0%;overflow:auto;width:100%; height: 97%;">
+            <b class="text-center"  style="position:fixed;top:2px;background-color: rgb(161, 234, 236);color:blue ; border-radius: 10px;padding:5px " ><i class="fas fa-angle-double-down"></i> Sommaire Statistique
+                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Recherche..." title="Type in a name">		
+            </b>
+            <ul id="myUL">
+            <li onclick="click_intro()"><a><i class="fas fa-align-right"></i> INTRODUCTION</a></li>
+            <li onclick="click_stat()"><a><i class="fas fa-align-right"></i>  STATISTIQUE</a></li>
+            <li onclick="click_bilan()"><a><i class="fas fa-align-right"></i> BILAN</a></li>
+            <li onclick="click_s_tvmes()"><a><i class="fas fa-align-right"></i> TVA MENSUEL</a></li>
+            <li onclick="clic_s_tvtrim()"><a><i class="fas fa-align-right"></i> TVA TRIMESTRIEL</a></li>
+            <li onclick="click_s_ca12()"><a><i class="fas fa-align-right"></i> CA12</a></li>
+            <li onclick="click_s_actis()"><a><i class="fas fa-align-right"></i> ACOMPTE IS</a></li>
+            <li onclick="click_s_liquidation()"><a><i class="fas fa-align-right"></i> LIQUIDATION IS</a></li>
+            <li onclick="click_s_alpes()"><a><i class="fas fa-align-right"></i> ALERT PES</a></li>
+            <li onclick="click_etat_bilan()"><a><i class="fas fa-align-right"></i> ETAT BILAN BQ</a></li>
+            
+            <li onclick="click_stat_ge()"><a><i class="fas fa-align-right"></i>  STATISTIQUE GENERALE</a></li>
+            <li onclick="click_s_stat_sup()"><a><i class="fas fa-align-right"></i> STAT PAR SUPERVISEUR</a></li>
+            <li onclick="click_s_stat_cdm()"><a><i class="fas fa-align-right"></i> STAT PAR CDM</a></li>
+
+            <li onclick="click_s_stat_ma_etc()"><a><i class="fas fa-align-right"></i> STAT (ACTIF - MA - etc...)</a></li>
+            <li onclick="click_s_stat_regmtva()"><a><i class="fas fa-align-right"></i> STAT REGIME TVA</a></li>
+            <li onclick="click_tiana_alex()"><a><i class="fas fa-align-right"></i> MENU Mr TIANA & Mr ALEX</a></li>
+            <li onclick="click_stat_nb_ligne()"><a><i class="fas fa-align-right"></i> STAT NB LIGNE ET CHIFFRE D’AFFAIRE</a></li>
+            <li onclick="click_suivi()"><a><i class="fas fa-align-right"></i> SUIVI</a></li>
+            <li onclick="click_last_ex()"><a><i class="fas fa-align-right"></i> DERNIER EXERCICE</a></li>
+            <li onclick="click_tous_dossier()"><a><i class="fas fa-align-right"></i> TOUS DOSSIER EQUIPE</a></li>
+            <li onclick="click_cont_cli()"><a><i class="fas fa-align-right"></i> CONTACT CLIENT</a></li>
+            <li onclick="click_cont_si()"><a><i class="fas fa-align-right"></i> CONTACT SIE</a></li>
+            <li onclick="click_re_ju()"><a><i class="fas fa-align-right"></i> RENSEIGNEMENT JURIDIQUE</a></li>
+            <li onclick="click_pes_re()"><a><i class="fas fa-align-right"></i> PES ET RELANCE</a></li>
+            <li onclick="click_pes_bq()"><a><i class="fas fa-align-right"></i> RELANCE PIECE ET BANQUE</a></li>
+            <li onclick="click_po_ju()"><a><i class="fas fa-align-right"></i> PÔLE JURIDIQUE</a></li>
+            <li onclick="click_chiff()"><a><i class="fas fa-align-right"></i> CHIFFRE D'AFFAIRE ET NOMBRE DE LIGNE</a></li>
+            <li onclick="click_nouv_clo()"><a><i class="fas fa-align-right"></i> NOUVELLE CLÔTURE</a></li>
+            <li onclick="click_sup()"><a><i class="fas fa-align-right"></i> SUPPRESSION</a></li>
+            <li onclick="click_import()"><a><i class="fas fa-align-right"></i> IMPORTATION FICHIER EXCEL</a></li>
+            </ul>
+        </section>
+        </div>
+    </div>
+
+    <a id="to_bottom" href="" >
+    <b style="color: rgb(255, 253, 253);cursor:pointer">	<i class="<i fas fa-arrow-up fa-3x"></i></b>
+    </a>
+
+    <script>
+
+
+        var leftPane = document.getElementById('left-pane');
+        var rightPane = document.getElementById('right-pane');
+        var paneSep = document.getElementById('panes-separator');
+
+        // The script below constrains the target to move horizontally between a left and a right virtual boundaries.
+        // - the left limit is positioned at 10% of the screen width
+        // - the right limit is positioned at 90% of the screen width
+        var leftLimit = 10;
+        var rightLimit = 90;
+
+
+        paneSep.sdrag(function (el, pageX, startX, pageY, startY, fix) {
+
+            fix.skipX = true;
+
+            if (pageX < window.innerWidth * leftLimit / 100) {
+                pageX = window.innerWidth * leftLimit / 100;
+                fix.pageX = pageX;
+            }
+            if (pageX > window.innerWidth * rightLimit / 100) {
+                pageX = window.innerWidth * rightLimit / 100;
+                fix.pageX = pageX;
+            }
+
+            var cur = pageX / window.innerWidth * 100;
+            if (cur < 0) {
+                cur = 0;
+            }
+            if (cur > window.innerWidth) {
+                cur = window.innerWidth;
+            }
+
+
+            var right = (100-cur-2);
+            leftPane.style.width = cur + '%';
+            rightPane.style.width = right + '%';
+
+        }, null, 'horizontal');
+    // <i class="fas fa-wifi-1"></i>
+        function myFunction() {
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByTagName("li");
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+            
+        }
+    }
+    document.getElementById("myUL").style.maxHeight =	(window.screen.height / 1.38) + "px";
+    function click_intro(){var e = document.getElementById("intro");  e.scrollIntoView();}
+    function click_stat(){var e = document.getElementById("s_stat");  e.scrollIntoView();}
+    function click_bilan(){var e = document.getElementById("bilan");  e.scrollIntoView();}
+    function click_stat_ge(){var e = document.getElementById("stat_ge");  e.scrollIntoView();}
+    function click_s_stat_sup(){var e = document.getElementById("s_stat_sup");  e.scrollIntoView();}
+    function click_s_stat_cdm(){var e = document.getElementById("s_stat_cdm");  e.scrollIntoView();}
+    function click_s_stat_ma_etc(){var e = document.getElementById("s_stat_ma_etc");  e.scrollIntoView();}
+    function click_s_stat_regmtva(){var e = document.getElementById("s_stat_regmtva");  e.scrollIntoView();}
+    function click_s_bilan(){var e = document.getElementById("s_bilan");  e.scrollIntoView();}
+    function click_tiana_alex(){var e = document.getElementById("tiana_alex");  e.scrollIntoView();}
+    function click_stat_nb_ligne(){var e = document.getElementById("stat_nb_ligne");  e.scrollIntoView();}
+    function click_suivi(){var e = document.getElementById("suivi");  e.scrollIntoView();}
+    function click_last_ex(){var e = document.getElementById("last_ex");  e.scrollIntoView();}
+    function click_tous_dossier(){var e = document.getElementById("tous_dossier");  e.scrollIntoView();}
+    function click_cont_cli(){var e = document.getElementById("cont_cli");  e.scrollIntoView();}
+    function click_cont_si(){var e = document.getElementById("cont_si");  e.scrollIntoView();}
+    function click_re_ju(){var e = document.getElementById("re_ju");  e.scrollIntoView();}
+    function click_pes_re(){var e = document.getElementById("pes_re");  e.scrollIntoView();}
+    function click_pes_bq(){var e = document.getElementById("pes_bq");  e.scrollIntoView();}
+    function click_chiff(){var e = document.getElementById("chiff");  e.scrollIntoView();}
+    function click_nouv_clo(){var e = document.getElementById("nouv_clo");  e.scrollIntoView();}
+    function click_sup(){var e = document.getElementById("sup");  e.scrollIntoView();}
+    function click_po_ju(){var e = document.getElementById("po_ju");  e.scrollIntoView();}
+    function click_s_tvmes(){var e = document.getElementById("s_tvmes");  e.scrollIntoView();}
+    function click_import(){var e = document.getElementById("import");  e.scrollIntoView();}
+    function clic_s_tvtrim(){var e = document.getElementById("s_tvtrim");  e.scrollIntoView();}
+    function click_s_ca12(){var e = document.getElementById("s_ca12");  e.scrollIntoView();}
+    function click_s_actis(){var e = document.getElementById("s_actis");  e.scrollIntoView();}
+    function click_s_liquidation(){var e = document.getElementById("s_liquidation");  e.scrollIntoView();}
+    function click_s_alpes(){var e = document.getElementById("s_alpes");  e.scrollIntoView();}
+    function click_etat_bilan(){var e = document.getElementById("etat_bilan");  e.scrollIntoView();}
+    function click_s_elmblq(){var e = document.getElementById("s_elmblq");  e.scrollIntoView();}
+    function click_s_export(){var e = document.getElementById("s_export");  e.scrollIntoView();}
+    function click_s_menu_except(){var e = document.getElementById("s_menu_except");  e.scrollIntoView();}
+    </script>
+
+</body>
+
+    <script type="text/javascript" src= "../asset/bootstrap/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../asset/bootstrap/js/popper.min.js"></script>
+    <script type="text/javascript" src="../asset/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+    <i class="bi bi-eye-fill"></i>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

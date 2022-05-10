@@ -1,0 +1,915 @@
+{% include "base.html.twig" %}
+<title>Suivi</title>
+{% block stylesheets %}
+  <link rel="stylesheet" href="./asset/bootstrap-5-admin/css/mdb.min.css"/>
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="./asset/bootstrap-5-admin/css/admin.css"/>
+  <link rel="stylesheet" href="./asset/checkbox/dist/jquery.customselect.css">
+
+  <style>
+    th {
+      /* Important */
+      background-color: #ececec;
+      color: #586896;
+      position: sticky;
+      z-index: 100;
+      top: 0;
+    }
+    .supre_chifr:hover,
+    .tr_list_general:hover {
+      background-color: #dedbe4;
+      cursor: default;
+    }
+    .supre_chifr:active {
+      background-color: red;
+    }
+
+    .in_visible,
+    .m_code_stuation {
+      display: none;
+    }
+    input {
+      text-align: center;
+      line-height: 150%;
+    }
+
+    input[type="date"]::-webkit-clear-button {
+      display: none;
+      font-size: 12px;
+    }
+
+    /* Removes the spin button */
+    input[type="date"]::-webkit-inner-spin-button {
+      display: none;
+      font-size: 12px;
+    }
+
+    /* Always display the drop down caret */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      color: #2c3e50;
+    }
+
+    /* A few custom styles for date inputs */
+
+    input[type="text"],
+    td {
+      font-size: 11.5px;
+    }
+
+    input[type="date"] {
+      appearance: none;
+      -webkit-appearance: none;
+      color: #094e25;
+      font-family: "Helvetica", arial, sans-serif;
+
+      border: 1px solid #ecf0f1;
+      background: #ecf0f1;
+      padding: 5px;
+      display: inline-block !important;
+      visibility: visible !important;
+
+    }
+    .etat_cmt_1,
+    .etat_cmt_2,
+    .etat_pice_1,
+    .etat_pice_2 {
+      color: #8585e8;
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  <!--Main Navigation-->
+  <header>
+
+    <!-- Sidebar -->
+
+    <!-- Navbar -->
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-info fixed-top">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="#" style="color:white">
+          <i class="fas fa-house-damage fa-lg"></i>&nbsp;&nbsp;&nbsp;DECLARATION PERIODIQUE
+        </a>
+        <!-- Search form -->
+        <!-- Right links -->
+        <ul class="navbar-nav ms-auto d-flex flex-row">
+          <!-- Notification dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" style="color:white" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-bell"></i>
+              &nbsp;<span class="badge rounded-pill badge-notification bg-primary">Menu</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end " style="background-color:rgb(222, 219, 228)" aria-labelledby="navbarDropdownMenuLink">
+              <li>
+                <a class="dropdown-item" href="?suivi_karlit=situtation_tva">
+                  <i class="fab fa-audible"></i>
+                  SITUATION TVA</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-align-left"></i>
+                  SITUATION BILAN</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="?suivi_karlit=statistique">
+                  <i class="fab fa-accusoft"></i>
+                  STATISTIQUE</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#statMA_Actif_sns" id="st_pp_cdm">
+                  <i class="fab fa-accusoft"></i>
+                  Echange prepa et precompta</a>
+              </li>
+            </ul>
+          </li>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <!-- Avatar -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center" href="#" style="color:white" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+              <img src="./asset/images/user.jpg" class="rounded-circle" height="22" alt="" loading="lazy"/>&nbsp;
+              {{utilisateur[0].nom}}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" style="background-color:rgb(222, 219, 228)" aria-labelledby="navbarDropdownMenuLink">
+              <li>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user-edit"></i>
+                  profile</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/SuiviK/?suivi_karlit=suivi">Suivi
+                  <i class="fas fa-book-open"></i>
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/SuiviK">Deconnexion
+                  <i class="fas fa-ban"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+  </header>
+  <!--Main Navigation-->
+
+  <!--Main layout-->
+  <body>
+    <main style="margin-top: 100px">
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-sm-1"></div>
+          <div class="col-sm">
+
+            <table width="100%">
+              <td>Equipe :
+              </td>
+              <td>
+                <select id="single_equipe" multiple="multiple" data-empty-text="votre equipe" data-dropdown="true">
+                  {% for e in sonEquipe %}
+                    <option value={{e.id}}="}">{{e.code}}</option>
+                  {% endfor %}
+                </select>
+              </td>
+              <td>
+                Exercice :
+              </td>
+              <td>
+                <select id="anne_equipe" multiple="multiple" data-empty-text="choisissez aumoins equipe" data-dropdown="true">
+                  {% for i in 2018..2025 %}
+                    <option value={{i}}="}">{{i}}</option>
+                  {% endfor %}
+                </select>
+              </td>
+              <td>
+                <button class="btn btn-primary" id="btn-lancer">Valider</button>
+              </td>
+            </table>
+          </div>
+          <div class="col-sm-3"></div>
+        </div>
+      </div>
+    </main>
+
+    <div class="container" style="margin-top:20px">
+      <div class="row">
+        <div class="col-md-4">
+          <div id="datatable_situation"></div>
+        </div>
+        <div class="col-md-8" id="tab_declaration" style="display:none">
+          <!-- Classic tabs -->
+          <div class="alert alert-info text-center" role="alert" id="name_doss"></div>
+
+          <ul class="nav nav-tabs mb-3" id="ex1" role="tablist" style="background: #ebf4fb;">
+
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="ex1-tab-1" data-mdb-toggle="tab" href="#ex1-tabs-1" role="tab" aria-controls="ex1-tabs-1" aria-selected="true">TVA MENS</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="ex1-tab-2" data-mdb-toggle="tab" href="#ex1-tabs-2" role="tab" aria-controls="ex1-tabs-2" aria-selected="false">TVA TRIM</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="ex1-tab-3" data-mdb-toggle="tab" href="#ex1-tabs-3" role="tab" aria-controls="ex1-tabs-3" aria-selected="false">ACOMPTE TVA ST</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="ex1-tab-4" data-mdb-toggle="tab" href="#ex1-tabs-4" role="tab" aria-controls="ex1-tabs-4" aria-selected="false">ACOMPTE IS</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="ex1-tab-5" data-mdb-toggle="tab" href="#ex1-tabs-5" role="tab" aria-controls="ex1-tabs-5" aria-selected="false">CVAE</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="ex1-tab-6" data-mdb-toggle="tab" href="#ex1-tabs-6" role="tab" aria-controls="ex1-tabs-6" aria-selected="false">TVS</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="ex1-tab-7" data-mdb-toggle="tab" href="#ex1-tabs-7" role="tab" aria-controls="ex1-tabs-7" aria-selected="false">BILAN</a>
+            </li>
+          </ul>
+          <!-- Tabs navs -->
+
+          <!-- Tabs content -->
+
+          <div class="tab-content" id="ex1-content">
+            <div class="tab-pane fade show active" id="ex1-tabs-1" role="tabpanel" aria-labelledby="ex1-tab-1">
+              <div style="position:relative;left:1%;width: 100%;overflow:auto;height:400px;">
+
+                <h3 class="text-center"></h3>
+                <table id="tva_mensuel" class="table-bordered text-center" width="100%">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">TVA</th>
+                      <th rowspan="2">ECHEANCE</th>
+                      <th rowspan="2">DATE TVA FAIT KARLIT</th>
+                      <th rowspan="2">DATE ENVOIE CLIENT</th>
+                      <th rowspan="2">DATE VALIDATION CLIENT</th>
+                      <th rowspan="2">DATE TÉLÉTRANSMISSION</th>
+                      <th>DATE VALIDATION EDI</th>
+                      <th>COMMENTAIRE</th>
+                    </tr>
+
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="mm">Octobre</td>
+                      <td class="ttdate">
+                        2020-10-24
+                      </td>
+                      <td class="dtensemble">2020-11-18</td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble">2020-11-18</td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td class="mm">Novembre</td>
+                      <td class="ttdate">
+                        2020-11-24
+                      </td>
+                      <td class="dtensemble">2020-12-14</td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble">2020-12-14</td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td class="mm">Decembre</td>
+                      <td class="ttdate">
+                        2020-12-24
+                      </td>
+                      <td class="dtensemble">2021-01-25</td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble">2021-01-25</td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td class="mm">Janvier</td>
+                      <td class="ttdate">
+                        2021-01-24
+                      </td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td class="mm">Fevrier</td>
+                      <td class="ttdate">
+                        2021-02-24
+                      </td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td class="mm">Mars</td>
+                      <td class="ttdate">
+                        2021-03-24
+                      </td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td class="mm">Avril</td>
+                      <td class="ttdate">
+                        2021-04-24
+                      </td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td class="mm">Mai</td>
+                      <td class="ttdate">
+                        2021-05-24
+                      </td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td class="mm">Juin</td>
+                      <td class="ttdate">
+                        2021-06-24
+                      </td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td class="mm">Juillet</td>
+                      <td class="ttdate">
+                        2021-07-24
+                      </td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td class="mm">Aout</td>
+                      <td class="ttdate">
+                        2021-08-24
+                      </td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td class="mm">Septembre</td>
+                      <td class="ttdate">
+                        2021-09-24
+                      </td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+              <div style="width: 100%">
+                <div class="text-center" style="color:red">TVA TRIMESTRIEL</div>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td width="72%">
+                        <b style="background-color: #f3d5d5;color:blue">Nom dossier
+                        </b>: BA HAMMOU &amp; FILS
+                      </td>
+                      <td>
+                        <b style="background-color: #f3d5d5;color:blue">date cloture
+                        </b>:
+                        <b id="dtechange">
+                          2021-12-31</b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table id="tva_trim" class="table-bordered text-center" width="100%">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">TVA</th>
+                      <th rowspan="2">ECHEANCE</th>
+                      <th rowspan="2">DATE TVA FAIT KARLIT</th>
+                      <th rowspan="2">DATE ENVOIE CLIENT</th>
+                      <th rowspan="2">DATE VALIDATION CLIENT</th>
+                      <th rowspan="2">DATE TÉLÉTRANSMISSION</th>
+                      <th>DATE VALIDATION EDI</th>
+                      <th>COMMENTAIRE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1T-2021</td>
+                      <td class="ttdate">2021-04-21</td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td>2T-2021</td>
+                      <td class="ttdate">2021-07-21</td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td>3T-2021</td>
+                      <td class="ttdate">2021-10-21</td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td>4T-2021</td>
+                      <td class="ttdate">2022-01-21</td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+              <div style="width: 100%">
+                <div class="text-center" style="color:red">ACOMPTE TVA ST</div>
+                MONTANT TVA N-1
+                <input type="text" value="4 000,00 €" style="background:#cbe6cb;color:red;text-align: center;" id="txtis" disabled="">
+                <p></p>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td width="72%">
+                        <b style="background-color: #f3d5d5;color:blue">Nom dossier
+                        </b>: COMDIGITAL.FR
+                      </td>
+                      <td>
+                        <b style="background-color: #f3d5d5;color:blue">date cloture
+                        </b>:
+                        <b id="dtechange">
+                          2021-12-31</b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table id="actpe_tva_st" class="table-bordered text-center" width="100%">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">ECHEANCE</th>
+                      <th rowspan="2">MONTANT ACOMPTES</th>
+                      <th rowspan="2">DATE ACOMPTE FAIT KARLIT</th>
+                      <th rowspan="2">DATE ENVOIE CLIENT</th>
+                      <th rowspan="2">DATE VALIDATION CLIENT</th>
+                      <th rowspan="2">DATE TÉLÉTRANSMISSION</th>
+                      <th>DATE VALIDATION EDI</th>
+                      <th>COMMENTAIRE</th>
+                    </tr>
+
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>2021-06-</td>
+                      <td class="dtnumberensembe"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td>2021-09-</td>
+                      <td class="dtnumberensembe"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="ex1-tabs-4" role="tabpanel" aria-labelledby="ex1-tab-4">
+
+              <div style="width: 100%;padding-right: 2%;">
+                <div class="text-center" style="color:red">ACOMPTE IS</div>
+                MONTANT IS N-1 :
+                <input style="background:#cbe6cb;color:red;text-align: center;" type="text" id="txtis" value="00000.00€" disabled="">
+                <p></p>
+                <table >
+                  <tbody>
+                    <tr>
+                      <td width="72%">
+                        <b style="background-color: #f3d5d5;color:blue">Nom dossier
+                        </b>: Entrassociés
+                      </td>
+                      <td>
+                        <b style="background-color: #f3d5d5;color:blue">date cloture
+                        </b>:
+                        <b id="dtechange">
+                          2021-09-30</b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="table-bordered text-center" width="100%">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">ECHEANCE</th>
+                      <th rowspan="2">MONTANT ACOMPTES</th>
+                      <th rowspan="2">DATE ACOMPTE FAIT KARLIT</th>
+                      <th rowspan="2">DATE ENVOIE CLIENT</th>
+                      <th rowspan="2">DATE VALIDATION CLIENT</th>
+                      <th rowspan="2">DATE TÉLÉTRANSMISSION</th>
+                      <th>DATE VALIDATION EDI</th>
+                      <th>COMMENTAIRE</th>
+                    </tr>
+
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="ttdate"></td>
+                      <td class="dtnumberensembe"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td class="ttdate">2021-06-15</td>
+                      <td class="dtnumberensembe"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td class="ttdate">
+                        2021-09-15</td>
+                      <td class="dtnumberensembe"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td class="ttdate">2021-12-15
+                      </td>
+                      <td class="dtnumberensembe"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="ex1-tabs-5" role="tabpanel" aria-labelledby="ex1-tab-5">
+              <div style="width: 100%;padding-right: 1%">
+                <div class="text-center" style="color:red">ACOMPTE CVAE</div>
+                MONTANT CVAE N-1
+                <input style="background:#cbe6cb;color:red;text-align: center;" type="text" id="txtis" value="0000.00 €" disabled="">
+                <p></p>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td width="72%">
+                        <b style="background-color: #f3d5d5;color:blue">Nom dossier
+                        </b>: Entrassociés
+                      </td>
+                      <td>
+                        <b style="background-color: #f3d5d5;color:blue">date cloture
+                        </b>:
+                        <b id="dtechange">
+                          2021-09-30</b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <table id="cvae" class="table-bordered text-center" width="100%">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">ECHEANCE</th>
+                      <th rowspan="2">MONTANT ACOMPTES</th>
+                      <th rowspan="2">DATE ACOMPTE CVAE FAIT KARLIT</th>
+                      <th rowspan="2">DATE ENVOIE CLIENT</th>
+                      <th rowspan="2">DATE VALIDATION CLIENT</th>
+                      <th rowspan="2">DATE TÉLÉTRANSMISSION</th>
+                      <th>DATE VALIDATION EDI</th>
+                      <th>COMMENTAIRE</th>
+                    </tr>
+
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        2021-03-15
+                      </td>
+                      <td class="dtnumberensembe"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        2021-06-15
+                      </td>
+                      <td class="dtnumberensembe"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="ex1-tabs-6" role="tabpanel" aria-labelledby="ex1-tab-6">
+              <div style="pwidth: 100%">
+
+                <div class="text-center" style="color:red">TVS</div>
+
+                <table>
+                  <tbody>
+                    <tr>
+                      <td width="72%">
+                        <b style="background-color: #f3d5d5;color:blue">Nom dossier
+                        </b>: Entrassociés
+                      </td>
+                      <td>
+                        <b style="background-color: #f3d5d5;color:blue">date cloture
+                        </b>:
+                        <b id="dtechange">
+                          2021-09-30</b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table id="tvs" class="table-bordered text-center" width="100%">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">ECHEANCE</th>
+                      <th rowspan="2">MONTANT TVS</th>
+                      <th rowspan="2">DATE TVS FAIT KARLIT</th>
+                      <th rowspan="2">DATE ENVOIE CLIENT</th>
+                      <th rowspan="2">DATE VALIDATION CLIENT</th>
+                      <th rowspan="2">DATE TÉLÉTRANSMISSION</th>
+                      <th>DATE VALIDATION EDI</th>
+                      <th>COMMENTAIRE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr>
+                      <td>
+                        <b>
+                          24-01-2021
+                        </b>
+                      </td>
+                      <td class="dtnumberensembe"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="ex1-tabs-7" role="tabpanel" aria-labelledby="ex1-tab-7">
+              <div style="width: 100%">
+                <div class="text-center" style="color:red">BILAN</div>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td width="72%">
+                        <b style="background-color: #f3d5d5;color:blue">Nom dossier
+                        </b>: Entrassociés
+                      </td>
+                      <td>
+                        <b style="background-color: #f3d5d5;color:blue">date cloture
+                        </b>:
+                        <b id="dtechange">
+                          2021-09-30</b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table id="tva_trim" class="table-bordered text-center" width="100%">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">LIASSE</th>
+                      <th rowspan="2">DATE BILAN FAIT KARLIT</th>
+                      <th rowspan="2">DATE VALIDATION SUP FRANCE</th>
+                      <th rowspan="2">DATE ENVOIE CLIENT</th>
+                      <th rowspan="2">DATE VALIDATION CLIENT</th>
+                      <th rowspan="2">DATE TÉLÉTRANSMISSION</th>
+                      <th>DATE VALIDATION EDI</th>
+                      <th>COMMENTAIRE</th>
+                    </tr>
+
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Liase Fiscale</td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td>CA12</td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td>SOLDE IS</td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td>CVAE 1330</td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td>Solde CVAE 1329 DEF</td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td>DECLOYER</td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td>DAS2</td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                    <tr>
+                      <td>C3S</td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="dtensemble"></td>
+                      <td class="cmtensemble"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Classic tabs -->
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+
+  <div class="text-center" id="loading" style="display:none"><img src="./asset/images/load.gif">
+  </html>
+  {% include "modal.html.twig" %}
+</button>
+</div>
+{% block javascripts %}
+<script type="text/javascript" src="./asset/bootstrap-5-admin/js/mdb.min.js"></script>
+<script type="text/javascript" src="./js/declaration.js"></script>
+<script src="./asset/checkbox/dist/jquery.customselect.js"></script>
+<script>
+  //Defaults
+  jQuery('#single_equipe,#anne_equipe').customselect({
+    labelPosition: 'after', // after | before | wrap
+    style: 'list', // list | none
+    dropdown: false, // true | false
+    classList: '', // string
+    targetTypes: [
+      'select-multiple', 'select-one'
+    ], // select-multiple | select-one
+    parentNode: null, // null | selector
+    observe: true, // true | false
+    selectedLimit: 1080, // number
+    selectedDelimiter: ' | ', // string
+    emptyText: 'Nothing selected', // string
+    selectedText: 'selection', // string
+    allSelectedText: 'Tous selectionnée', // string
+    search: true
+  });
+</script>
+
+{% endblock %}
+
+{% endblock %}
+
+</html>

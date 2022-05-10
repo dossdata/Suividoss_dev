@@ -1,0 +1,829 @@
+{% include "base.html.twig" %}
+<title>Suivi</title>
+{% block stylesheets %}
+  <link rel="stylesheet" href="./asset/bootstrap-5-admin/css/mdb.min.css"/>
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="./asset/bootstrap-5-admin/css/admin.css"/>
+  <link rel="stylesheet" href="./asset/checkbox/dist/jquery.customselect.css">
+
+  <style>
+    th {
+      /* Important */
+      background-color: #ececec;
+      color: #586896;
+      position: sticky;
+      z-index: 100;
+      top: 0;
+    }
+    .supre_chifr:hover,
+    .tr_list_general:hover {
+      background-color: #dedbe4;
+      cursor: default;
+    }
+    .supre_chifr:active {
+      background-color: red;
+    }
+
+    .in_visible,
+    .m_code_stuation {
+      display: none;
+    }
+    input {
+      text-align: center;
+      line-height: 150%;
+    }
+
+    input[type="date"]::-webkit-clear-button {
+      display: none;
+      font-size:11.5px;
+    }
+
+    /* Removes the spin button */
+    input[type="date"]::-webkit-inner-spin-button {
+      display: none;
+      font-size:11.5px;
+    }
+
+    /* Always display the drop down caret */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      color: #2c3e50;
+    }
+
+    /* A few custom styles for date inputs */
+
+    input[type="text"],
+    td {
+      font-size: 11.5px;
+    }
+  input[type="date"] {
+      appearance: none;
+      -webkit-appearance: none;
+      color: #1f4584;
+      font-family: "Helvetica", arial, sans-serif;
+
+      border: 1px solid #ecf0f1;
+      background: #ecf0f1;
+      padding: 5px;
+      display: inline-block !important;
+      visibility: visible !important;
+      text-align:center
+
+    }
+
+input[type="text"],input[type="number"],select {
+   border: 1px solid #cccccc; 
+   border-radius: 3px; 
+   -webkit-border-radius: 3px; 
+   -moz-border-radius: 3px; 
+   -khtml-border-radius: 3px; 
+   background: #ffffff !important; 
+   outline: none;
+   height: 24px; 
+   width: 120px;
+   color: #8a4a4a; 
+   font-size: 11px; 
+   font-family: Tahoma;
+   text-align:center;
+}
+
+input[type="text"]:focus,input[type="number"] :focus{
+   border: 1px solid #6fa5ff; 
+}
+    .etat_cmt_1,
+    .etat_cmt_2,
+    .etat_pice_1,
+    .etat_pice_2 {
+      color: #8585e8;
+    }
+
+html{
+   style="overflow:hidden"
+}
+
+
+  </style>
+{% endblock %}
+
+{% block body %}
+  <!--Main Navigation-->
+  <header>
+
+    <!-- Sidebar -->
+
+    <!-- Navbar -->
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-info fixed-top">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="#" style="color:white">
+          <i class="fas fa-house-damage fa-lg"></i>&nbsp;&nbsp;&nbsp;SITUATION TVA
+        </a>
+        <!-- Search form -->
+        <!-- Right links -->
+        <ul class="navbar-nav ms-auto d-flex flex-row">
+          <!-- Notification dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" style="color:white" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-bell"></i>
+              &nbsp;<span class="badge rounded-pill badge-notification bg-primary">Menu</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end " style="background-color:rgb(222, 219, 228)" aria-labelledby="navbarDropdownMenuLink">
+              <li>
+                <a class="dropdown-item" href="?suivi_karlit=declaration_periodique">
+                  <i class="fab fa-audible"></i>
+                  DECLARATION PERIODIQUE</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="?suivi_karlit=situtation_bilan"> 
+                  <i class="fas fa-align-left"></i>
+                  SITUATION BILAN</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="?suivi_karlit=statistique">
+                  <i class="fab fa-accusoft"></i>
+                  STATISTIQUE</a>
+              </li>
+     
+            </ul>
+          </li>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <!-- Avatar -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center" href="#" style="color:white" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+              <img src="./asset/images/user.jpg" class="rounded-circle" height="22" alt="" loading="lazy"/>&nbsp;
+              {{utilisateur[0].nom}}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" style="background-color:rgb(222, 219, 228)" aria-labelledby="navbarDropdownMenuLink">
+              <li data-toggle="modal" data-target="#profile_s">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user-edit"></i>
+                  profile</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="?suivi_karlit=suivi">Suivi
+                  <i class="fas fa-book-open"></i>
+                </a>
+              </li>
+              <li><a class="dropdown-item" href="?suivi_karlit=suivi_tva">Suivi tva&nbsp;<i class="fas fa-book-open"></i></a></li>
+              <li>
+                <a class="dropdown-item" href="/SuiviKARLIT">Deconnexion
+                  <i class="fas fa-ban"></i>
+                </a>
+              </li>
+
+                    <li  
+                style="color:red" id="click_tiana_"><a class="dropdown-item" style="color:#840dce" href="./asset/SUIVIDOSS.pdf">
+                &nbsp;<i class="fas fa-question-circle"></i> &nbsp;AIDE
+              </a></li>	
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+  </header>
+  <!--Main Navigation-->
+
+  <!--Main layout-->
+  <body>
+    <main style="margin-top: 100px">
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-sm-1"></div>
+          <div class="col-sm">
+
+            <table width="100%">
+              <td>Equipe :
+              </td>
+              <td>
+                <select id="single_equipe" multiple="multiple" data-empty-text="votre equipe" data-dropdown="true">
+                  {% for e in sonEquipe %}
+                    <option value="{{e.id}}">{{e.code}}</option>
+                  {% endfor %}
+                </select>
+              </td>
+              <td>
+                Exercice :
+              </td>
+              <td>
+                <select id="anne_equipe" multiple="multiple" data-empty-text="choisissez exercice(s)" data-dropdown="true">
+                  {% for i in 2010..2025 %}
+                    <option value="{{i}}">{{i}}</option>
+                  {% endfor %}
+                </select>
+              </td>
+              <td>
+                <button class="btn btn-primary" id="btn-lancer">Valider</button>
+              </td>
+            </table>
+          </div>
+          <div class="col-sm-3"></div>
+        </div>
+      </div>
+    </main>
+ <div id="tva_regime" style="display:none">
+
+    <select class="stsearch">
+      {% for tvaregime in tva_regime %}
+        <option value="{{tvaregime.nom}}">{{tvaregime.nom}}</option>
+      {% endfor %}
+    </select>
+     </div>
+
+  
+    <div class="container-fluid" style="margin-top:20px">
+      <div class="row">
+        <div class="col-md-3">
+          <div id="datatable_situation"></div>
+        </div>
+        <div class="col-md-9" id="tab_declaration" style="display:none">
+          <div class="alert alert-info text-center" role="alert" id="name_doss"></div>
+          <div class="card">
+            <div class="card-body text-center" style="position:relative;left:1%;width: 100%;overflow:auto;" id="table_tabs">
+                  <div id="situation_tva_st" style = "display:none">
+                    <table class="table-bordered text-center" width="100%" style="zoom:78%">
+                      <thead>
+                        <tr>
+                          <th>Dossier</th>
+                          <th>SIT Dossier
+                          </th>
+                          <th style="display:none">Cloture</th>
+                          <th>Etat tva</th>
+                          <th colspan="7" class="text-center">Element bloquant</th>
+                          <th>Date dernier Keobiz</th>
+                          <th>Dater dernier Pes</th>
+                          <th>Commentaire
+                          </th>
+                          <th>Date dernier Relance</th>
+                          <th>Dernie appel client</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td rowspan="14" class="n_om_doss" style="color: #00c4ff;"></td>
+                          <td rowspan="14" class="stdossier">ACTIF</td>
+                          <td rowspan="14" style="display:none">2022-01-31</td>
+                          <td></td>
+                          <td colspan="3" class="text-center" style="background: #ddd;color:red">RELEVE BANCAIRE</td>
+                          <td colspan="2" rowspan="2">PIECES MANQUANTE</td>
+                          <td colspan="2" rowspan="2">COMMENTAIRES</td>
+                          <td rowspan="14" class="datedernierkeobiz" style="color:blue">
+                          <input type="date" id="date_dernierkeobiz">
+                          </td>
+                          <td rowspan="14" class="dernierpes">2021-05-14</td>
+                          <td rowspan="14" class="commentaire_globale" style="color:blue">
+                              <textarea class="form-control" id="cmt_globale"></textarea>   
+                          </td>
+                          <td rowspan="14" class="dernierrelance"></td>
+                          <td rowspan="14" class="dernierappelclient"></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td style="background: #f5f5f5;color:red" id="t_a">Semestriel</td>
+                          <td style="background: #f5f5f5;color:red;display:none">ANNEE</td>
+                          <td style="background: #f5f5f5;color:red">Etat</td>
+                        </tr>
+                        <tr>
+                          <td class="etat_tva">
+                          <select id="etat_tva_1">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select>
+                          </td>
+                          <td class="m1">ST 1</td>
+                          <td class="a1" style="display:none">2022</td>
+                          <td class="etatbancaire etat_1" style="color:blue">
+                        <select id="select_st1">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select>
+                          </td>
+                          <td colspan="3" class="piecemanque etat_pice_1">
+                          <select id="piece_n1">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select>                          
+                          </td>
+                          <td colspan="2" class="cmmt etat_cmt_1">
+                            <textarea class="form-control" id="cmt_st1"></textarea>                          
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="etat_tva">
+                            <select id="etat_tva_2">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select>                          
+                          </td>
+                          <td class="m2">ST 2</td>
+                          <td class="a2" style="display:none">2022</td>
+                          <td class="etatbancaire etat_2" style="color:blue">
+                        <select id="select_st2">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select>                       
+                          </td>
+                          <td colspan="3" class="piecemanque etat_pice_2">
+                         <select id="piece_n2">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select>  
+                          
+                          </td>
+                          <td colspan="2" class="cmmt etat_cmt_2">
+                            <textarea class="form-control" id="cmt_st2"></textarea>                                                    
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="etat_tva" style="display: none;"></td>
+                          <td class="m3" style="display: none;">Avril</td>
+                          <td class="a3" style="display:none">2022</td>
+                          <td class="etatbancaire etat_3" style="display: none;"></td>
+                          <td colspan="3" class="piecemanque etat_pice_3" style="display: none;"></td>
+                          <td colspan="2" class="cmmt etat_cmt_3" style="display: none;"></td>
+                        </tr>
+                        <tr>
+                          <td class="etat_tva" style="display: none;"></td>
+                          <td class="m4" style="display: none;">Mai</td>
+                          <td class="a4" style="display:none">2022</td>
+                          <td class="etatbancaire etat_4" style="display: none;"></td>
+                          <td colspan="3" class="piecemanque etat_pice_4" style="display: none;"></td>
+                          <td colspan="2" class="cmmt etat_cmt_4" style="display: none;"></td>
+                        </tr>
+                        <tr class="tmens" style="display: none;">
+                          <td class="etat_tva" style="display: none;"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                     </div> <!--- fin tva_st -->
+                        <!--- debut rt et et -->
+                    <div id="situation_rt_et" style = "display:none">
+                      <table class="table-bordered display text-center" width="100%" style="zoom:78%">
+                      <thead><tr><th>DOSSIER</th><th>SIT Dossier </th>
+                      <th style="display:none">DATE DE CLOTURE</th><th>ETAT TVA</th><th colspan="7" class="text-center">ELEMENTS BLOQUANT</th>
+                      <th>DATE DERNIER DEPOT KEOBIZ</th><th>DATE DERNIER PES</th><th>COMMENTAIRE</th><th>DATE DERNIER RELANCE</th>
+                      <th>DATE DERNIER APPEL CLIENT</th></tr></thead><tbody><tr><td rowspan="14" style="color: #00c4ff;" class="n_om_doss"></td>
+                      <td rowspan="14" class="stdossier">ACTIF</td><td rowspan="14" style="display:none">2021-12-31</td><td></td>
+                      <td colspan="3" class="text-center" style="background: #ddd;color:red">RELEVE BANCAIRE</td>
+                      <td colspan="2" rowspan="2">PIECES MANQUANTE</td><td colspan="2" rowspan="2">COMMENTAIRES</td>
+                      <td rowspan="14" class="datedernierkeobiz">
+                      <input type="date" class="form-control" id="date_rt_et_tva">
+                      </td>
+                      <td rowspan="14" class="dernierpes">2020-12-22</td><td rowspan="14" class="commentaireS commentaire">
+                      <textarea class="form-control" id="cmt_globale_rt_et"></textarea>   
+                      </td>
+                      <td rowspan="14" class="dernierrelance"></td><td rowspan="14" class="dernierappelclient">
+                      </td></tr><tr><td></td><td style="background: #f5f5f5;color:red" id="t_a">TRIMESTRIELE</td>
+                      <td style="background: #f5f5f5;color:red;display:none">ANNEE</td><td style="background: #f5f5f5;color:red">ETAT</td>
+                      </tr><tr><td class="etat_tva">
+                         <select id="etat_tva_et_rt_1">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select>      
+                      </td>
+                      <td class="m1">1T</td><td class="etatbancaire etat_1" data-value="qsdfdqs">
+                      <select id="etat_et_rt_1">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select>                           
+                      </td>
+                      <td colspan="3" class="piecemanque etat_pice_1">
+                      <select id="piece_et_rt_n1">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select>                       
+                      </td>
+                      <td colspan="2" class="cmmt etat_cmt_1">
+                      <textarea class="form-control" id="cmt_rt_et_1"></textarea>
+                      </td></tr><tr><td class="etat_tva">
+                        <select id="etat_tva_et_rt_2">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select>     
+                      </td><td class="m2">2T</td>
+                      <td class="etatbancaire etat_2">
+                        <select id="etat_et_rt_2">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select>                        
+                      </td>
+                      <td colspan="3" class="piecemanque etat_pice_2">
+                          <select id="piece_et_rt_n2">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select>                                             
+                      </td>
+                      <td colspan="2" class="cmmt etat_cmt_2">
+                      <textarea class="form-control" id="cmt_rt_et_2"></textarea>
+                      </td></tr><tr><td class="etat_tva">
+                        <select id="etat_tva_et_rt_3">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select> 
+                      </td><td class="m3">3T</td>
+                       <td class="etatbancaire etat_3">
+                        <select id="etat_et_rt_3">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select>                         
+                       </td><td colspan="3" class="piecemanque etat_pice_3">
+                          <select id="piece_et_rt_n3">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select>                         
+                       </td>
+                      <td colspan="2" class="cmmt etat_cmt_3">
+                      <textarea class="form-control" id="cmt_rt_et_3"></textarea>
+                      </td></tr><tr><td class="etat_tva">
+                        <select id="etat_tva_et_rt_4">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select>
+                      </td><td class="m4">4T</td>
+                      <td class="etatbancaire etat_4">
+                      <select id="etat_et_rt_4">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select>                        
+                      </td>
+                      <td colspan="3" class="piecemanque etat_pice_4">
+                          <select id="piece_et_rt_n4">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select>                        
+                      </td>
+                      <td colspan="2" class="cmmt etat_cmt_4">
+                      <textarea class="form-control" id="cmt_rt_et_4"></textarea>
+                      </td></tr>
+                      </tbody></table>
+                    </div><!--- fin rt et et -->
+
+                    <!---  debut rm et em exo sns +-->  <div  id="tva_rm_em"> 
+                      <table class="table-bordered display text-center" width="100%" style="zoom:78%"><thead><tr><th>DOSSIER</th><th>SIT Dossier </th><th style="display:none">DATE DE CLOTURE</th><th>ETAT TVA</th><th colspan="7" class="text-center">ELEMENTS BLOQUANT</th><th>DATE DERNIER DEPOT KEOBIZ</th><th>DATE DERNIER PES</th><th>COMMENTAIRE</th><th>DATE DERNIER RELANCE</th><th>DATE DERNIER APPEL CLIENT</th></tr></thead>
+                      <tbody><tr><td rowspan="14" class="n_om_doss" style="color: #00c4ff;"></td><td rowspan="14" class="stdossier">
+                       <select class="stsearch" id="st_dossier_tva_mens">
+                        {% for s in sit %}
+                          <option value="{{s.nom}}">{{s.nom}}</option>
+                        {% endfor %}
+                      </select>
+                      </td>
+                      <td></td><td colspan="3" class="text-center" style="background: #ddd;color:red">RELEVE BANCAIRE</td><td colspan="2" rowspan="2">PIECES MANQUANTE</td><td colspan="2" rowspan="2">COMMENTAIRES</td><td rowspan="14" class="datedernierkeobiz">
+                      <input type="date" id="dt_rm_em_mens">
+                      </td><td rowspan="14" class="dernierpes"></td>
+                      <td rowspan="14" class="commentaireS commentaire">
+                      <textarea id="commentaire_mens_single" class="form-control" style="margin-top: 0px; margin-bottom: 0px; height: 371px;"></textarea>
+
+                      </td>
+                      <td rowspan="14" class="dernierrelance"></td><td rowspan="14" class="dernierappelclient"></td></tr><tr><td></td><td style="background: #f5f5f5;color:red" id="t_a">MENSUEL</td><td style="background: #f5f5f5;color:red;display:none">ANNEE</td><td style="background: #f5f5f5;color:red">ETAT</td></tr><tr><td class="etat_tva">
+                      <select class="etat_tva_mens_g">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                      </select>
+                      </td><td class="m1 mois_rm"></td><td class="etatbancaire etat_1" data-value="qsdfdqs">
+                      <select class="etat_mens_rm">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select> 
+                      </td><td colspan="3" class="piecemanque etat_pice_1">
+                      <select class="piece_mens_n">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select> 
+                      </td><td colspan="2" class="cmmt etat_cmt_1">
+                      <b class="commentaire_mens_g" style="white-space:nowrap"></b><a class="edit_cmt_rm" data-toggle="modal" data-target="#cmtmodal"><i class="fas fa-edit"></i></a>
+                      </td></tr><tr>
+                      <td class="etat_tva">
+                       <select class="etat_tva_mens_g">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                      </select>
+                      </td><td class="m2 mois_rm"></td>
+                      <td class="etatbancaire etat_2">
+                            <select class="etat_mens_rm">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select> 
+                        </td><td colspan="3" class="piecemanque etat_pice_2">
+                        <select class="piece_mens_n">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select> 
+                        </td><td colspan="2" class="cmmt etat_cmt_2">
+                        <b class="commentaire_mens_g" style="white-space:nowrap"></b><a class="edit_cmt_rm" data-toggle="modal" data-target="#cmtmodal"><i class="fas fa-edit"></i></a>
+                        </td></tr><tr>
+                      <td class="etat_tva">
+                       <select class="etat_tva_mens_g">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                      </select>
+                      </td><td class="m3 mois_rm"></td>
+                      <td class="etatbancaire etat_3">
+                            <select class="etat_mens_rm">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select> </td><td colspan="3" class="piecemanque etat_pice_3">
+                        <select class="piece_mens_n">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select> 
+                        </td><td colspan="2" class="cmmt etat_cmt_3">
+                        <b class="commentaire_mens_g" style="white-space:nowrap"></b><a class="edit_cmt_rm" data-toggle="modal" data-target="#cmtmodal"><i class="fas fa-edit"></i></a>
+                        </td></tr><tr>
+                      <td class="etat_tva">
+                       <select class="etat_tva_mens_g">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                      </select>
+                      </td><td class="m4 mois_rm"></td><td class="etatbancaire etat_4">
+                        <select class="etat_mens_rm">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select> 
+                      </td><td colspan="3" class="piecemanque etat_pice_4">
+                      <select class="piece_mens_n">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select> 
+                      </td><td colspan="2" class="cmmt etat_cmt_4">
+                      <b class="commentaire_mens_g" style="white-space:nowrap"></b><a class="edit_cmt_rm" data-toggle="modal" data-target="#cmtmodal"><i class="fas fa-edit"></i></a>
+                      </td></tr><tr class="tmens">
+                      <td class="etat_tva">
+                       <select class="etat_tva_mens_g">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                      </select>
+                      </td><td class="mois_rm"></td>
+                      <td class="etatbancaire etat_5">
+                            <select class="etat_mens_rm">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select> 
+                      </td><td colspan="3" class="piecemanque etat_pice_5">
+                      <select class="piece_mens_n">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select> 
+                      </td><td colspan="2" class="cmmt etat_cmt_5">
+                      <b class="commentaire_mens_g" style="white-space:nowrap"></b><a class="edit_cmt_rm" data-toggle="modal" data-target="#cmtmodal"><i class="fas fa-edit"></i></a>
+                      </td></tr><tr class="tmens">
+                      <td class="etat_tva">
+                       <select class="etat_tva_mens_g">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                      </select>
+                      </td><td class="mois_rm"></td>
+                      <td class="etatbancaire etat_6">
+                            <select class="etat_mens_rm">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select> 
+                      </td><td colspan="3" class="piecemanque etat_pice_6">
+                      <select class="piece_mens_n">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select> 
+                      </td><td colspan="2" class="cmmt etat_cmt_6">
+                      <b class="commentaire_mens_g" style="white-space:nowrap"></b><a class="edit_cmt_rm" data-toggle="modal" data-target="#cmtmodal"><i class="fas fa-edit"></i></a>
+                      </td></tr><tr class="tmens">
+                      <td class="etat_tva">
+                       <select class="etat_tva_mens_g">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                      </select>
+                      </td>
+                      <td class="mois_rm"></td>
+                      <td class="etatbancaire etat_7">
+                            <select class="etat_mens_rm">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select> 
+                      </td><td colspan="3" class="piecemanque etat_pice_7">
+                      <select class="piece_mens_n">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select> 
+                      </td><td colspan="2" class="cmmt etat_cmt_7">
+                      <b class="commentaire_mens_g" style="white-space:nowrap"></b><a class="edit_cmt_rm" data-toggle="modal" data-target="#cmtmodal"><i class="fas fa-edit"></i></a>
+                      </td></tr><tr class="tmens">
+                      <td class="etat_tva">
+                       <select class="etat_tva_mens_g">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                      </select>
+                      </td><td class="mois_rm"></td>
+                      <td class="etatbancaire etat_8">
+                            <select class="etat_mens_rm">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select> 
+                      </td><td colspan="3" class="piecemanque etat_pice_8">
+                      <select class="piece_mens_n">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select> 
+                      </td><td colspan="2" class="cmmt etat_cmt_8">
+                      <b class="commentaire_mens_g" style="white-space:nowrap"></b><a class="edit_cmt_rm" data-toggle="modal" data-target="#cmtmodal"><i class="fas fa-edit"></i></a>
+                      </td></tr><tr class="tmens">
+                      <td class="etat_tva">
+                       <select class="etat_tva_mens_g">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                      </select>
+                      </td><td class="mois_rm"></td>
+                      <td class="etatbancaire etat_9">
+                            <select class="etat_mens_rm">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select> 
+                      </td><td colspan="3" class="piecemanque etat_pice_9">
+                      <select class="piece_mens_n">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select> 
+                      </td><td colspan="2" class="cmmt etat_cmt_9">
+                      <b class="commentaire_mens_g" style="white-space:nowrap"></b><a class="edit_cmt_rm" data-toggle="modal" data-target="#cmtmodal"><i class="fas fa-edit"></i></a>
+                      </td></tr><tr class="tmens">
+                      <td class="etat_tva">
+                       <select class="etat_tva_mens_g">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                      </select>
+                      </td><td class="mois_rm"></td>
+                      <td class="etatbancaire etat_10">
+                            <select class="etat_mens_rm">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select> 
+                      </td><td colspan="3" class="piecemanque etat_pice_10">
+                      <select class="piece_mens_n">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select> 
+                      </td><td colspan="2" class="cmmt etat_cmt_10">
+                      <b class="commentaire_mens_g" style="white-space:nowrap"></b><a class="edit_cmt_rm" data-toggle="modal" data-target="#cmtmodal"><i class="fas fa-edit"></i></a>
+                      </td></tr><tr class="tmens">
+                      <td class="etat_tva">
+                       <select class="etat_tva_mens_g">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                      </select>
+                      </td><td class="mois_rm"></td>
+                      <td class="etatbancaire etat_11">
+                            <select class="etat_mens_rm">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select> 
+                      </td>
+                      <td colspan="3" class="piecemanque etat_pice_11">
+                      <select class="piece_mens_n">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select> 
+                      </td><td colspan="2" class="cmmt etat_cmt_11">
+                      <b class="commentaire_mens_g" style="white-space:nowrap"></b><a class="edit_cmt_rm" data-toggle="modal" data-target="#cmtmodal"><i class="fas fa-edit"></i></a>
+                      </td></tr><tr class="tmens">
+                      <td class="etat_tva">
+                       <select class="etat_tva_mens_g">
+                          {% for st1 in etat_tva %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                      </select>
+                      </td><td class="mois_rm"></td>
+                      <td class="etatbancaire etat_12">
+                            <select class="etat_mens_rm">
+                          {% for st1 in list_etatbilanbq %}
+                            <option value="{{st1.nom}}">{{st1.nom}}</option>
+                          {% endfor %}
+                        </select> 
+                      </td><td colspan="3" class="piecemanque etat_pice_12">
+                      <select class="piece_mens_n">
+                            {% for piece_1 in piecemanquante %}
+                              <option value="{{piece_1.nom}}">{{piece_1.nom}}</option>
+                            {% endfor %}
+                          </select> 
+                      
+                      </td><td colspan="2" class="cmmt etat_cmt_12">
+                      <b class="commentaire_mens_g" style="white-space:nowrap"></b><a class="edit_cmt_rm" data-toggle="modal" data-target="#cmtmodal"><i class="fas fa-edit"></i></a>
+                      </td></tr></tbody></table>
+
+                      <!-- Classic tabs -->
+
+                    </div>
+                    </div>
+
+
+                  </div>
+                </div>
+                <div class="modal-footer justify-content-center"></div>
+
+                <!-- Classic tabs -->
+
+              </div>
+            </div>
+          </div>
+
+        </body>
+
+        <div class="text-center" id="loading" style="display:none"><img src="./asset/images/load.gif">
+        </html>
+        {% include "modal.html.twig" %}
+      </button>
+    </div>
+      <div style="position:fixed;bottom:5%;right:0;display:none" id="btn_opt">
+        <button class="btn-danger"  id="btn_annuler"><i class="fas fa-ban"></i> ANNULER</button>
+        &nbsp;
+        <button class="btn-primary" id="valide_tabs"><i class="far fa-save"></i> ENREGISTRER</button>
+        </div>                   
+      </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-info fixed-bottom" style="height:1%">
+      <div class="container-fluid">
+       @_keobiz.fr_ hery_info.2021
+      </div>
+    </nav>
+    {% block javascripts %}
+      <script type="text/javascript" src="./asset/bootstrap-5-admin/js/mdb.min.js"></script>
+      <script type="text/javascript" src="./js/situation_tva.js"></script>
+      <script src="./asset/checkbox/dist/jquery.customselect.js"></script>
+      <script>
+        //Defaults
+        jQuery('#single_equipe,#anne_equipe').customselect({
+          labelPosition: 'after', // after | before | wrap
+          style: 'list', // list | none
+          dropdown: false, // true | false
+          classList: '', // string
+          targetTypes: [
+            'select-multiple', 'select-one'
+          ], // select-multiple | select-one
+          parentNode: null, // null | selector
+          observe: true, // true | false
+          selectedLimit: 1080, // number
+          selectedDelimiter: ' | ', // string
+          emptyText: 'Nothing selected', // string
+          selectedText: 'selection', // string
+          allSelectedText: 'Tous selectionnée', // string
+          search: true
+        });
+      </script>
+
+    {% endblock %}
+
+  {% endblock %}
+
+</html>
