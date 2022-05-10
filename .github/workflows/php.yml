@@ -24,8 +24,8 @@ jobs:
     
     - name: cd repertoir
       run:
-        sshpass -e ssh -o stricthostkeychecking=yes ${{secrets.APP_USER}}@{{secrets.APP_HOST}}@{{secrets.APP_KEY}}
-        "cd htdocs && cd SuiviKARLIT && git pull"
+        sshpass -e ssh -o stricthostkeychecking=no {{ secrets.APP_HOST }}@${{ secrets.APP_USER }}
+        "cd htdocs"
 
     
     # Docs: https://getcomposer.org/doc/articles/scripts.md
