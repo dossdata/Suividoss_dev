@@ -27,7 +27,7 @@ jobs:
         sshpass -e ssh -o stricthostkeychecking=yes ${{secrets.APP_USER}}@{{secrets.APP_HOST}}@{{secrets.APP_KEY}}
         "cd htdocs && cd SuiviKARLIT && git pull"
 
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+    
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     # - name: Run test suite
