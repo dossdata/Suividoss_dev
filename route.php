@@ -192,6 +192,11 @@ switch ($_POST["param"]) {
         echo ($dz);
         break;
 
+    case 'gaia':
+        $list = $affect->list_gaia($_POST["cloture"]);
+        echo json_encode($repons);
+        break;
+
     case 'click_val_fait_tous':
         $list = $affect->click_val_fait_tous($_POST["date_exercice"], $_POST["id"], $_POST["condtion"]);
         $repons = [];

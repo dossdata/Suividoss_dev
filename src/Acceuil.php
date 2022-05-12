@@ -1541,6 +1541,85 @@ class Acceuil extends Connection
     }
 
 
+    public function list_gaia($cloture){
+        $sql = 'SELECT DISTINCT 
+        u1.nom_mail as cde,u2.nom_mail as reference,u3.nom_mail as cdm_j,u4.nom_mail as ass,u5.nom_mail as os,u6.nom_mail as prepa, u7.nom_mail as manage_fr   ,u8.nom_mail as cdm_frr,
+        cd.presentant,cd.tel,cd.mail as mail_presentant,
+        
+        u1.prenom_mail as prenom_mail_cde, u1.mail as mail_cde,
+        u2.prenom_mail as prenom_mail_reviseur,u2.mail as mail_rev,
+        u3.prenom_mail as prenom_mail_cdm,u3.mail as mail__cdm,
+        u4.prenom_mail as prenom_mail_ass,u4.mail as mail_ss,
+        u5.prenom_mail as prenom_mail_os,u5.mail as mail_os,
+        u6.prenom_mail as prenom_mail_prepa,u6.mail as mail_prepa,         
+
+        u7.prenom_mail as prenom_manag,u7.mail as mail_mamanag,
+        u8.prenom_mail as prenom_cdm_m ,u8.mail as mail_cdm_m,
+
+        
+        D.id as id_dossier,
+        S.id as situation_portfeuil_id,
+        Eq.code as code,
+        D.nom as dossier, 
+        S.idsituation_dossier as sit_dossier,
+        S.cmtKarlit as cmt,
+        S.date_cloturation as cloture,
+        S.regime_dimpos as rg_d_imp1,
+        S.regime_dimpos2 as rg_d_imp2,
+        S.forme_juridique as frm_jrdq,
+        S.dpcoala as dp_coala,
+        S.tvregime as regime,
+        S.tvadate_echeance as dt_ech,
+        S.date_de_depot_dernier_keobiz,
+        S.situation_trait_karlit as sit_karlit,
+        S.date_dernier_maj as date_maj,
+        S.etat_bilan as etat_bl,
+        S.date_envoie_bilan_karlit as dt_d_envoie_bl_krlt,
+        U.nom as cdm,
+        S.date_rev_bilan_fr as dt_rev_sup_fr,
+        S.observation as obs_sup_fr,
+        max(P.date_pes) as dernier_pes,
+        max(R.date_relance) as dernier_relance,
+        S.date_dernier_appel_client dernier_appel_client,
+        S.Activite as Activite,
+        S.social as social, 
+        S.tns as tns,
+        S.releve as releve,
+        S.mem_autre_equipe as mem_autre_equipe,
+        S.commentaire_releve as commentaire_releve,
+        S.achat as achat,
+        S.vente as vente,
+        S.date_modif_revu,
+        S.date_expert,
+        Rs.siren,siret,Rs.activite,
+        Rs.fs_coala,fs_apptream,Rs.table_banque,
+
+        S.commentaire_et_autre as commentaire_et_autre,Rs.activite as Activite_final,
+        "" as sumimage,
+        if(S.situation_trait_karlit = "EC REVISION PRECOMPTA",EN.nom_revision_precompta,if(S.situation_trait_karlit = "EC SAISI P.C",EN.nom_precompta,if(S.situation_trait_karlit = "EC REVISION",EN.nom_cdm,if(S.situation_trait_karlit = "EC SAISI ASS.",EN.nom_assistant,if(S.situation_trait_karlit = "A TRAITER",EN.responsable_reception,if(S.situation_trait_karlit = "EN ATTENTE",EN.nom_cdm,if(S.situation_trait_karlit = "A REVISER P.C",EN.nom_precompta,if(S.situation_trait_karlit = "FINI REVISION PRECOMPTA",EN.nom_revision_precompta,if(S.situation_trait_karlit = "A REVISER",EN.nom_assistant,"??")))))))))  AS encours_de 
+        FROM suividossdb.situation_par_portfeuil S 
+        LEFT JOIN dossier D on (D.id = S.iddoss)  
+        LEFT JOIN utilisateur u1 on(u1.id = D.ll) 
+        LEFT JOIN utilisateur u2 on(u2.id = D.reference_t) 
+        LEFT JOIN utilisateur u3 on(u3.id = D.cdm) 
+        LEFT JOIN utilisateur u4 on(u4.id = D.ass) 
+        LEFT JOIN utilisateur u5 on(u5.id = D.os) 
+        LEFT JOIN utilisateur u6 on(u6.id = D.prepa)  
+
+        LEFT JOIN utilisateur u7 on(u7.id = D.manger_fr)
+        LEFT JOIN utilisateur u8 on(u8.id = D.cdm_fr)
+
+        LEFT JOIN contact_dossier cd on(cd.id_dossier = D.id)  LEFT JOIN
+        suividossdb.pes P on(P.iddoss = S.id) LEFT JOIN suividossdb.relance R on(R.iddoss = S.id) 
+        LEFT JOIN utilisateur U on(U.id = S.utilisateur_id) LEFT JOIN suividossdb.equipe Eq on(D.equip_id = Eq.id) 
+        LEFT JOIN suividossdb.reseignement_juridique Rs on(D.id = Rs.iddossier) 
+        LEFT JOIN suividossdb.envoie EN on(EN.dossier_id = D.id) 
+         WHERE S.date_cloturation LIKE "' . $cloture .'%"  group by S.id order by Eq.code';
+        $res = $this->Getconnexion()->prepare($sql);
+        $res->execute();
+        $respons = $res->fetchAll();
+        return $respons;
+    }
 
     public function stat_g_avec_ms($date_bilan)
     {

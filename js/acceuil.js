@@ -11,6 +11,18 @@ $(function(){
     var equipeselectionnes = "";
     var declaratoin_com = "";
     var click_decl_ = "";
+
+    var virtuel_tet_juridque = '<thead><tr>'+
+    '<th>Equipe</th><th>Dossier</th><th>Situation</th>'+
+    '<th>Manager france</th>'+
+    '<th>Cdm france</th>'+
+    '<th>Directeur de mission</th>'+
+    '<th>Reviseur</th><th>Cdm Karlit</th><th>Assistant Karlit</th>'+
+    '<th>Siren</th><th>Siret</th>'+
+    '<th>Representant</th><th>Telephone</th><th>Mail</th>'+            
+    '<th>sauvegarde Coala</th><th>Chemin Appstream</th><th>'+
+        'Nom Banque / RIB IBAN 1 / Journal	/ Compte Banque'
+    '</th><tbody>'; 
     
     var tete_nb_linge = '<table id="table_tiana_alex_nbligne" class="table-bordered text-center" width="100%" style="zoom:75%">'+
     '<thead>'+
@@ -4419,6 +4431,44 @@ $('#elementbloquant thead tr:eq(1) th').each( function (i) {
                 $('#clickdt').hide();
             })
 
+            $(document).on('click','#report_gg', function(){
+                $('#tb_moda_juridque').html("");
+                $('#loadinggaia').show();
+                $.ajax({
+                    url: "route.php",
+                    type: 'POST',
+                    dataType:'json',
+                    data: {
+                        param:"gaia",
+                        cloture: "2021-12",
+                    },
+                    success: function(data) {
+                        valeur_juridque = "";
+                        console.log(data);
+                        for(var i = 0; i < data.length; i++){
+                                 valeur_juridque += "<tr class=''>"+
+                                "<td>"+ data[i].code +"</td>"+
+                                "<td class='ndoss' style='white-space:nowrap;width:30%'>" + data[i].dossier + "</td><td>" + data[i].sit_dossier + 
+                                "</td><td><table><tr><td>" + data[i].manage_fr +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].prenom_manag +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].mail_mamanag +  "</td></tr></table></td>"+
+                                "</td><td><table><tr><td>" + data[i].cdm_frr +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].prenom_cdm_m +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].mail_cdm_m +  "</td></tr></table></td>"+
+                                "</td><td><table><tr><td>" + data[i].cde +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].prenom_mail_cde +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].mail_cde +  "</td></tr></table></td>"+
+                                "<td><table><tr><td>" + data[i].reference +  "</tr></td><tr><td style='white-space:nowrap'>" + data[i].prenom_mail_reviseur +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].mail_rev +  "</td></tr></table></td>"+
+                                "<td><table><tr><td>" + data[i].cdm_j +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].prenom_mail_cdm +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].mail__cdm +  "</td></tr></table></td>" +
+                                "<td><table><tr><td>" + data[i].ass +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].prenom_mail_ass +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].mail_ss +  "</td></tr></table></td>" +
+                                "<td style='white-space:nowrap'>'" + data[i].siren + "</td>"+"<td style='white-space:nowrap'>'" + data[i].siret + "</td>"+
+                                "<td class=''>"+data[i].presentant+"</td>"+
+                                "<td class=''>"+data[i].tel+"</td>"+
+                                "<td class=''>"+data[i].mail_presentant+"</td>"+
+                                "<td class=''>"+data[i].fs_coala+"</td>"+
+                                "<td>" + data[i].fs_apptream + "</td></td><td style='white-space:nowrap'><table>" + data[i].table_banque +  "</table></td></tr>";
+                                valeur_juridque = valeur_juridque.replace(/null/g,"").replace(/ 00:00:00/g,"");                    
+                        }
+                        $('#tb_moda_juridque_gaia').html("<table id='s_expor_virt' class='table-bordered' style='zoom:92%'>" + virtuel_tet_juridque + valeur_juridque+"</tbody></table>");
+                        $('#loadinggaia').hide();
+                    },
+                });
+            })
+            
             
             
             $(document).on('click','#click_detail__fait_com_s_13', function(){
