@@ -4432,7 +4432,8 @@ $('#elementbloquant thead tr:eq(1) th').each( function (i) {
             })
 
             $(document).on('click','#report_gg', function(){
-                $('#tb_moda_juridque').html("");
+                $('#tb_moda_juridque_gaia').html("");
+                valeur_juridque = "";
                 $('#loadinggaia').show();
                 $.ajax({
                     url: "route.php",
@@ -4443,8 +4444,10 @@ $('#elementbloquant thead tr:eq(1) th').each( function (i) {
                         cloture: "2021-12",
                     },
                     success: function(data) {
-                        valeur_juridque = "";
+                        
                         console.log(data);
+                        //$('#loadinggaia').hide();
+                        //return;
                         for(var i = 0; i < data.length; i++){
                                  valeur_juridque += "<tr class=''>"+
                                 "<td>"+ data[i].code +"</td>"+

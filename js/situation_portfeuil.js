@@ -81,6 +81,32 @@ $(function(){
 
             var virtuel_tet_juridque = '<thead><tr>'+
             '<th>Equipe</th><th>Dossier</th><th>Situation</th>'+
+
+            '<th style="background: #e0eafd;">Cloture</th>'+
+            '<th style="background: #e0eafd;">Regime 1</th>'+
+            '<th style="background: #e0eafd;">Regime 2</th>'+
+            '<th style="background: #e0eafd;">Forme juridique</th>'+
+            '<th style="background: #e0eafd;">Depot coala</th>'+
+            '<th style="background: #e0eafd;">Regime</th>'+
+            '<th style="background: #e0eafd;">Echeance</th>'+
+            '<th style="background: #e0eafd;">Date dernie keobiz</th>'+
+            '<th style="background: #e0eafd;">Situation Karlit</th>'+
+            '<th style="background: #e0eafd;">Date maj</th>'+
+            '<th style="background: #e0eafd;">Etat bilan</th>'+
+            '<th style="background: #e0eafd;">Date d envoie bilan</th>'+
+            '<th style="background: #e0eafd;">Dernier Pes</th>'+
+            '<th style="background: #e0eafd;">Dernier Relance</th>'+
+            '<th style="background: #e0eafd;">Dernier appel client</th>'+
+            '<th style="background: #e0eafd;">Activite</th>'+
+            '<th style="background: #e0eafd;">social</th>'+
+            '<th style="background: #e0eafd;">Tns</th>'+
+            '<th style="background: #e0eafd;">Releve</th>'+
+            '<th style="background: #e0eafd;">Commentaire releve</th>'+
+            '<th style="background: #e0eafd;">Achat</th>'+
+            '<th style="background: #e0eafd;">Vente</th>'+
+
+
+
             '<th>Manager france</th>'+
             '<th>Cdm france</th>'+
             '<th>Directeur de mission</th>'+
@@ -283,6 +309,30 @@ $(function(){
                     valeur_juridque += "<tr class=''>"+
                         "<td>"+ data[i].code +"</td>"+
                         "<td class='ndoss' style='white-space:nowrap;width:30%'>" + data[i].dossier + "</td><td>" + data[i].sit_dossier + 
+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].cloture +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].rg_d_imp1 +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].rg_d_imp2 +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].frm_jrdq +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].dp_coala +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].regime +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].dt_ech +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].date_de_depot_dernier_keobiz +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].sit_karlit +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].date_maj +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].etat_bl +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].dt_d_envoie_bl_krlt +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].dernier_pes +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].dernier_relance +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].dernier_appel_client +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].Activite +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].social +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].tns +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].releve +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].commentaire_releve +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].achat +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].vente +"</td>"+
+
                         "</td><td><table><tr><td>" + data[i].manage_fr +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].prenom_manag +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].mail_mamanag +  "</td></tr></table></td>"+
                         "</td><td><table><tr><td>" + data[i].cdm_frr +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].prenom_cdm_m +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].mail_cdm_m +  "</td></tr></table></td>"+
                         "</td><td><table><tr><td>" + data[i].cde +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].prenom_mail_cde +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].mail_cde +  "</td></tr></table></td>"+
@@ -310,7 +360,7 @@ $(function(){
                 
                 $('#tablvirtuel_suivie').html("<table id='table_export_virtuel'>" + virtuel_tet_datatable + valeur+"</tbody></table>");
                 
-                $('#tb_moda_juridque').html("<table id='s_expor_virt' class='table-bordered' style='zoom:92%'>" + virtuel_tet_juridque + valeur_juridque+"</tbody></table>");
+                $('#tb_moda_juridque').html("<table id='s_expor_virt' class='table-bordered' style='zoom:92%'>" + virtuel_tet_juridque + valeur_juridque +"</tbody></table>");
 
                 $('.visualiser').html("Modification");
                 $('#loading').hide();
@@ -362,6 +412,30 @@ $(function(){
                         valeur_juridque += "<tr class=''>"+
                         "<td>"+ data[i].code +"</td>"+
                         "<td class='ndoss' style='white-space:nowrap;width:30%'>" + data[i].dossier + "</td><td>" + data[i].sit_dossier + 
+                        
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].cloture +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].rg_d_imp1 +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].rg_d_imp2 +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].frm_jrdq +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].dp_coala +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].regime +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].dt_ech +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].date_de_depot_dernier_keobiz +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].sit_karlit +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].date_maj +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].etat_bl +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].dt_d_envoie_bl_krlt +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].dernier_pes +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].dernier_relance +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].dernier_appel_client +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].Activite +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].social +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].tns +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].releve +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].commentaire_releve +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].achat +"</td>"+
+                        "<td style='background:#f1f3f7;border:1px solid gray'>"+ data[i].vente +"</td>"+
+
                         "</td><td><table><tr><td>" + data[i].manage_fr +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].prenom_manag +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].mail_mamanag +  "</td></tr></table></td>"+
                         "</td><td><table><tr><td>" + data[i].cdm_frr +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].prenom_cdm_m +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].mail_cdm_m +  "</td></tr></table></td>"+
                         "</td><td><table><tr><td>" + data[i].cde +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].prenom_mail_cde +  "</td></tr><tr><td style='white-space:nowrap'>" + data[i].mail_cde +  "</td></tr></table></td>"+

@@ -194,7 +194,7 @@ switch ($_POST["param"]) {
 
     case 'gaia':
         $list = $affect->list_gaia($_POST["cloture"]);
-        echo json_encode($repons);
+        echo json_encode($list);
         break;
 
     case 'click_val_fait_tous':

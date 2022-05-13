@@ -1594,9 +1594,7 @@ class Acceuil extends Connection
         Rs.siren,siret,Rs.activite,
         Rs.fs_coala,fs_apptream,Rs.table_banque,
 
-        S.commentaire_et_autre as commentaire_et_autre,Rs.activite as Activite_final,
-        "" as sumimage,
-        if(S.situation_trait_karlit = "EC REVISION PRECOMPTA",EN.nom_revision_precompta,if(S.situation_trait_karlit = "EC SAISI P.C",EN.nom_precompta,if(S.situation_trait_karlit = "EC REVISION",EN.nom_cdm,if(S.situation_trait_karlit = "EC SAISI ASS.",EN.nom_assistant,if(S.situation_trait_karlit = "A TRAITER",EN.responsable_reception,if(S.situation_trait_karlit = "EN ATTENTE",EN.nom_cdm,if(S.situation_trait_karlit = "A REVISER P.C",EN.nom_precompta,if(S.situation_trait_karlit = "FINI REVISION PRECOMPTA",EN.nom_revision_precompta,if(S.situation_trait_karlit = "A REVISER",EN.nom_assistant,"??")))))))))  AS encours_de 
+        S.commentaire_et_autre as commentaire_et_autre,Rs.activite as Activite_final 
         FROM suividossdb.situation_par_portfeuil S 
         LEFT JOIN dossier D on (D.id = S.iddoss)  
         LEFT JOIN utilisateur u1 on(u1.id = D.ll) 
@@ -1605,16 +1603,14 @@ class Acceuil extends Connection
         LEFT JOIN utilisateur u4 on(u4.id = D.ass) 
         LEFT JOIN utilisateur u5 on(u5.id = D.os) 
         LEFT JOIN utilisateur u6 on(u6.id = D.prepa)  
-
-        LEFT JOIN utilisateur u7 on(u7.id = D.manger_fr)
-        LEFT JOIN utilisateur u8 on(u8.id = D.cdm_fr)
-
-        LEFT JOIN contact_dossier cd on(cd.id_dossier = D.id)  LEFT JOIN
+        LEFT JOIN utilisateur u7 on(u7.id = D.manger_fr) 
+        LEFT JOIN utilisateur u8 on(u8.id = D.cdm_fr) 
+        LEFT JOIN contact_dossier cd on(cd.id_dossier = D.id)  LEFT JOIN 
         suividossdb.pes P on(P.iddoss = S.id) LEFT JOIN suividossdb.relance R on(R.iddoss = S.id) 
         LEFT JOIN utilisateur U on(U.id = S.utilisateur_id) LEFT JOIN suividossdb.equipe Eq on(D.equip_id = Eq.id) 
         LEFT JOIN suividossdb.reseignement_juridique Rs on(D.id = Rs.iddossier) 
         LEFT JOIN suividossdb.envoie EN on(EN.dossier_id = D.id) 
-         WHERE S.date_cloturation LIKE "' . $cloture .'%"  group by S.id order by Eq.code';
+         WHERE S.date_cloturation LIKE "' . $cloture .'%" and D.manger_fr = "1530"  group by S.id order by Eq.code';
         $res = $this->Getconnexion()->prepare($sql);
         $res->execute();
         $respons = $res->fetchAll();
