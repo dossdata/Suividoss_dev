@@ -20,4 +20,4 @@ jobs:
           
       - name: deploy
         run: 
-          echo open(r'key.yaml')
+          echo (php -r 'key.yaml')
