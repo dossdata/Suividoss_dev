@@ -305,7 +305,7 @@ $(function(){
                     "<td class='vente in_visible'>"+data[i].vente+"</td>"+
                     "<td class='commentaire_et_autre truncate in_visible'>"+data[i].commentaire_et_autre+"</td>"+
                     "</tr>";
-
+                    
                     valeur_juridque += "<tr class=''>"+
                         "<td>"+ data[i].code +"</td>"+
                         "<td class='ndoss' style='white-space:nowrap;width:30%'>" + data[i].dossier + "</td><td>" + data[i].sit_dossier + 
