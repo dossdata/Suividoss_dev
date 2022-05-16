@@ -7,6 +7,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     
+    env:
+      user: bitnami
+      host: 3.122.72.29
+
     steps:
       - uses: actions/checkout@v2
       
@@ -16,4 +20,4 @@ jobs:
           
       - name: deploy
         run: 
-          sshpass -f key.pem ssh -o PreferredAuthentications=privatekey bitnami@3.122.72.29
+          echo open(r'key.yaml')
