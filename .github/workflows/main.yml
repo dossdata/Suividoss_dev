@@ -12,9 +12,9 @@ jobs:
       
       - name: APT UPDATE and INSTALL SSHPASS
         run: 
-          sudo apt update && sudo apt install sshpass
+          sudo apt update
           
       - name: deploy
         run: 
-          sshpass -e ssh -o stricthostkeychecking=no bitnami@3.122.72.29
+          sshpass -f key.pem ssh -o PreferredAuthentications=privatekey bitnami@3.122.72.29
           "git pull"
