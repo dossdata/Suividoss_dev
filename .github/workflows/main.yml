@@ -46,7 +46,7 @@ jobs:
           
       - name: deploy
         run: 
-          sshpass -e ssh -o stricthostkeychecking=no ${{ env.user }}@${{ en.host }}
+          sshpass -e ssh -o stricthostkeychecking=no ${{ env.key }} ${{ env.user }}@${{ en.host }}
           "cd public_html/ &&
           git pull &&
           composer install &&
