@@ -296,12 +296,21 @@ $(function () {
   $(document).on("click", "#click_parequip", function () {
     $("#optio_critere").html($(this).html());
     $(".par_Equipe, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip").show(60);
+    $(".par_sup,.validgraphsup_parcdm,#head_parcdm,#tbody_parcdm,#tbody_gestion_equipe,.par_gestionEquipe").hide(60);
+  });
+
+  $(document).on("click", "#gestion_equipe", function () {
+    $("#optio_critere").html($(this).html());
+    $('#tbody_gestion_equipe,.par_gestionEquipe').show(60)
+    $(".par_Equipe, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip").hide(60);
     $(".par_sup,.validgraphsup_parcdm,#head_parcdm,#tbody_parcdm").hide(60);
   });
+
+  
 
   $(document).on("click", "#click_parcdm", function () {
     $("#optio_critere").html($(this).html());
     $(".par_Equipe, .validgraphsup_parcdm,#head_parcdm,#tbody_parcdm").show(60);
-    $(".par_sup, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip").hide(60);
+    $(".par_sup, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip,#tbody_gestion_equipe,.par_gestionEquipe").hide(60);
   });
 });

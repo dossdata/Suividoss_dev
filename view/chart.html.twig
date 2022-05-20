@@ -90,6 +90,13 @@
                   <span class="title">Par Cdm</span>
                 </a>
               </li>
+
+              <li>
+                <a href="#" id="gestion_equipe">
+                  <i class="fas fa-band-aid text-danger"></i>&nbsp;
+                  <span class="title">Gestion D'equipe</span>
+                </a>
+              </li>
               <!--<li> <a href="#"> <i class="fas fa-border-all"></i>&nbsp; <span class="title">Tables</span> </a> </li>-->
             </ul>
           </div>
@@ -194,6 +201,35 @@
                     </div>
                   </div>
 
+                  <div class="row par_gestionEquipe text-center" style="display:none">
+                    <div class="col-md-1">Manager Fr
+                    </div>
+                    <div class="col-md-2">
+                      <select class="form-control" id="select_mm"></select>
+                    </div>
+
+                    <div class="col-md-1">CDM France</div>
+                    <div class="col-md-2">
+                      <select class="form-control" id="select_aa"></select>
+                    </div>
+
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                      <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                      <label for="vehicle1" class="text-danger">
+                        Hors Ma</label>
+                    </div>
+
+                    <div class="col-md-1"></div>
+
+                    <div class="col-md-2">
+                      <button type="button" class="btn btn-info ">
+                        <i class="fas fa-check"></i>Lancer
+                      </button>
+                    </div>
+
+                  </div>
+
                 </div>
 
               </div>
@@ -215,23 +251,24 @@
                 <i class="fas fa-print"></i>&nbsp;Imprimer</a>
 
               <table class="w3-table w3-border w3-centered w3-hoverable w3-table-all w3-striped w3-animate-top">
-                 <thead>
-                  <tr class="w3-light-grey"  id="head_parequipe" style="display:none">
+                <thead>
+                  <tr class="w3-light-grey" id="head_parequipe" style="display:none">
                     <th>Rang</th>
                     <th>Equipe</th>
                     <th>Total Bilan</th>
                     <th>Total Fait</th>
                     <th>Graph</th>
                   </tr>
-                  <tr class="w3-dark-grey"  id="head_parcdm" style="display:none">
+                  <tr class="w3-dark-grey" id="head_parcdm" style="display:none">
                     <th>Rang</th>
                     <th>Nom</th>
                     <th>Total Fait</th>
                     <th>Graph</th>
                   </tr>
-                </thead>              
+                </thead>
                 <tbody id="tbody_parequip"></tbody>
                 <tbody id="tbody_parcdm"></tbody>
+                <tbody id="tbody_gestion_equipe"></tbody>
               </table>
               <div id="chartContainertableau" style="height: 350px; width: 100%;"></div>
             </div>
