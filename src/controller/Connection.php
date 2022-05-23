@@ -20,7 +20,8 @@ class Connection
       $this->root = "admin";
       $this->port = 3306;
 
-      /*$this->server = "localhost";
+      /*
+      $this->server = "localhost";
       $this->base = "suividossdb";
       $this->password = "Lougaroup1root4321";
       $this->root = "root";

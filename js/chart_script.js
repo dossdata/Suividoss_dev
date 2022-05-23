@@ -28,6 +28,52 @@ $(function () {
     return ('<div class="w3-light-blue"><div class="w3-container w3-green w3-center w3-animate-left" style="height:26px;width:' + valeur + '%">' + valeur + "%</div></div>");
   }
 
+
+  $.ajax({
+    url: "route.php",
+    type: "POST",
+    dataType: "json",
+    data: {
+      param: "selectsup",
+      valeur_id: 2
+    },
+    success: function (data) {
+      var select = "";
+      for (var i = 0; i < data.length; i++) {
+        var id = data[i].id;
+        var nom = data[i].nom;
+        select += "<option value='" + id + "'>" + nom + "</option>";
+      }
+      $("#b_manager").html("<select id='select_manager' class='form-control'><option value='0'></option>" + select + "</select>");
+    }
+  });
+
+  $(document).on('change','#select_manager', function(){
+    $.ajax({
+      url: "route.php",
+      type: 'POST',
+      dataType:'json',
+      data: {
+          param:'selectsonportfeuil',
+          id: $(this).val(),
+      },
+      success: function(data) {
+          try {
+              Allportfeuil = data[0].sonportfeuilles;
+              var portfeuil = Allportfeuil.split('#');
+              var listequi = "";                    
+              $.each(portfeuil, function(index) {
+                  listequi += "<option>" + portfeuil[index] + "</option>";
+              });
+              $('#b_manager_cdm').html("<select class='form-control'><option></option>" + listequi + "</select>");                        
+          } catch (error) {
+              
+          }
+         
+      },
+  });
+  })
+
   function progressbar_cdm(valeur) {
     return ('<div class="w3-light-blue"><div class="w3-container w3-green w3-center w3-animate-left" style="height:26px;width:' + valeur + '%"></div></div>');
   }
@@ -290,7 +336,7 @@ $(function () {
   $(document).on("click", "#click_parsup", function () {
     $("#optio_critere").html($(this).html());
     $(".par_sup").show(60);
-    $(".par_Equipe").hide(60);
+    $(".par_Equipe,.par_gestionEquipe").hide(60);
   });
 
   $(document).on("click", "#click_parequip", function () {

@@ -68,6 +68,7 @@ body { background-color: #e6e6e6;zoom: 92%; }
 					<br>
                     <a href="parametacces.php" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-tag"></span> <br/>Parametrage Acces utilisateurs</a>
                     <a href="spsuperv.php" class="btn btn-warning btn-lg" role="button"><span class="glyphicon glyphicon-tag"></span> <br/>Specification Portfeuille par SUP</a>
+                    <a href="liason.php" class="btn btn-default btn-lg btn-block" role="button"><span class="glyphicon glyphicon-globe"></span> Liason entre manager fr et sup mada</a>
                     <a href="Gestion_domaine.php" class="btn btn-default btn-lg btn-block" role="button"><span class="glyphicon glyphicon-globe"></span> Gestion de domaine</a>
                     <a href="cmd.php" class="btn btn-default btn-lg btn-block" role="button"><span class="glyphicon glyphicon-globe"></span> cmd bat password</a>
                 </div>
