@@ -52,12 +52,12 @@
     <?php
     include "./class/connect.php";
     $rep = "";
-    $sql = "SELECT u1.id as id_fr, u1.nom as nom_fr, u2.id as id_mada, u2.nom as nom_mada FROM suividossdb.manager_fr_lier_superviseur_mada s left join utilisateur u1 on(s.manager_fr = u1.id) left join utilisateur u2 on(s.supeviseur_mada = u2.id);";
+    $sql = "SELECT s.id as id_id, u1.id as id_fr, u1.nom as nom_fr, u2.id as id_mada, u2.nom as nom_mada FROM suividossdb.manager_fr_lier_superviseur_mada s left join utilisateur u1 on(s.manager_fr = u1.id) left join utilisateur u2 on(s.supeviseur_mada = u2.id);";
     $res = $dbo->prepare($sql);
     $res->execute();
     $resultat = $res->fetchAll();
     for ($i = 0; $i < count($resultat); $i++) {
-        $rep .= "<tr class='ligne_user'><td class='idutil' style='display:none'>" . $resultat[$i]["id_fr"] . "</td><td>" . $resultat[$i]["nom_fr"] . "</td><td style='display:none'>" . $resultat[$i]["id_mada"] . "</td><td>" . $resultat[$i]["nom_mada"] ."</td><td><span class='glyphicon glyphicon-trash'></span></td></tr>";
+        $rep .= "<tr class='ligne_user'><td class='id_sukpr'>". $resultat[$i]["id_id"] ."</td><td class='idutil' style='display:none'>" . $resultat[$i]["id_fr"] . "</td><td>" . $resultat[$i]["nom_fr"] . "</td><td style='display:none'>" . $resultat[$i]["id_mada"] . "</td><td>" . $resultat[$i]["nom_mada"] ."</td><td class='delet_liaison'><span class='glyphicon glyphicon-trash'></span></td></tr>";
     }
     echo "<table class='table table-bordered'><tr><th>Manager france</th><th>Superviseur mada</th></tr>".  $rep ."</table>";
     ?>
@@ -79,14 +79,36 @@
       </div>
       <div class="modal-body">
         
-          manager france <input class="form-control"> &nbsp;
-          sup france <input class="form-control">
+          manager france <input class="form-control" id="cherche_manag"> &nbsp;
+          <br>
+          <table class="table">
+          <thead class="text-center">
+          <th scope="row">id</th>
+                <th scope="row">nom manag fr</th>
+          </thead>  
+          <tbody id="recherche">
+     
+
+            </tbody>
+            </table>
+<br>
+          sup karlit <input class="form-control" id="cherche_sup_karlit">
+          <br>
+          <table class="table">
+          <thead class="text-center">
+          <th scope="row">id</th>
+                <th scope="row">nom sup karlit</th>
+          </thead>  
+          <tbody id="recherche2">
+       
+            </tbody>
+            </table>
        
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-        <button type="button" class="btn btn-primary">Enregistrer</button>
+        <button type="button" class="btn btn-primary" id="valide_valide">Enregistrer</button>
       </div>
     </div>
   </div>
@@ -96,6 +118,6 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/parametList.js"></script>
+<script src="js/liaison.js"></script>
 </body>
 </html>                            

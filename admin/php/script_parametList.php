@@ -21,6 +21,54 @@
 
 
 	
+
+	if($param == "cherche_manag"){
+
+		$fin_resultat = "";
+		$sql = "SELECT u1.id as id_fr, u1.nom as nom_fr FROM suividossdb.utilisateur u1 WHERE u1.post_id = 5 and u1.pays_id = 2 and u1.nom like '". $_POST["valeur"] ."%' ";
+		$res = $dbo->prepare($sql);
+		$res->execute();
+		$resultat = $res->fetchAll();		
+		echo   json_encode($resultat);
+		
+	}
+
+	if($param == "cherche_manag_2"){
+
+		$fin_resultat = "";
+		$sql = "SELECT u1.id as id_mada, u1.nom as nom_mada FROM suividossdb.utilisateur u1 WHERE u1.post_id = 5 and u1.pays_id = 5 and u1.login like '". $_POST["valeur"] ."%' ";
+		$res = $dbo->prepare($sql);
+		$res->execute();
+		$resultat = $res->fetchAll();		
+		echo   json_encode($resultat);
+		
+	}
+
+	if($param == "valide_sss"){
+
+		$sql = "INSERT INTO manager_fr_lier_superviseur_mada (manager_fr,supeviseur_mada) VALUES(:f,:m)";
+		$res = $dbo->prepare($sql);
+		$res->execute(array('f' => $_POST["valeur2"], 'm' =>$_POST["valeur1"]
+));	
+		echo  "valide ok";
+		
+	}
+
+	
+	if($param == "supre"){
+
+		$sql = "DELETE FROM manager_fr_lier_superviseur_mada where id =:id ";
+		$res = $dbo->prepare($sql);
+		$res->execute(array('id' =>$_POST["valeur1"]
+));	
+		echo  "supre ok";
+		
+	}
+
+	
+	
+	
+	
 		if($param == "listregimdimposition2"){
 		$fin_resultat = "";
 		$sql = "SELECT * FROM suividossdb.regim_imposition2 where nom <> ''";
