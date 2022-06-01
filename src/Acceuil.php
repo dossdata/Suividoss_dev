@@ -1845,7 +1845,7 @@ class Acceuil extends Connection
         $sql0 = "select u.nom from manager_fr_lier_superviseur_mada m left join utilisateur u on(u.id = m.supeviseur_mada) WHERE m.manager_fr =:manger_fr";
         $res0 = $this->Getconnexion()->prepare($sql0);
         $res0->execute(array(
-            'manger_fr' => $manager,
+            'manger_fr' => $manager
         ));
         $resultat0 = $res0->fetchAll();
 
