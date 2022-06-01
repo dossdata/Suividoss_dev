@@ -39,6 +39,34 @@ switch ($_POST["param"]) {
         echo $dz;
         break;
 
+        case 'lance_reporting':
+            $z = $affect->lance_reporting($_POST["manager"], $_POST["cdm_fr"], $_POST["type_ma"],$_POST["dectect"]);
+            $dz = json_encode($z);
+            echo $dz;
+            break; 
+
+            case '__attrib':
+                $z = $affect->__attrib($_POST["iddossier"]);
+                echo json_encode($z);
+                break; 
+
+
+            
+            
+            case '_update_niveau_etp':
+                $z = $affect->_update_niveau_etp($_POST["id_user"], $_POST["niveau"]);
+                break;              
+            
+            
+
+        case '__det__click':
+            $z = $affect->__det__click($_POST["manager"], $_POST["cdm_fr"], $_POST["type_ma"],$_POST["collab"],$_POST["id"]);
+            $dz = json_encode($z);
+            echo $dz;
+            break;               
+
+        
+
     case 'selectall_ptf_cdm':
         $z = $affect->selectall_ptf_cdm($_POST["select_mm"], $_POST["select_aa"]);
         $dz = json_encode($z);

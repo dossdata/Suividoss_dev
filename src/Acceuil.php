@@ -1541,7 +1541,8 @@ class Acceuil extends Connection
     }
 
 
-    public function list_gaia($cloture){
+    public function list_gaia($cloture)
+    {
         $sql = 'SELECT DISTINCT 
         u1.nom_mail as cde,u2.nom_mail as reference,u3.nom_mail as cdm_j,u4.nom_mail as ass,u5.nom_mail as os,u6.nom_mail as prepa, u7.nom_mail as manage_fr   ,u8.nom_mail as cdm_frr,
         cd.presentant,cd.tel,cd.mail as mail_presentant,
@@ -1610,7 +1611,7 @@ class Acceuil extends Connection
         LEFT JOIN utilisateur U on(U.id = S.utilisateur_id) LEFT JOIN suividossdb.equipe Eq on(D.equip_id = Eq.id) 
         LEFT JOIN suividossdb.reseignement_juridique Rs on(D.id = Rs.iddossier) 
         LEFT JOIN suividossdb.envoie EN on(EN.dossier_id = D.id) 
-         WHERE S.date_cloturation LIKE "' . $cloture .'%" and D.manger_fr = "1530"  group by S.id order by Eq.code';
+         WHERE S.date_cloturation LIKE "' . $cloture . '%" and D.manger_fr = "1530"  group by S.id order by Eq.code';
         $res = $this->Getconnexion()->prepare($sql);
         $res->execute();
         $respons = $res->fetchAll();
@@ -1653,12 +1654,9 @@ class Acceuil extends Connection
 
     public function select_sup($pays_id)
     {
-        $sql = "SELECT  id, nom FROM suividossdb.utilisateur where pays_id=:pays_id and post_id=:post_id";
+        $sql = "SELECT distinct d.manger_fr as id, upper(u.nom) as nom FROM dossier d  left join utilisateur u on(u.id = d.manger_fr) where d.manger_fr is not null group by d.manger_fr";
         $res = $this->Getconnexion()->prepare($sql);
-        $res->execute(array(
-            'pays_id' => $pays_id,
-            'post_id' => 5,
-        ));
+        $res->execute();
         $resultat = $res->fetchAll();
         return $resultat;
     }
@@ -1768,12 +1766,156 @@ class Acceuil extends Connection
         return $val;
     }
 
+    public function __det__click($manager, $cdm_fr, $type, $collab,$_id)
+    {
+        if ($type == "true") {
+            $type_d = " and s.idsituation_dossier <> 'MA'";
+        } else {
+            $type_d = " ";
+        }
+
+
+        if ($collab == "_ass") {
+            $sql_ass = "select distinct d.id, e.code,d.nom,s.idsituation_dossier,tmp.dern_date as date_cloturation,COALESCE(s.etat_bilan,'') as etat_bilan from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
+        LEFT JOIN utilisateur u on(u.id = d.ass) 
+        LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
+            ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where d.ass = '". $_id ."' and tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d;
+            $res_ass = $this->Getconnexion()->prepare($sql_ass);
+            $res_ass->execute(array(
+                'manger_fr' => $manager,
+                'cmd_fr' => $cdm_fr,
+            ));
+            return $res_ass->fetchAll();
+        }
+
+
+        if ($collab == "_cdm") {
+            $sql_cdm = "select distinct d.id, e.code,d.nom,s.idsituation_dossier,tmp.dern_date as date_cloturation,COALESCE(s.etat_bilan,'') as etat_bilan from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
+            LEFT JOIN utilisateur u on(u.id = d.cdm) 
+            LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
+                ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where d.cdm = '".$_id."' and tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d ;
+            $res_cdm = $this->Getconnexion()->prepare($sql_cdm);
+            $res_cdm->execute(array(
+                'manger_fr' => $manager,
+                'cmd_fr' => $cdm_fr,
+            ));
+            return $res_cdm->fetchAll();
+        }
+
+
+        if ($collab == "_cde") {
+            $sql_cde = "select distinct d.id, e.code,d.nom,s.idsituation_dossier,tmp.dern_date as date_cloturation, COALESCE(s.etat_bilan,'') as etat_bilan from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
+                LEFT JOIN utilisateur u on(u.id = d.ll) 
+                LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
+                    ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where d.ll = '".$_id."' and tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d ;
+            $res_cde = $this->Getconnexion()->prepare($sql_cde);
+            $res_cde->execute(array(
+                'manger_fr' => $manager,
+                'cmd_fr' => $cdm_fr,
+            ));
+            return $res_cde->fetchAll();
+        }
+    }
+
+    public function date_retour($date_start){
+        return ' YEAR(date(now()))*12 + MONTH(date(now())) - (YEAR('.$date_start.')*12 + MONTH('.$date_start.')) as ancienter ,';
+    }
+    public function lance_reporting($manager, $cdm_fr, $type, $dectect)
+    {
+        $type_d = "";
+        $plus = "";
+        $total_resultat = [];
+        
+        if ($type == "true") {
+            $type_d = " and s.idsituation_dossier <> 'MA'";
+        } else {
+            $type_d = " ";
+        }
+
+        $dectect_dect = "";
+        if ($dectect == "modal") {
+            $dectect_dect = " d.id, e.code,d.nom,s.idsituation_dossier,tmp.dern_date as date_cloturation,s.etat_bilan ";
+            $plus = " GROUP BY tmp.iddoss  order by e.code,d.nom ";
+        } else {
+            $dectect_dect = 'count(distinct d.nom,tmp.dern_date) as total_dossier';
+            $plus = " order by e.code,d.nom";
+        }
+
+
+        $sql0 = "select u.nom from manager_fr_lier_superviseur_mada m left join utilisateur u on(u.id = m.supeviseur_mada) WHERE m.manager_fr =:manger_fr";
+        $res0 = $this->Getconnexion()->prepare($sql0);
+        $res0->execute(array(
+            'manger_fr' => $manager,
+        ));
+        $resultat0 = $res0->fetchAll();
+
+
+
+        $sql = "select $dectect_dect from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id)
+    LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
+        ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d . " " . $plus;
+        $res = $this->Getconnexion()->prepare($sql);
+        $res->execute(array(
+            'manger_fr' => $manager,
+            'cmd_fr' => $cdm_fr,
+        ));
+        $resultat = $res->fetchAll();
+
+
+        $sql_ass = "select u.niveau_etp, ". $this->date_retour("date_d_entrer") ." d.ass as id_ass, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
+        LEFT JOIN utilisateur u on(u.id = d.ass) 
+        LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
+            ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d . " GROUP BY u.prenom_mail ";
+        $res_ass = $this->Getconnexion()->prepare($sql_ass);
+        $res_ass->execute(array(
+            'manger_fr' => $manager,
+            'cmd_fr' => $cdm_fr,
+        ));
+        $resultat_ass = $res_ass->fetchAll();
+
+
+
+        $sql_cdm = "select u.niveau_etp, ". $this->date_retour("date_d_entrer") ." d.cdm as id_cdm, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
+            LEFT JOIN utilisateur u on(u.id = d.cdm) 
+            LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
+                ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d . " GROUP BY u.prenom_mail ";
+        $res_cdm = $this->Getconnexion()->prepare($sql_cdm);
+        $res_cdm->execute(array(
+            'manger_fr' => $manager,
+            'cmd_fr' => $cdm_fr,
+        ));
+        $resultat_cdm = $res_cdm->fetchAll();
+
+
+        $sql_cde = "select u.niveau_etp, ". $this->date_retour("date_d_entrer") ." d.ll as id_cde, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
+                LEFT JOIN utilisateur u on(u.id = d.ll) 
+                LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
+                    ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d . " GROUP BY u.prenom_mail ";
+        $res_cde = $this->Getconnexion()->prepare($sql_cde);
+        $res_cde->execute(array(
+            'manger_fr' => $manager,
+            'cmd_fr' => $cdm_fr,
+        ));
+        $resultat_cde = $res_cde->fetchAll();
+
+
+        array_push($total_resultat, [
+            "total_dossier" => $resultat,
+            "nom_assistant" => $resultat_ass,
+            "nom_cdm" => $resultat_cdm,
+            "nom_cde" => $resultat_cde,
+            "nom_sup_mada" => $resultat0
+        ]);
+
+        return $total_resultat;
+    }
+
 
 
 
     public function selectsonportfeuil($id)
     {
-        $sql = "SELECT sonportfeuilles FROM portfeuilsup WHERE utilisateur_id =:utilisateur_id";
+        $sql = "select distinct e.id, e.code from dossier d left join equipe e on(e.id = equip_id) where d.manger_fr =:utilisateur_id and e.code is not null group by e.code";
         $res = $this->Getconnexion()->prepare($sql);
         $res->execute(array(
             'utilisateur_id' => $id,
@@ -1794,6 +1936,33 @@ class Acceuil extends Connection
         return $this->statGeneralsups_graphique($aneselect, $resultat[0]["sonportfeuilles"]);
     }
 
+    public function __attrib($id)
+    {
+        $sql = "SELECT D.nom as nom_dsss, 
+           u1.prenom_mail as nom_cde,u1.prenom as matricule_cde,u1.mail as mail_cde,
+           u2.prenom_mail as nom_rf,u2.prenom as matricule_rf,u2.mail as mail_rf,
+           u3.prenom_mail as nom_cdm,u3.prenom as matricule_cdm,u3.mail as mail_cdm,
+           u4.prenom_mail as nom_ass,u4.prenom as matricule_ass,u4.mail as mail_ass,
+           u7.prenom_mail as nom_mgr,u7.prenom as matricule_mgr,u7.mail as mail_mgr,
+           u8.prenom_mail as nom_cdmfr,u8.prenom as matricule_cdmfr,u8.mail as mail_cdmfr         
+         FROM dossier D 
+        LEFT JOIN utilisateur u1 on(u1.id = D.ll) 
+        LEFT JOIN utilisateur u2 on(u2.id = D.reference_t) 
+        LEFT JOIN utilisateur u3 on(u3.id = D.cdm) 
+        LEFT JOIN utilisateur u4 on(u4.id = D.ass) 
+        LEFT JOIN utilisateur u7 on(u7.id = D.manger_fr)
+        LEFT JOIN utilisateur u8 on(u8.id = D.cdm_fr)        
+         WHERE D.id =:id";
+        $res = $this->Getconnexion()->prepare($sql);
+        $res->execute(array(
+            'id' => $id,
+        ));
+        $resultat = $res->fetchAll();
+
+        return $resultat;
+    }
+
+    
 
     public function statGeneralsups_graphique($date_bilan, $llportfeuil)
     {
@@ -2001,9 +2170,9 @@ class Acceuil extends Connection
                         'code' => $value
                     ));
                     $resultat = $res->fetchAll();
-                    array_push($array,[
+                    array_push($array, [
                         $value => count($resultat)
-                    ]);                                    
+                    ]);
                 }
             }
         }
@@ -3043,6 +3212,17 @@ class Acceuil extends Connection
         ));
         return "ok";
     }
+
+    public function _update_niveau_etp($user_id, $niveau)
+    {
+        $sql = "UPDATE suividossdb.utilisateur SET niveau_etp=:niveau_etp WHERE id=:id";
+        $res = $this->Getconnexion()->prepare($sql);
+        $res->execute(array(
+            'niveau_etp' => $niveau,
+            "id" => $user_id,
+        ));
+    }
+    
 
     public function update_valeur_alert_pes($id_situation, $valeur)
     {

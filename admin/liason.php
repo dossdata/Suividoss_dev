@@ -47,24 +47,29 @@
   <div class="card-header">
         Table
   </div>
+  <div class="w3-panel w3-card-4 w3-yellow"><p id="recherche_id_nm"></p></div>
   <div class="card-body">
     <p class="card-text">
     <?php
     include "./class/connect.php";
     $rep = "";
-    $sql = "SELECT s.id as id_id, u1.id as id_fr, u1.nom as nom_fr, u2.id as id_mada, u2.nom as nom_mada FROM suividossdb.manager_fr_lier_superviseur_mada s left join utilisateur u1 on(s.manager_fr = u1.id) left join utilisateur u2 on(s.supeviseur_mada = u2.id);";
+    $sql = "SELECT distinct d.manger_fr as id, upper(u.nom) as nom, u2.nom as nom_sup_karlit
+    FROM dossier d  left join utilisateur u on(u.id = d.manger_fr) left join manager_fr_lier_superviseur_mada m on (d.manger_fr = m.manager_fr) 
+    left join utilisateur u2 on(u2.id = m.supeviseur_mada) 
+    where d.manger_fr is not null group by d.manger_fr";
     $res = $dbo->prepare($sql);
     $res->execute();
     $resultat = $res->fetchAll();
     for ($i = 0; $i < count($resultat); $i++) {
-        $rep .= "<tr class='ligne_user'><td class='id_sukpr'>". $resultat[$i]["id_id"] ."</td><td class='idutil' style='display:none'>" . $resultat[$i]["id_fr"] . "</td><td>" . $resultat[$i]["nom_fr"] . "</td><td style='display:none'>" . $resultat[$i]["id_mada"] . "</td><td>" . $resultat[$i]["nom_mada"] ."</td><td class='delet_liaison'><span class='glyphicon glyphicon-trash'></span></td></tr>";
+        $rep .= "<tr class='ligne_user'><td class='id_sukpr'>". $resultat[$i]["id"] ."<td>" . $resultat[$i]["nom"] ."</td><td contenteditable='true' class='td_keyup'>". $resultat[$i]["nom_sup_karlit"]."</td><td class='delet_liaison'><span class='glyphicon glyphicon-floppy-save'></span></td></tr>";
     }
-    echo "<table class='table table-bordered'><tr><th>Manager france</th><th>Superviseur mada</th></tr>".  $rep ."</table>";
+    echo "<table class='table table-bordered'><tr><th>id</th><th>manger france</th><th>Superviseur mada</th><th>#</th></tr>".  $rep ."</table>";
     ?>
     </p>
     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#add_mss">A jout nouveau</a>
   </div>
 </div>
+
 
 
 <!-- Modal -->
@@ -79,19 +84,20 @@
       </div>
       <div class="modal-body">
         
-          manager france <input class="form-control" id="cherche_manag"> &nbsp;
+          sup france <input class="form-control" id="cherche_manag"> &nbsp;
           <br>
           <table class="table">
           <thead class="text-center">
-          <th scope="row">id</th>
-                <th scope="row">nom manag fr</th>
-          </thead>  
-          <tbody id="recherche">
-     
+          <th scope="row">id</th><th scope="row">sup fr</th></thead>  
+          <tbody id="recherche"></tbody></table><br>*
 
-            </tbody>
-            </table>
-<br>
+          manag france <input class="form-control" id="cherche_manag_vrai"> &nbsp;
+          <br>
+          <table class="table">
+          <thead class="text-center">
+          <th scope="row">id</th><th scope="row">manag fr</th></thead>  
+          <tbody id="recherche_vrai"></tbody></table><br>
+
           sup karlit <input class="form-control" id="cherche_sup_karlit">
           <br>
           <table class="table">

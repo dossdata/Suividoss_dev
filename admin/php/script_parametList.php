@@ -25,7 +25,20 @@
 	if($param == "cherche_manag"){
 
 		$fin_resultat = "";
-		$sql = "SELECT u1.id as id_fr, u1.nom as nom_fr FROM suividossdb.utilisateur u1 WHERE u1.post_id = 5 and u1.pays_id = 2 and u1.nom like '". $_POST["valeur"] ."%' ";
+		if(isset($_POST["valeur"])){
+		$sql = 'SELECT id,nom FROM utilisateur where (login LIKE "'.$_POST["valeur"].'%" or nom LIKE "'.$_POST["valeur"].'%" or prenom LIKE "'.$_POST["valeur"].'%") and pays_id = 5 and post_id = 5;';
+		$res = $dbo->prepare($sql);
+		$res->execute();
+		$resultat = $res->fetchAll();		
+		echo   json_encode($resultat);
+	}
+		
+	}
+
+	if($param == "cherche_manag_vrai"){
+
+		$fin_resultat = "";
+		$sql = "SELECT u1.id as id_fr, u1.nom as nom_fr FROM suividossdb.utilisateur u1 WHERE u1.post_id = 9 and u1.pays_id = 2 and u1.nom like '". $_POST["valeur"] ."%' ";
 		$res = $dbo->prepare($sql);
 		$res->execute();
 		$resultat = $res->fetchAll();		
@@ -46,23 +59,25 @@
 
 	if($param == "valide_sss"){
 
-		$sql = "INSERT INTO manager_fr_lier_superviseur_mada (manager_fr,supeviseur_mada) VALUES(:f,:m)";
+		$sql = "INSERT INTO manager_fr_lier_superviseur_mada (manager_fr,supeviseur_mada,manager_vrai) VALUES(:f,:m,:v)";
 		$res = $dbo->prepare($sql);
-		$res->execute(array('f' => $_POST["valeur2"], 'm' =>$_POST["valeur1"]
+		$res->execute(array('f' => $_POST["valeur2"], 'm' =>$_POST["valeur1"], 'v' =>$_POST["valeur3"]
 ));	
 		echo  "valide ok";
 		
 	}
 
 	
-	if($param == "supre"){
+	if($param == "valide_insertion"){
 
-		$sql = "DELETE FROM manager_fr_lier_superviseur_mada where id =:id ";
+		$sql = "DELETE FROM manager_fr_lier_superviseur_mada where manager_fr =:manager_fr ";
 		$res = $dbo->prepare($sql);
-		$res->execute(array('id' =>$_POST["valeur1"]
-));	
-		echo  "supre ok";
+		$res->execute(array('manager_fr' => trim($_POST["valeur1"])
+		));	
 		
+		$sql = "INSERT INTO manager_fr_lier_superviseur_mada (manager_fr,supeviseur_mada) VALUES(:f,:m)";
+		$res = $dbo->prepare($sql);
+		$res->execute(array('f' => trim($_POST["valeur1"]), 'm' => trim($_POST["valeur2"])));
 	}
 
 	

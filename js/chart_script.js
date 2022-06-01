@@ -1,4 +1,5 @@
 $(function () {
+  var return_id = "";
   $(document).on("change", "#listpaysselect", function () {
     $(".as_sup").hide();
     $("#aneselect").val("");
@@ -48,7 +49,13 @@ $(function () {
     }
   });
 
+  $(document).on('change','#cdm_fr_select,#vehicle1', function(){
+    $('.total_dossier_select').html("00");
+  })
+  
+
   $(document).on('change','#select_manager', function(){
+    $('.total_dossier_select').html("00");
     $.ajax({
       url: "route.php",
       type: 'POST',
@@ -58,18 +65,18 @@ $(function () {
           id: $(this).val(),
       },
       success: function(data) {
-          try {
-              Allportfeuil = data[0].sonportfeuilles;
-              var portfeuil = Allportfeuil.split('#');
-              var listequi = "";                    
-              $.each(portfeuil, function(index) {
-                  listequi += "<option>" + portfeuil[index] + "</option>";
-              });
-              $('#b_manager_cdm').html("<select class='form-control'><option></option>" + listequi + "</select>");                        
-          } catch (error) {
+          
+              var listequi = "";   
               
-          }
-         
+              if(data.length > 0){
+                for(var x =0; x < data.length; x++){
+                  listequi += "<option value='"+data[x].id +"'>" + data[x].code + "</option>";
+                }
+              }
+                
+              
+              $('#b_manager_cdm').html("<select class='form-control' id='cdm_fr_select'><option></option>" + listequi + "</select>");                        
+          
       },
   });
   })
@@ -359,4 +366,214 @@ $(function () {
     $(".par_Equipe, .validgraphsup_parcdm,#head_parcdm,#tbody_parcdm").show(60);
     $(".par_sup, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip,#tbody_gestion_equipe,.par_gestionEquipe").hide(60);
   });
+
+  $(document).on("click", "#reporting_social", function () {
+    $('#tbody_gestion_equipe').hide(20);
+    lance_cout_detail("button");
+    $('#tbody_gestion_equipe').show(100);
+  });
+
+  $(document).on("click", "#lance_detail_sx,.total_dossier_select", function () {
+    if(parseInt($('.total_dossier_select').html()) > 0){
+      lance_cout_detail("modal");
+      document.getElementById('id01').style.display='block';
+    }else{
+      return;
+    }
+  });
+
+
+
+  $(document).on("dblclick", ".niveau_etp", function () {
+    return_id = "";
+    var liste = "";
+    for(var x = 1; x< 11; x++){
+      liste += "<option value='"+x+"'>"+x+"</option>";
+    }
+    $(this).closest("th").html("<select class='change_etp'><option></option>"+liste+"</select>");
+    return_id =  $(this).closest("tr").find(".recupere_id").html();
+   
+  });
+  
+  $(document).on("change", ".change_etp", function () {
+    var valeur = $(this).val();
+    $(this).closest("tr").find(".niveau_etp").html(valeur);
+
+    $.ajax({
+      url: "route.php",
+      type: "POST",
+      dataType: "json",
+      data: {
+        param: "_update_niveau_etp",
+        id_user: return_id,
+        niveau: $(this).val(),
+      },
+      success: function (data) {
+       
+      }
+    });   
+
+  });
+  
+
+  function lance_cout_detail(detection){
+    var tete =     '<tr><th>Nom</th><th style="text-align:center;color:red" >Nb dossier</th>'+
+    '<th  style="text-align:center;color:red">Ancienneté ETP</th>'+
+    '<th style="text-align:center;color:red">Niveau ETP</th></tr>';
+    $.ajax({
+      url: "route.php",
+      type: "POST",
+      dataType: "json",
+      data: {
+        param: "lance_reporting",
+        manager: $("#select_manager").val(),
+        cdm_fr: $("#cdm_fr_select").val(),
+        type_ma: $('#vehicle1').prop('checked'),
+        dectect:detection,
+      },
+      success: function (data) {
+        if(detection == "button"){
+          $('#sup_k').html("");
+          $("#table_ass_list,#table_cdm_list").html("");
+          $('#sup_k').html(data[0]["nom_sup_mada"][0].nom);
+          var list_ass = "";
+          var list_cdm = "";
+          var list_cde = "";
+        if(data[0]["total_dossier"].length > 0){
+        $('.total_dossier_select').html(data[0]["total_dossier"][0].total_dossier)
+
+        for(var t = 0; t < data[0]["nom_assistant"].length; t++){
+          var anci = "";
+          if(data[0]["nom_assistant"][t].ancienter != null){anci =  ("  "+ data[0]["nom_assistant"][t].ancienter / 12 | 0) + " ans  " + data[0]["nom_assistant"][t].ancienter % 12 +" mois";}
+          list_ass += "<tr><th>"+data[0]["nom_assistant"][t].prenom_mail+"<th class='id_ass recupere_id'>"+data[0]["nom_assistant"][t].id_ass+"</th><th class='click_dts'><b>" + data[0]["nom_assistant"][t].total + "</b></th><th>"+anci.replace("0 ans ","").replace(" 0 mois","")+"</th><th class='niveau_etp'>"+data[0]["nom_assistant"][t].niveau_etp+"</th></tr>"
+        }
+        $("#table_ass_list").html( tete + list_ass);
+
+
+        for(var tt = 0; tt < data[0]["nom_cdm"].length; tt++){
+          var anci = "";
+          if(data[0]["nom_cdm"][tt].ancienter != null){anci =  ("  "+ data[0]["nom_cdm"][tt].ancienter / 12 | 0) + " ans  " + data[0]["nom_cdm"][tt].ancienter % 12 +" mois";}
+          list_cdm += "<tr><th>"+data[0]["nom_cdm"][tt].prenom_mail+"<th class='id_cdm recupere_id'>"+data[0]["nom_cdm"][tt].id_cdm+"</th><th class='click_dts'><b>" + data[0]["nom_cdm"][tt].total + "</b></th><th>"+anci.replace("0 ans ","").replace(" 0 mois","")+"</th><th class='niveau_etp'>"+data[0]["nom_cdm"][tt].niveau_etp+"</th></tr>"
+        }
+        $("#table_cdm_list").html(tete + list_cdm);
+
+
+        for(var ttt = 0; ttt < data[0]["nom_cde"].length; ttt++){
+          var anci = "";
+          if(data[0]["nom_cde"][ttt].ancienter != null){anci =  ("  "+ data[0]["nom_cde"][ttt].ancienter / 12 | 0) + " ans  " + data[0]["nom_cde"][ttt].ancienter % 12 +" mois";}          
+          list_cde += "<tr><th>"+data[0]["nom_cde"][ttt].prenom_mail+"<th class='id_cde recupere_id'>"+data[0]["nom_cde"][ttt].id_cde+"</th><th class='click_dts'><b>" + data[0]["nom_cde"][ttt].total + "</b></th><th>"+anci.replace("0 ans ","").replace(" 0 mois","")+"</th><th class='niveau_etp'>"+data[0]["nom_cde"][ttt].niveau_etp+"</th></tr>"
+        }
+        $("#table_cde_list").html( tete + list_cde);
+
+
+        }else{
+          $('.total_dossier_select').html("00");
+        }
+      }else{
+        $('#reponsemytable').html("");
+        if(data[0]["total_dossier"].length >0){
+          var mytable = "";
+          for(var z = 0; z < data[0]["total_dossier"].length; z++){
+            mytable += "<tr class='click_attrib'><td>"+ (z +1) +"</td><td class='id_dossier_'>"+data[0]["total_dossier"][z].id+"</td><td>"+ data[0]["total_dossier"][z].code + "</td>" + "<td>"+ data[0]["total_dossier"][z].nom + "</td>" + "<td>"+ data[0]["total_dossier"][z].idsituation_dossier + "</td>" + "<td>"+ data[0]["total_dossier"][z].date_cloturation + "</td>" + "<td>"+ data[0]["total_dossier"][z].etat_bilan + "</td></tr>"
+          }
+          $('#reponsemytable').html(mytable);
+        }
+
+      }
+      }
+    });    
+  }
+
+
+  $(document).on('click','.click_dts', function(){
+    if($(this).closest("tr").find("th:eq(1)").hasClass("id_ass") == true)
+    {
+      __lance_cout_detail("_ass",$(this).closest("tr").find("th:eq(1)").html());
+    }
+  })
+
+  $(document).on('click','.click_dts', function(){
+    if($(this).closest("tr").find("th:eq(1)").hasClass("id_cdm") == true)
+    {
+      __lance_cout_detail("_cdm",$(this).closest("tr").find("th:eq(1)").html());
+    }
+    
+  })
+  
+  $(document).on('click','.click_dts', function(){
+    if($(this).closest("tr").find("th:eq(1)").hasClass("id_cde") == true)
+    {
+      __lance_cout_detail("_cde",$(this).closest("tr").find("th:eq(1)").html());
+    }
+    
+  })  
+
+  $(document).on('click','.click_attrib', function(){
+    $('#doss_select').html("")
+    $.ajax({
+      url: "route.php",
+      type: "POST",
+      dataType: "json",
+      data: {
+        param: "__attrib",
+        iddossier: $(this).closest("tr").find(".id_dossier_").html(),
+      },
+      success: function (data) {
+        if(data.length > 0){
+          document.getElementsByClassName('id02')[0].style.display='block';
+          $('#doss_select').html(data[0].nom_dsss)
+          $('.nom_dd:eq(0)').html(data[0].nom_cde);
+          $('.nom_dd:eq(1)').html(data[0].nom_rf);
+          $('.nom_dd:eq(2)').html(data[0].nom_cdm);
+          $('.nom_dd:eq(3)').html(data[0].nom_ass);
+          $('.nom_dd:eq(4)').html(data[0].nom_mgr);
+          $('.nom_dd:eq(5)').html(data[0].nom_cdmfr);
+
+          $('.prenom_dd:eq(0)').html(data[0].matricule_cde);
+          $('.prenom_dd:eq(1)').html(data[0].matricule_rf);
+          $('.prenom_dd:eq(2)').html(data[0].matricule_cdm);
+          $('.prenom_dd:eq(3)').html(data[0].matricule_ass);
+          $('.prenom_dd:eq(4)').html(data[0].matricule_mgr);
+          $('.prenom_dd:eq(5)').html(data[0].matricule_cdmfr);
+
+          $('.mail_dd:eq(0)').html(data[0].mail_cde);
+          $('.mail_dd:eq(1)').html(data[0].mail_rf);
+          $('.mail_dd:eq(2)').html(data[0].mail_cdm);
+          $('.mail_dd:eq(3)').html(data[0].mail_ass);
+          $('.mail_dd:eq(4)').html(data[0].mail_mgr);
+          $('.mail_dd:eq(5)').html(data[0].mail_cdmfr);          
+          
+
+        }
+      }
+    }); 
+  })  
+
+  function __lance_cout_detail(collab,id){
+    $.ajax({
+      url: "route.php",
+      type: "POST",
+      dataType: "json",
+      data: {
+        param: "__det__click",
+        manager: $("#select_manager").val(),
+        cdm_fr: $("#cdm_fr_select").val(),
+        type_ma: $('#vehicle1').prop('checked'),
+        collab:collab,
+        id:id
+      },
+      success: function (data) {
+       console.log(data);
+       if(data.length >0){
+        var mytable = "";
+        for(var z = 0; z < data.length; z++){
+          mytable += "<tr class='click_attrib'><td>"+ (z +1) +"</td><td class='id_dossier_'>"+data[z].id+"</td><td>"+ data[z].code + "</td>" + "<td>"+ data[z].nom + "</td>" + "<td>"+ data[z].idsituation_dossier + "</td>" + "<td>"+ data[z].date_cloturation + "</td>" + "<td>"+ data[z].etat_bilan + "</td></tr>"
+        }
+        $('#reponsemytable').html(mytable);
+        document.getElementById('id01').style.display='block';
+      }
+      }
+    });    
+  }
+
 });

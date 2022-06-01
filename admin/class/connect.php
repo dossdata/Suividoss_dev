@@ -1,8 +1,8 @@
 <?php
-/*$server = "suividoss-production.caukscxdgck1.eu-central-1.rds.amazonaws.com";
+/*$server = "localhost";
 $base = "suividossdb" ;
-$password = "CfeSArICSDzqwNM58R4Y";
-$root = "admin" ;
+$password = "Lougaroup1root4321";
+$root = "root" ;
 $port = 3306;*/
 
 $server = "suividoss-production.caukscxdgck1.eu-central-1.rds.amazonaws.com";

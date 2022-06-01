@@ -566,7 +566,17 @@ $(function(){
     })
 
 
+    $(document).on('keyup','#frmj_siren', function(){
+        var text = "";
+        var text = $(this).val().replace(/./,"").replace(/ /,"").trim();
+        //$(this).val(text);
+    })
 
+    $(document).on('keyup','#frmj_sieret', function(){
+        var text = "";
+        var text = $(this).val().replace(/./,"").replace(/ /,"").trim();        
+        //$(this).val(text);
+    })
 
     $(document).on('click','#reseignement_juridique_click', function(){
         $('#frmj').val("");

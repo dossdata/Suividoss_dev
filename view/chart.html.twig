@@ -11,7 +11,27 @@
     <link rel="stylesheet" href='./asset/bootstrap/css/addons/datatables-select.min.css'>
     <link rel="stylesheet" href="./asset/css/styles.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+      .click_dts {
+        width: 18%;
+      }
+      .click_dts:hover,
+      .niveau_etp:hover {
+        cursor: pointer;
+        background: #ebebeb!important;
 
+      }
+      .click_dts:active,
+      .niveau_etp:active {
+        color: red!important;
+      }
+
+      .id_ass,
+      .id_cde,
+      .id_cdm,.id_dossier_ {
+        display: none;
+      }
+    </style>
   </head>
   <body style="zoom:82%">
 
@@ -205,17 +225,19 @@
                     <div class="col-md-1">Manager Fr
                     </div>
                     <div class="col-md-2">
-                     <b id="b_manager"></b>
+                      <b id="b_manager"></b>
                     </div>
 
                     <div class="col-md-1">CDM France</div>
                     <div class="col-md-2">
-                      <b id="b_manager_cdm"><select class="form-control" ></select></b>
+                      <b id="b_manager_cdm">
+                        <select class="form-control"></select>
+                      </b>
                     </div>
 
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
-                      <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                      <input type="checkbox" id="vehicle1" name="vehicle1">
                       <label for="vehicle1" class="text-danger">
                         Hors Ma</label>
                     </div>
@@ -223,7 +245,7 @@
                     <div class="col-md-1"></div>
 
                     <div class="col-md-2">
-                      <button type="button" class="btn btn-info ">
+                      <button type="button" class="btn btn-info " id="reporting_social">
                         <i class="fas fa-check"></i>&nbsp;Valider
                       </button>
                     </div>
@@ -268,33 +290,164 @@
                 </thead>
                 <tbody id="tbody_parequip"></tbody>
                 <tbody id="tbody_parcdm"></tbody>
-                <tbody id="tbody_gestion_equipe"></tbody>
+
               </table>
               <div id="chartContainertableau" style="height: 350px; width: 100%;"></div>
             </div>
+
+            <div id="tbody_gestion_equipe" style="display:none">
+              <a href="#" id="lance_detail_sx" class="w3-button w3-white">
+
+                Total dossier :
+                <b style="font-size:18px;color:red" class="total_dossier_select">00</b>
+              </a>
+              <div style="position:relative;left:10%">
+                <dl>
+                  <dt>SUPERVISEUR KARLIT</dt>
+                  <dd style="text-align:center">
+                    <table border='1' width="40%">
+                      <tr>
+                        <th>Nom</th>
+                        <th colspan="" style="text-align:center;color:red">Nb dossier</th>
+                      </tr>
+                      <th width="40%" id="sup_k">SUP ....<th>
+                          <b class="total_dossier_select">
+                            ...
+                          </b>
+                        </th>
+                      </table>
+                    </dd>
+
+                    <dt>DIRECTEUR DE MISSION KARLIT</dt>
+                    <dd style="text-align:center">
+                      <table border='1' width="40%" id="table_cde_list"></table>
+                    </dd>
+                    <hr>
+                    <dt>CDM KARLIT</dt>
+                    <dd style="text-align:center">
+                      <table border='1' width="40%" id="table_cdm_list"></table>
+                    </dd>
+                    <dt>ASSISTANT KARLIT</dt>
+                    <dd style="text-align:center">
+                      <table border='1' width="40%" id="table_ass_list"></table>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-        </div>
+          <div class="w3-container">
+            <div id="id01" class="w3-modal">
+              <div class="w3-modal-content">
+                <div class="w3-container">
+                  <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Page</th>
+                        <th>Equipe</th>
+                        <th>Dossier</th>
+                        <th>Situation</th>
+                        <th>Cloture</th>
+                        <th>Etat bilan</th>
+                      </tr>
+                    </thead>
+                    <tbody id="reponsemytable"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        <script type="text/javascript" src="./asset/bootstrap/js/jquery.min.js"></script>
-        <script type="text/javascript" src="./asset/bootstrap/js/popper.min.js"></script>
-        <script type="text/javascript" src="./asset/bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="./asset/bootstrap/js/addons/datatables.min.js"></script>
-        <script type="text/javascript" src="./asset/bootstrap/js/addons/datatables-select.min.js"></script>
-        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        <script type="text/javascript" src="./js/chart_script.js"></script>
+          <!-- Trigger/Open the Modal -->
 
-        <script>
-          $(document).ready(function () {
-            $(".hamburger .hamburger__inner").click(function () {
-              $(".wrapper").toggleClass("active")
+          <!-- The Modal -->
+          <div class="w3-modal id02">
+            <div class="w3-modal-content w3-animate-zoom w3-card-4">
+              <header class="w3-container w3-light-blue">
+                <span onclick="document.getElementsByClassName('id02')[0].style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <h2 class="w3-text-white">ATTRIBUTION</h2>
+                <center id="doss_select" class="w3-text-red">
+                </center>
+              </header>
+
+              <div class="w3-container">
+                <table class="w3-table w3-border border='1' w3-table-all w3-hoverable w3-striped">
+                  <tr>
+                    <th class="w3-center-align w3-text-blue">POSTE</th>
+                    <th class="w3-center-align w3-text-blue" >NOM</th>
+                    <th class="w3-center-align w3-text-blue">PRENOM ou MATRICULE</th>
+                    <th class="w3-center-align w3-text-blue">MAIL</th>
+
+                  </tr>
+                  <tr>
+                    <td class="w3-text-red">DIRECTEUR DE MISSION</td>
+                    <td class="nom_dd"></td>
+                    <td class="prenom_dd"></td>
+                    <td class="mail_dd"></td>
+                  </tr>
+                  <tr>
+                    <td class="w3-text-red">REFERENCE TECHNIQUE</td>
+                    <td class="nom_dd"></td>
+                    <td class="prenom_dd"></td>
+                    <td class="mail_dd"></td>
+                  </tr>
+                  <tr>
+                    <td class="w3-text-red">CDM</td>
+                    <td class="nom_dd"></td>
+                    <td class="prenom_dd"></td>
+                    <td class="mail_dd"></td>
+                  </tr>
+                  <tr>
+                    <td class="w3-text-red">ASSISTANT</td>
+                    <td class="nom_dd"></td>
+                    <td class="prenom_dd"></td>
+                    <td class="mail_dd"></td>
+                  </tr>
+                  <tr>
+                    <td class="w3-text-red">MANAGER FRANCE</td>
+                    <td class="nom_dd"></td>
+                    <td class="prenom_dd"></td>
+                    <td class="mail_dd"></td>
+                  </tr>
+
+                  <tr>
+                    <td class="w3-text-red">CDM FRANCE</td>
+                    <td class="nom_dd"></td>
+                    <td class="prenom_dd"></td>
+                    <td class="mail_dd"></td>
+                  </tr>
+
+                </table>
+
+              </div>
+              <footer class="w3-container w3-light-blue">
+                <p>@keobiz</p>
+              </footer>
+            </div>
+          </div>
+
+          <script type="text/javascript" src="./asset/bootstrap/js/jquery.min.js"></script>
+          <script type="text/javascript" src="./asset/bootstrap/js/popper.min.js"></script>
+          <script type="text/javascript" src="./asset/bootstrap/js/bootstrap.min.js"></script>
+          <script type="text/javascript" src="./asset/bootstrap/js/addons/datatables.min.js"></script>
+          <script type="text/javascript" src="./asset/bootstrap/js/addons/datatables-select.min.js"></script>
+          <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+          <script type="text/javascript" src="./js/chart_script.js"></script>
+
+          <script>
+            $(document).ready(function () {
+              $(".hamburger .hamburger__inner").click(function () {
+                $(".wrapper").toggleClass("active")
+              })
+
+              $(".top_navbar .fas").click(function () {
+                $(".profile_dd").toggleClass("active");
+              });
+              //$(".hamburger .hamburger__inner").click();
             })
-
-            $(".top_navbar .fas").click(function () {
-              $(".profile_dd").toggleClass("active");
-            });
-            //$(".hamburger .hamburger__inner").click();
-          })
-        </script>
-      </body>
-    </html>
+          </script>
+        </body>
+      </html>
