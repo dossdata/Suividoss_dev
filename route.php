@@ -33,6 +33,14 @@ switch ($_POST["param"]) {
         echo $dz;
         break;
 
+        case 'selectsup_2':
+            $z = $affect->selectsup_2($_POST["valeur_id"]);
+            $dz = json_encode($z);
+            echo $dz;
+            break;        
+
+        
+
     case 'selectall_ptf':
         $z = $affect->selectall_ptf($_POST["select_mm"], $_POST["select_aa"]);
         $dz = json_encode($z);
@@ -76,6 +84,14 @@ switch ($_POST["param"]) {
         $dz = json_encode($z);
         echo $dz;
         break;
+
+        case 'selectsonportfeuil2':
+            $z = $affect->selectsonportfeuil2($_POST["id"]);
+            $dz = json_encode($z);
+            echo $dz;
+            break;        
+
+
 
     case 'selectsonportfeuil_grap':
         $z = $affect->selectsonportfeuil_grap($_POST["id"], $_POST["aneselect"]);

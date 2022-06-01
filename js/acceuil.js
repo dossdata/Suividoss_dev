@@ -2153,7 +2153,7 @@ $(function(){
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    param:'selectsup',
+                    param:'selectsup_2',
                     valeur_id: $(this).val(),
                 },
                 success: function(data) {
@@ -2169,7 +2169,7 @@ $(function(){
         })   
         
         $(document).on('change', '#listpaysselect', function() {
-            $('#aneselect').val("");
+           /* $('#aneselect').val("");
             $('#listptt').html("");
             initalise();
             var select = "";
@@ -2190,7 +2190,7 @@ $(function(){
                     }
                     $('#sup').html( " Superviseur : <select id='supselect'><option value='0'></option>"+ select +"</select>")
                 },
-            });
+            });*/
         })
 
         $(document).on('change', '#listpaysselectblc', function() {
@@ -2235,7 +2235,7 @@ $(function(){
                 type: 'POST',
                 dataType:'json',
                 data: {
-                    param:'selectsonportfeuil',
+                    param:'selectsonportfeuil2',
                     id: $(this).val(),
                 },
                 success: function(data) {

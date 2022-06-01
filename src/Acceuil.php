@@ -1661,6 +1661,18 @@ class Acceuil extends Connection
         return $resultat;
     }
 
+    public function selectsup_2($pays_id)
+    {
+        $sql = "SELECT  id, nom FROM suividossdb.utilisateur where pays_id=:pays_id and post_id=:post_id";
+        $res = $this->Getconnexion()->prepare($sql);
+        $res->execute(array(
+            'pays_id' => $pays_id,
+            'post_id' => 5,
+        ));
+        $resultat = $res->fetchAll();
+        return $resultat;
+    }
+
 
     public function selectall_ptf($mois, $annee)
     {
@@ -1916,6 +1928,17 @@ class Acceuil extends Connection
     public function selectsonportfeuil($id)
     {
         $sql = "select distinct e.id, e.code from dossier d left join equipe e on(e.id = equip_id) where d.manger_fr =:utilisateur_id and e.code is not null group by e.code";
+        $res = $this->Getconnexion()->prepare($sql);
+        $res->execute(array(
+            'utilisateur_id' => $id,
+        ));
+        $resultat = $res->fetchAll();
+        return $resultat;
+    }
+
+    public function selectsonportfeuil2($id)
+    {
+        $sql = "SELECT sonportfeuilles FROM portfeuilsup WHERE utilisateur_id =:utilisateur_id";
         $res = $this->Getconnexion()->prepare($sql);
         $res->execute(array(
             'utilisateur_id' => $id,
