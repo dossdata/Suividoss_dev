@@ -467,7 +467,7 @@ $(function () {
 
 
         }else{
-          $('.total_dossier_select').html("00");
+          $('.total_dossier_select').html("0");
         }
       }else{
         $('#reponsemytable').html("");
