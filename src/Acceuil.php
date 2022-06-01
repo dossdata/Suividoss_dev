@@ -1788,10 +1788,12 @@ class Acceuil extends Connection
 
 
         if ($collab == "_ass") {
+            $cond = "";
+            if($_id == "null"){$cond = " d.ass is null ";}else{ $cond = "d.ass = '$_id'";}
             $sql_ass = "select distinct d.id, e.code,d.nom,s.idsituation_dossier,tmp.dern_date as date_cloturation,COALESCE(s.etat_bilan,'') as etat_bilan from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
         LEFT JOIN utilisateur u on(u.id = d.ass) 
         LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
-            ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where d.ass = '". $_id ."' and tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d;
+            ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where $cond and tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d;
             $res_ass = $this->Getconnexion()->prepare($sql_ass);
             $res_ass->execute(array(
                 'manger_fr' => $manager,
@@ -1802,10 +1804,11 @@ class Acceuil extends Connection
 
 
         if ($collab == "_cdm") {
+            if($_id == "null"){$cond = " d.cdm is null ";}else{ $cond = "d.cdm = '$_id'";}
             $sql_cdm = "select distinct d.id, e.code,d.nom,s.idsituation_dossier,tmp.dern_date as date_cloturation,COALESCE(s.etat_bilan,'') as etat_bilan from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
             LEFT JOIN utilisateur u on(u.id = d.cdm) 
             LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
-                ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where d.cdm = '".$_id."' and tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d ;
+                ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where  $cond and tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d ;
             $res_cdm = $this->Getconnexion()->prepare($sql_cdm);
             $res_cdm->execute(array(
                 'manger_fr' => $manager,
@@ -1816,10 +1819,11 @@ class Acceuil extends Connection
 
 
         if ($collab == "_cde") {
+            if($_id == "null"){$cond = " d.ll is null ";}else{ $cond = "d.ll = '$_id'";}
             $sql_cde = "select distinct d.id, e.code,d.nom,s.idsituation_dossier,tmp.dern_date as date_cloturation, COALESCE(s.etat_bilan,'') as etat_bilan from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
                 LEFT JOIN utilisateur u on(u.id = d.ll) 
                 LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
-                    ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where d.ll = '".$_id."' and tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d ;
+                    ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where $cond and tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d ;
             $res_cde = $this->Getconnexion()->prepare($sql_cde);
             $res_cde->execute(array(
                 'manger_fr' => $manager,
