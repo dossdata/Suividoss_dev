@@ -49,9 +49,7 @@ switch ($_POST["param"]) {
                 $z = $affect->__attrib($_POST["iddossier"]);
                 echo json_encode($z);
                 break; 
-
-
-            
+           
             
             case '_update_niveau_etp':
                 $z = $affect->_update_niveau_etp($_POST["id_user"], $_POST["niveau"]);

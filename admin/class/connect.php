@@ -11,7 +11,6 @@ $password = "CfeSArICSDzqwNM58R4Y";
 $root = "admin" ;
 $port = 3306;
 
-
 try {
    //$dbo = new PDO("mysql:host=$server;dbname=$base", $root, $password);
    $dbo = new PDO('mysql:host='.$server.';port='.$port.';charset=utf8;dbname='.$base.'', $root, $password);
