@@ -10,7 +10,7 @@ $(function () {
       type: "POST",
       dataType: "json",
       data: {
-        param: "selectsup",
+        param: "selectsup_2",
         valeur_id: $(this).val()
       },
       success: function (data) {
