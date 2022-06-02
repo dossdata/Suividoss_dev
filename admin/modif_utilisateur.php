@@ -235,7 +235,7 @@ molda left
 				</div>
 				<div class="text-center"><button class="btn btn-primary" id="btnEnregistrer">Enregistrer la modification <span class='glyphicon glyphicon-edit'></span></button>
 
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-warning" id="btn-supr">Suprimier l'Utilisateur <span class='glyphicon glyphicon-delete'></span></button>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-warning" id="btn-supr" style="display:none">Suprimier l'Utilisateur <span class='glyphicon glyphicon-delete'></span></button>
 
 				</div>
 
