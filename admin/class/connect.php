@@ -1,6 +1,5 @@
 <?php
-/*
-$server = "localhost";
+/*$server = "localhost";
 $base = "suividossdb" ;
 $password = "Lougaroup1root4321";
 $root = "root" ;

@@ -53,43 +53,49 @@ $(function(){
     });
 
 
-$(document).on('keyup','#txtnom',function(){
-	$('#txtlogin').val($(this).val());
-	$('#txtpassword').val($(this).val());
-});
+
 
 $(document).on('click','#btnOk',function(){
-	var txtnom = $('#txtnom').val();
-	var txtprenom = $('#txtprenom').val(); 
-	var txtlogin = $('#txtlogin').val();
-	var txtpassword = $('#txtpassword').val();
-	var chkpays = $('#chkpays').val();
-	var chcpost = $('#chcpost').val();
-	var chkmodifdoss = $('#chkmodifdoss').is(":checked");
-	var chksuprdoss = $('#chksuprdoss').is(":checked");
-	var chksmodifequip = $('#chksmodifequip').is(":checked");
-	var chksuprequip = $('#chksuprequip').is(":checked");
-	var chkmodifprofil = $('#chkmodifprofil').is(":checked");
-	var chkvisualisation = $('#chkvisualisation').is(":checked");
+	var nom = $('#txtnom').val();
+	var prenom = $('#txtprenom').val();
+	var txtmat = $('#txtmat').val().toUpperCase();
+	var login = $('#txtlogin').val();
+	var paasword = $('#txtpassword').val();
+	var pays = $('#chkpays').val();
+	var poste = $('#chcpost').val();
+	var sexe = $('#sexe').val();
+	var date_de_naissance = $('#date_naissance').val();
+	var date_d_entree = $('#dt_entrer').val();
+	var supervision = $('#sup_select').val();
+	var niveau_etp = $('#niveau_etp').val();
+
+		if(parseInt($('#chkpays').val()) != 2){
+		if(nom == "" || prenom == "" || txtmat == "" || login == "" || paasword == "" || pays == "0" || poste == "0" || sexe == "" || date_de_naissance == "" || 
+		date_d_entree == "" || supervision == "" || niveau_etp == "" ){
+			alert("Attention les champs ne doivent être vide !");
+			return;
+		}
+	}
+
 
 	$.ajax({
         url: "php/script_utilisateur.php",
         type:'POST',
         data:{
-            param:'add',	
-			Otxtnom:txtnom,
-			Otxtprenom:txtprenom,
-			Otxtlogin:txtlogin,
-			Otxtpassword:txtpassword,
-			Ochkpays:chkpays,
-			Ochcpost :chcpost,
-			Ochkmodifdoss :chkmodifdoss,
-			Ochksuprdoss:chksuprdoss,
-			Ochksmodifequip:chksmodifequip,
-			Ochksuprequip :chksuprequip,
-			Ochkmodifprofil:chkmodifprofil,
-			Ochkvisualisation:chkvisualisation,	
-		
+            param:'add',
+			 nom: nom,
+			 prenom: prenom,
+			 txtmat:txtmat,
+			 login: login,
+			 paasword: paasword,
+			 pays: pays,
+			 poste: poste,
+			 sexe: sexe,
+			 date_de_naissance: date_de_naissance,
+			 date_d_entree: date_d_entree,
+			 supervision: supervision,
+			 niveau_etp: niveau_etp,
+			
         },
         success: function(data){
 	if(data == "bien"){

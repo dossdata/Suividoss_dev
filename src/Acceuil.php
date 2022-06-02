@@ -1878,7 +1878,7 @@ class Acceuil extends Connection
         $resultat = $res->fetchAll();
 
 
-        $sql_ass = "select u.niveau_etp, ". $this->date_retour("date_d_entrer") ." d.ass as id_ass, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
+        $sql_ass = "select u.prenom, u.niveau_etp, ". $this->date_retour("date_d_entrer") ." d.ass as id_ass, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
         LEFT JOIN utilisateur u on(u.id = d.ass) 
         LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
             ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d . " GROUP BY u.prenom_mail ";
@@ -1891,7 +1891,7 @@ class Acceuil extends Connection
 
 
 
-        $sql_cdm = "select u.niveau_etp, ". $this->date_retour("date_d_entrer") ." d.cdm as id_cdm, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
+        $sql_cdm = "select u.prenom, u.niveau_etp, ". $this->date_retour("date_d_entrer") ." d.cdm as id_cdm, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
             LEFT JOIN utilisateur u on(u.id = d.cdm) 
             LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
                 ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d . " GROUP BY u.prenom_mail ";

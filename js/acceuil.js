@@ -2164,6 +2164,7 @@ $(function(){
                         select += "<option value='" + id + "'>"+ nom +"</option>";
                     }
                     $('#sup').html( " Superviseur : <select id='supselect'><option value='0'></option>"+ select +"</select>")
+                    return;
                 },
             });
         })   

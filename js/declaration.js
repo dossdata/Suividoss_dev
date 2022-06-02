@@ -293,10 +293,12 @@ $(function(){
   
             if(tva_regime== "EM" || tva_regime== "RM"){
                 $('.tb_declaration_tabs:eq(0)').removeClass('in_visible');
+                $('.tb_declaration_tabs:eq(3)').removeClass('in_visible');
             }
     
             if(tva_regime== "ET" || tva_regime== "RT"){
                 $('.tb_declaration_tabs:eq(1)').removeClass('in_visible');
+                $('.tb_declaration_tabs:eq(3)').removeClass('in_visible');
             }
 
             if(tva_regime== "ST"){

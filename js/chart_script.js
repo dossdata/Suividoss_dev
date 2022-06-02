@@ -417,7 +417,7 @@ $(function () {
   
 
   function lance_cout_detail(detection){
-    var tete =     '<tr><th>Nom</th><th style="text-align:center;color:red" >Nb dossier</th>'+
+    var tete =     '<tr><th>Nom</th><th class="teteaff">Matricule</th><th style="text-align:center;color:red" >Nb dossier</th>'+
     '<th  style="text-align:center;color:red">Ancienneté ETP</th>'+
     '<th style="text-align:center;color:red">Niveau ETP</th></tr>';
     $.ajax({
@@ -445,7 +445,7 @@ $(function () {
         for(var t = 0; t < data[0]["nom_assistant"].length; t++){
           var anci = "";
           if(data[0]["nom_assistant"][t].ancienter != null){anci =  ("  "+ data[0]["nom_assistant"][t].ancienter / 12 | 0) + " ans  " + data[0]["nom_assistant"][t].ancienter % 12 +" mois";}
-          list_ass += "<tr><th>"+data[0]["nom_assistant"][t].prenom_mail+"<th class='id_ass recupere_id'>"+data[0]["nom_assistant"][t].id_ass+"</th><th class='click_dts'><b>" + data[0]["nom_assistant"][t].total + "</b></th><th>"+anci.replace("0 ans ","").replace(" 0 mois","")+"</th><th class='niveau_etp'>"+data[0]["nom_assistant"][t].niveau_etp+"</th></tr>"
+          list_ass += "<tr><th>"+data[0]["nom_assistant"][t].prenom_mail+"<th>"+data[0]["nom_assistant"][t].prenom+"</th><th class='id_ass recupere_id'>"+data[0]["nom_assistant"][t].id_ass+"</th><th class='click_dts'><b>" + data[0]["nom_assistant"][t].total + "</b></th><th>"+anci.replace("0 ans ","").replace(" 0 mois","")+"</th><th class='niveau_etp'>"+data[0]["nom_assistant"][t].niveau_etp+"</th></tr>"
         }
         $("#table_ass_list").html( tete + list_ass);
 
@@ -453,7 +453,7 @@ $(function () {
         for(var tt = 0; tt < data[0]["nom_cdm"].length; tt++){
           var anci = "";
           if(data[0]["nom_cdm"][tt].ancienter != null){anci =  ("  "+ data[0]["nom_cdm"][tt].ancienter / 12 | 0) + " ans  " + data[0]["nom_cdm"][tt].ancienter % 12 +" mois";}
-          list_cdm += "<tr><th>"+data[0]["nom_cdm"][tt].prenom_mail+"<th class='id_cdm recupere_id'>"+data[0]["nom_cdm"][tt].id_cdm+"</th><th class='click_dts'><b>" + data[0]["nom_cdm"][tt].total + "</b></th><th>"+anci.replace("0 ans ","").replace(" 0 mois","")+"</th><th class='niveau_etp'>"+data[0]["nom_cdm"][tt].niveau_etp+"</th></tr>"
+          list_cdm += "<tr><th>"+data[0]["nom_cdm"][tt].prenom_mail+"<th>"+data[0]["nom_cdm"][tt].prenom+"</th><th class='id_cdm recupere_id'>"+data[0]["nom_cdm"][tt].id_cdm+"</th><th class='click_dts'><b>" + data[0]["nom_cdm"][tt].total + "</b></th><th>"+anci.replace("0 ans ","").replace(" 0 mois","")+"</th><th class='niveau_etp'>"+data[0]["nom_cdm"][tt].niveau_etp+"</th></tr>"
         }
         $("#table_cdm_list").html(tete + list_cdm);
 
@@ -469,6 +469,7 @@ $(function () {
         }else{
           $('.total_dossier_select').html("0");
         }
+        $('.teteaff:eq(0)').hide();
       }else{
         $('#reponsemytable').html("");
         if(data[0]["total_dossier"].length >0){

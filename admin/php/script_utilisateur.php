@@ -31,43 +31,39 @@ if($param == "ListPostes"){
 
 
 if($param == "add"){
-	$Otxtnom=$_POST["Otxtnom"];
-	$Otxtprenom=$_POST["Otxtprenom"];
-	$Otxtlogin=$_POST["Otxtlogin"];
-	$Otxtpassword=$_POST["Otxtpassword"];
-	$Ochkmodifdoss =$_POST["Ochkmodifdoss"];
-	$Ochksuprdoss=$_POST["Ochksuprdoss"];
-	$Ochksmodifequip=$_POST["Ochksmodifequip"];
-	$Ochksuprequip =$_POST["Ochksuprequip"];
-	$Ochkmodifprofil=$_POST["Ochkmodifprofil"];
-	$Ochkvisualisation=$_POST["Ochkvisualisation"];
-	$Ochkpays=$_POST["Ochkpays"];
-	$Ochcpost =$_POST["Ochcpost"];
-
-	if($Ochkmodifdoss == "true"){$Ochkmodifdoss = 1;}else{$Ochkmodifdoss = 0;};
-	if($Ochksuprdoss == "true"){$Ochksuprdoss = 1;}else{$Ochksuprdoss = 0;};
-	if($Ochksmodifequip == "true"){$Ochksmodifequip = 1;}else{$Ochksmodifequip = 0;};
-	if($Ochksuprequip == "true"){$Ochksuprequip = 1;}else{$Ochksuprequip = 0;};
-	if($Ochkmodifprofil == "true"){$Ochkmodifprofil = 1;}else{$Ochkmodifprofil = 0;};
-	if($Ochkvisualisation == "true"){$Ochkvisualisation = 1;}else{$Ochkvisualisation = 0;};
-	
+	$nom=$_POST["nom"];
+	$prenom=$_POST["prenom"];
+	$txtmat=$_POST["txtmat"];
+	$login= trim($_POST["login"]);
+	$paasword=$_POST["paasword"];
+	$pays=$_POST["pays"];
+	$poste=$_POST["poste"];
+	$sexe=$_POST["sexe"];
+	$date_de_naissance=$_POST["date_de_naissance"];
+	$date_d_entree=$_POST["date_d_entree"];
+	$supervision=$_POST["supervision"];
+	$niveau_etp=$_POST["niveau_etp"];	
 	
 	try {
-  		$sql = "INSERT INTO suividossdb.utilisateur(nom,prenom,login,password,modif_doss,supr_doss,modif_equip,supr_equip,modif_profil,visual_autre,pays_id,post_id) VALUES (:nom,:prenom,:login,:password,:modif_doss,:supr_doss,:modif_equip,:supr_equip,:modif_profil,:visual_autre,:pays_id,:post_id)";
+  		$sql = "INSERT INTO suividossdb.utilisateur 
+		  (nom,prenom,login,password,pays_id,post_id,sexe,date_de_naissance,date_d_entrer,son_superviseur,niveau_etp,nom_mail,prenom_mail,mail) 
+		  VALUES (:nom,:prenom,:login,:paasword,:pays,:poste,:sexe,:date_de_naissance,:date_d_entree,:supervision,:niveau_etp,:nom_mail,:prenom_mail,:mail)";
 		$res = $dbo->prepare($sql);
 		$res->execute(array(
-			'nom' =>trim($Otxtnom),
-			'prenom'=>trim($Otxtprenom),
-			'login'=>trim($Otxtlogin),
-			'password'=>trim($Otxtpassword),
-			'modif_doss'=>trim($Ochkmodifdoss),
-			'supr_doss'=>trim($Ochksuprdoss),
-			'modif_equip'=>trim($Ochksmodifequip),
-			'supr_equip'=>trim($Ochksuprequip),
-			'modif_profil'=>trim($Ochkmodifprofil),
-			'visual_autre'=>trim($Ochkvisualisation),
-			'pays_id'=>trim($Ochkpays),
-			'post_id'=>trim($Ochcpost),
+			 "nom"=>$txtmat."_".$prenom,
+			 "prenom"=>$txtmat,
+			 "login"=>$login,
+			 "paasword"=>$paasword,
+			 "pays"=>$pays,
+			 "poste"=>$poste,
+			 "sexe"=>$sexe,
+			 "date_de_naissance"=>$date_de_naissance,
+			 "date_d_entree"=>$date_d_entree,
+			 "supervision"=>$supervision,
+			 "niveau_etp"=>$niveau_etp,
+			 "nom_mail" => $nom,
+			 "prenom_mail" => $prenom,
+			 "mail" => $login
 		));
 		echo "bien";
 	} catch (Exception $e) {

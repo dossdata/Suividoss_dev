@@ -1,12 +1,21 @@
 $(function() {
     var idLogin = "";
     var tete = '<thead><tr><th class = "itemresize" nowrap="nowrap">id</th>' +
-        '<th class = "itemresize status" nowrap="nowrap">nom</th>' +
-        '<th class = "itemresize status" nowrap="nowrap">Login </th>' +
-        '<th class = "itemresize status" nowrap="nowrap" id="nbr_image">Mdp</th>' +
-        '<th class = "itemresize status" nowrap="nowrap" id="nbr_fact">Pays</th>' +
-        '<th class = "itemresize status" nowrap="nowrap" id="nbr_autres">Poste</th>' +
-        '<th class = "itemresize status" nowrap="nowrap" id="nbr_autres">#</th></tr></thead>';
+        '<th >nom</th>' +
+        '<th class = "">Penom</th>' +
+        '<th>Login </th>' +
+        '<th>Sexe </th>' +
+        '<th  id="">Mdp</th>' +
+        '<th  id="">Supervision</th>' +
+        '<th  id="">Niveau Etp</th>' +
+        '<th  id="">Pays</th>' +
+        '<th  id="">Poste</th>' +
+        '<th class = "">Mail</th>'+
+        '<th class = "">Date d entree</th>'+
+        '<th class = "">Date d sortie</th>'+
+        '<th class = "">Date de naissance</th>'+
+        '<th class = "">#</th>'+
+        '</tr></thead>';
 
     function returnlist() {
         $.ajax({
@@ -73,24 +82,58 @@ $(function() {
 
     $(document).on('click', '.iconmodif', function() {
         idLogin = $(this).closest('tr').find('td:eq(0)').html();
-        $('#txtnom').val($(this).closest('tr').find('td:eq(1)').html());
-        $('#txtlogin').val($(this).closest('tr').find('td:eq(2)').html());
-        $('#txtpassword').val($(this).closest('tr').find('td:eq(3)').html());
-        $('#lstpays option[data="' + $(this).closest('tr').find('td:eq(4)').html() + '"]').attr('selected', 'selected');
-        $('#lstpost option[data="' + $(this).closest('tr').find('td:eq(5)').html() + '"]').attr('selected', 'selected');
+        $('#txtnom').val($(this).closest('tr').find('.snom').html());
+        $('#txtlogin').val($(this).closest('tr').find('.slogin').html());
+        $('#txtprenom').val($(this).closest('tr').find('.sprenomail').html());
+        $('#txtmail').val($(this).closest('tr').find('.smail').html());
+        $('#txtniveauetp').val($(this).closest('tr').find('.sniveau_etp').html());
+        $('#txtsexe').val($(this).closest('tr').find('.ssex').html());        
+        $('#txtpassword').val($(this).closest('tr').find('.spassword').html());
+        $('#txtdate_de_naissance').val($(this).closest('tr').find('.snaissance').html());
+        $('#txtdateentrer').val($(this).closest('tr').find('.sentrer').html());
+        $('#txtsortie').val($(this).closest('tr').find('.ssortie').html());
+        $('#txtmatricule').val($(this).closest('tr').find('.ssmat').html());
+        
+        
+        $('#supervision option[data="' + $(this).closest('tr').find('.sssup').html() + '"]').attr('selected', 'selected');
+        $('#lstpays option[data="' + $(this).closest('tr').find('.spays_id').html() + '"]').attr('selected', 'selected');
+        $('#lstpost option[data="' + $(this).closest('tr').find('.spost').html() + '"]').attr('selected', 'selected');
     })
 
     $(document).on('click', '#btnEnregistrer', function() {
+
+        var nom = $('#txtnom').val();
+        var prenom = $('#txtprenom').val();
+        var txtmat = $('#txtmatricule').val().toUpperCase();
+        var login = $('#txtlogin').val();
+        var txmail = $('#txtmail').val();
+        var paasword = $('#txtpassword').val();
+        var pays = $('#lstpays').val();
+        var poste = $('#lstpost').val();
+        var sexe = $('#txtsexe').val();
+        var date_de_naissance = $('#txtdate_de_naissance').val();
+        var date_d_entree = $('#txtdateentrer').val();
+        var supervision = $('#supervision').val();
+        var niveau_etp = $('#txtniveauetp').val();
+
         $.ajax({
             url: "php/script_s_modif_utilisateur.php",
             type: 'POST',
             data: {
                 param: 'updatelogin',
-                txtnom: $('#txtnom').val(),
-                txtlogin: $('#txtlogin').val(),
-                txtpassword: $('#txtpassword').val(),
-                lstpays: $('#lstpays').val(),
-                lstpost: $('#lstpost').val(),
+                nom: nom,
+                prenom: prenom,
+                txtmat:txtmat,
+                login: login,
+                paasword: paasword,
+                pays: pays,
+                poste: poste,
+                sexe: sexe,
+                date_de_naissance: date_de_naissance,
+                date_d_entree: date_d_entree,
+                supervision: supervision,
+                niveau_etp: niveau_etp,
+                txmail:txmail,
                 idlogin: idLogin,
 
             },
