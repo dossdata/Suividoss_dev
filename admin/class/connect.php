@@ -1,9 +1,9 @@
 <?php
-/*$server = "localhost";
+$server = "localhost";
 $base = "suividossdb" ;
 $password = "Lougaroup1root4321";
 $root = "root" ;
-$port = 3306;*/
+$port = 3306;
 
 $server = "suividoss-production.caukscxdgck1.eu-central-1.rds.amazonaws.com";
 $base = "suividossdb" ;

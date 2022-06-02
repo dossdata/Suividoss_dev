@@ -436,6 +436,8 @@ $(function () {
           $('#sup_k').html("");
           $("#table_ass_list,#table_cdm_list").html("");
           $('#sup_k').html(data[0]["nom_sup_mada"][0].nom);
+          $('#mat_su').html(data[0]["nom_sup_mada"][0].prenom);
+          
           var list_ass = "";
           var list_cdm = "";
           var list_cde = "";
@@ -461,7 +463,7 @@ $(function () {
         for(var ttt = 0; ttt < data[0]["nom_cde"].length; ttt++){
           var anci = "";
           if(data[0]["nom_cde"][ttt].ancienter != null){anci =  ("  "+ data[0]["nom_cde"][ttt].ancienter / 12 | 0) + " ans  " + data[0]["nom_cde"][ttt].ancienter % 12 +" mois";}          
-          list_cde += "<tr><th>"+data[0]["nom_cde"][ttt].prenom_mail+"<th class='id_cde recupere_id'>"+data[0]["nom_cde"][ttt].id_cde+"</th><th class='click_dts'><b>" + data[0]["nom_cde"][ttt].total + "</b></th><th>"+anci.replace("0 ans ","").replace(" 0 mois","")+"</th><th class='niveau_etp'>"+data[0]["nom_cde"][ttt].niveau_etp+"</th></tr>"
+          list_cde += "<tr><th>"+data[0]["nom_cde"][ttt].prenom_mail+"<th>"+data[0]["nom_cde"][ttt].prenom +"</th><th class='id_cde recupere_id'>"+data[0]["nom_cde"][ttt].id_cde+"</th><th class='click_dts'><b>" + data[0]["nom_cde"][ttt].total + "</b></th><th>"+anci.replace("0 ans ","").replace(" 0 mois","")+"</th><th class='niveau_etp'>"+data[0]["nom_cde"][ttt].niveau_etp+"</th></tr>"
         }
         $("#table_cde_list").html( tete + list_cde);
 
@@ -469,7 +471,6 @@ $(function () {
         }else{
           $('.total_dossier_select').html("0");
         }
-        $('.teteaff:eq(0)').hide();
       }else{
         $('#reponsemytable').html("");
         if(data[0]["total_dossier"].length >0){
@@ -487,24 +488,24 @@ $(function () {
 
 
   $(document).on('click','.click_dts', function(){
-    if($(this).closest("tr").find("th:eq(1)").hasClass("id_ass") == true)
+    if($(this).closest("tr").find(".recupere_id").hasClass("id_ass") == true)
     {
-      __lance_cout_detail("_ass",$(this).closest("tr").find("th:eq(1)").html());
+      __lance_cout_detail("_ass",$(this).closest("tr").find(".recupere_id").html());
     }
   })
 
   $(document).on('click','.click_dts', function(){
-    if($(this).closest("tr").find("th:eq(1)").hasClass("id_cdm") == true)
+    if($(this).closest("tr").find(".recupere_id").hasClass("id_cdm") == true)
     {
-      __lance_cout_detail("_cdm",$(this).closest("tr").find("th:eq(1)").html());
+      __lance_cout_detail("_cdm",$(this).closest("tr").find(".recupere_id").html());
     }
     
   })
   
   $(document).on('click','.click_dts', function(){
-    if($(this).closest("tr").find("th:eq(1)").hasClass("id_cde") == true)
+    if($(this).closest("tr").find(".recupere_id").hasClass("id_cde") == true)
     {
-      __lance_cout_detail("_cde",$(this).closest("tr").find("th:eq(1)").html());
+      __lance_cout_detail("_cde",$(this).closest("tr").find(".recupere_id").html());
     }
     
   })  

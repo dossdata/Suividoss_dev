@@ -1858,7 +1858,7 @@ class Acceuil extends Connection
         }
 
 
-        $sql0 = "select u.nom from manager_fr_lier_superviseur_mada m left join utilisateur u on(u.id = m.supeviseur_mada) WHERE m.manager_fr =:manger_fr";
+        $sql0 = "select u.prenom, u.nom from manager_fr_lier_superviseur_mada m left join utilisateur u on(u.id = m.supeviseur_mada) WHERE m.manager_fr =:manger_fr";
         $res0 = $this->Getconnexion()->prepare($sql0);
         $res0->execute(array(
             'manger_fr' => $manager
@@ -1903,7 +1903,7 @@ class Acceuil extends Connection
         $resultat_cdm = $res_cdm->fetchAll();
 
 
-        $sql_cde = "select u.niveau_etp, ". $this->date_retour("date_d_entrer") ." d.ll as id_cde, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
+        $sql_cde = "select u.prenom, u.niveau_etp, ". $this->date_retour("date_d_entrer") ." d.ll as id_cde, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
                 LEFT JOIN utilisateur u on(u.id = d.ll) 
                 LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
                     ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d . " GROUP BY u.prenom_mail ";
