@@ -33,7 +33,18 @@
       }
     </style>
   </head>
+  
+
+
   <body style="zoom:82%">
+
+    {% if utilisateur[0].nom_poste != "SUPERVISEUR" and utilisateur[0].nom_poste != "PDG" and utilisateur[0].nom_poste != "DIRECTEUR" and utilisateur[0].nom_poste != "MANAGER" and utilisateur[0].nom_poste != "MANAGER D EQUIPE" and utilisateur[0].nom_poste != "REVISEUR" and utilisateur[0].nom_poste != "CHEF D EQUIPE" %}
+      <style>
+        #gestion_equipe {
+          display:none
+        }
+      </style>
+    {% endif %}
 
     <div class="wrapper">
       <div class="top_navbar">
