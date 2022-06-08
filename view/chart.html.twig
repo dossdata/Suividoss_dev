@@ -27,6 +27,7 @@
       }
 
       .id_ass,
+      .id_ref,
       .id_cde,
       .id_cdm,.id_dossier_ {
         display: none;
@@ -40,7 +41,7 @@
 
     {% if utilisateur[0].nom_poste != "SUPERVISEUR" and utilisateur[0].nom_poste != "PDG" and utilisateur[0].nom_poste != "DIRECTEUR" and utilisateur[0].nom_poste != "MANAGER" and utilisateur[0].nom_poste != "MANAGER D EQUIPE" and utilisateur[0].nom_poste != "REVISEUR" and utilisateur[0].nom_poste != "CHEF D EQUIPE" %}
       <style>
-        #gestion_equipe {
+        #gestion_equipe,#click_evolu {
           display:none
         }
       </style>
@@ -57,7 +58,7 @@
         </div>
         <div class="menu" style="background:#3197b7">
           <div class="logo" style="color:#F4F7F6!important">
-            Dashboard Manager
+            
 
           </div>
           <div class="right_menu">
@@ -126,6 +127,13 @@
                 <a href="#" id="gestion_equipe">
                   <i class="fas fa-band-aid text-danger"></i>&nbsp;
                   <span class="title">Gestion D'equipe</span>
+                </a>
+              </li>
+
+              <li>
+              <a href="#" id="click_evolu">
+                  <i class="fab fa-elementor"></i>&nbsp;
+                  <span class="title">Evolut° en mens</span>
                 </a>
               </li>
               <!--<li> <a href="#"> <i class="fas fa-border-all"></i>&nbsp; <span class="title">Tables</span> </a> </li>-->
@@ -263,6 +271,21 @@
 
                   </div>
 
+                 <div class="row par_evo text-center" style="display:none">
+                    <div class="col-md-1">Année
+                    </div>
+                    <div class="col-md-2">
+                    <select class="form-control" id="select_evo">
+                    <option></option>
+                      {% for row in 2010..2030 %}
+                        <option value={{row}}>{{row}}</option>
+                      {% endfor %}
+                    </select>
+                    </div>
+            
+
+                  </div>                  
+
                 </div>
 
               </div>
@@ -336,6 +359,12 @@
                     <dd style="text-align:center">
                       <table border='1' width="40%" id="table_cde_list"></table>
                     </dd>
+
+                    <dt>REFERENCE TECHNIQUE</dt>
+                    <dd style="text-align:center">
+                      <table border='1' width="40%" id="table_technique_list"></table>
+                    </dd>
+                    <hr>
                     <hr>
                     <dt>CDM KARLIT</dt>
                     <dd style="text-align:center">
@@ -349,6 +378,57 @@
                 </div>
               </div>
             </div>
+
+  <style>
+    #theadevo tr th {
+        background: #fff;
+        position: sticky;
+        box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+        top: 0;
+    }
+
+ 
+
+    #tbodevo tr th {
+        /* Don't forget this, required for the stickiness */
+        top: 1.5em;
+    }
+    #tbodevo td,#theadevo th{
+      border: 1px solid #000;
+      text-align:center
+
+    }
+    .col2,.col3,.col4{
+      font-size:15px;
+      font-weight: bold;
+
+    }
+    
+  </style>
+         <div id="tbody_gevo" style="display:none">
+              <table id="taevo" class="w3-table" width="100%">
+              <thead id="theadevo">
+              <tr>
+                <th>Synthèse globale Karlit</th>	
+                <th>Nombre de dossiers Actif</th>
+                <th>Nombre de directeur de mission</th>
+                <th>Nombre de CDM Karlit</th>
+                <th>Nombre d'Assistant Karlit</th>
+              </tr>  
+              </thead>
+              <tbody id="tbodevo">
+              {% set mois_array = ["Janvier","Fevrier","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Decembre"] %}
+              {% for mois in mois_array %}
+                  <tr><td><h5>Période {{mois}} <i class="anne_select"></i></h5></td>{% for col in 1..4 %}<td class='col{{col}}'></td>{% endfor %}</tr>
+                  <tr><td class='entrer_user'>Entrée</td>{% for col in 1..4 %}<td class='col{{col}}'></td>{% endfor %}</tr>
+                  <tr><td class="sortie_user">Sortie</td>{% for col in 1..4 %}<td class='col{{col}}'></td>{% endfor %}</tr>
+                  <tr><td class="variation_user">Variation</td>{% for col in 1..4 %}<td class='col{{col}}'></td>{% endfor %}</tr>
+              {% endfor %}
+              </tbody>   
+            </table>
+        </div>
+
+            
 
           </div>
 
@@ -365,7 +445,6 @@
                         <th>Dossier</th>
                         <th>Situation</th>
                         <th>Cloture</th>
-                        <th>Etat bilan</th>
                       </tr>
                     </thead>
                     <tbody id="reponsemytable"></tbody>
@@ -374,6 +453,7 @@
               </div>
             </div>
           </div>
+          
 
           <!-- Trigger/Open the Modal -->
 
@@ -436,6 +516,31 @@
 
                 </table>
 
+              </div>
+              <footer class="w3-container w3-light-blue">
+                <p>@keobiz</p>
+              </footer>
+            </div>
+          </div>
+
+           <div class="w3-modal id03">
+            <div class="w3-modal-content w3-animate-zoom w3-card-4">
+              <header class="w3-container w3-light-blue">
+                <span onclick="document.getElementsByClassName('id03')[0].style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <h2 class="w3-text-white">DETAIL</h2>
+                <center id="doss_select" class="w3-text-red">
+                </center>
+              </header>
+
+              <div class="w3-container">
+                <table class="w3-table w3-border border='1' w3-table-all w3-hoverable w3-striped">
+                    <th>NOM</th>
+                    <th>PRENOM</th>
+                    <th>MATRICULE</th>
+                    <th>POSTE</th>
+                    <th>ANCIENTER</th>
+                    <th>NIVEAU ETP</th>                
+                </table>               
               </div>
               <footer class="w3-container w3-light-blue">
                 <p>@keobiz</p>

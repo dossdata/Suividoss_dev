@@ -14,6 +14,7 @@ $(function() {
         '<th class = "">Date d entree</th>'+
         '<th class = "">Date d sortie</th>'+
         '<th class = "">Date de naissance</th>'+
+        '<th>Date de poste</th>' + 
         '<th class = "">#</th>'+
         '</tr></thead>';
 
@@ -93,6 +94,7 @@ $(function() {
         $('#txtdateentrer').val($(this).closest('tr').find('.sentrer').html());
         $('#txtsortie').val($(this).closest('tr').find('.ssortie').html());
         $('#txtmatricule').val($(this).closest('tr').find('.ssmat').html());
+        $('#txtdatepost').val($(this).closest('tr').find('.date_poste').html());
         
         
         $('#supervision option[data="' + $(this).closest('tr').find('.sssup').html() + '"]').attr('selected', 'selected');
@@ -115,6 +117,7 @@ $(function() {
         var date_d_entree = $('#txtdateentrer').val();
         var supervision = $('#supervision').val();
         var niveau_etp = $('#txtniveauetp').val();
+        var date_poste = $('#txtdatepost').val();
 
         $.ajax({
             url: "php/script_s_modif_utilisateur.php",
@@ -134,7 +137,9 @@ $(function() {
                 supervision: supervision,
                 niveau_etp: niveau_etp,
                 txmail:txmail,
+                date_poste:date_poste,
                 idlogin: idLogin,
+
 
             },
             success: function(data) {

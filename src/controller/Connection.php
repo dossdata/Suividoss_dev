@@ -15,14 +15,14 @@ class Connection
    public function Getconnexion()
    {
       
-      $this->server = "suividoss-production.caukscxdgck1.eu-central-1.rds.amazonaws.com";
+     $this->server = "suividoss-production.caukscxdgck1.eu-central-1.rds.amazonaws.com";
       $this->base = "suividossdb";
       $this->password = "CfeSArICSDzqwNM58R4Y";
       $this->root = "admin";
       $this->port = 3306;
 
       
-      /*$this->server = "localhost";
+      /* $this->server = "localhost";
       $this->base = "suividossdb";
       $this->password = "Lougaroup1root4321";
       $this->root = "root";

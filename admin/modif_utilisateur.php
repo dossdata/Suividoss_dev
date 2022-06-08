@@ -218,12 +218,14 @@ molda left
 							<td>date d'entree</td>
 							<td>date sortie</td>
 							<td>MATRICULE</td>
+							<td>Changement de poste ou date debut de poste</td>
 						</tr>
 						<tr>
 							<td><input type="date" id="txtdate_de_naissance" class="form-control"></td>
 							<td><input type="date" id="txtdateentrer"  class="form-control"></td>
 							<td><input type="date" id="txtsortie" class="form-control"></td>
-							<td ><input type="text" id="txtmatricule" maxlength="5"></td>
+							<td ><input type="text" id="txtmatricule" maxlength="5" class="form-control"></td>
+							<td ><input type="date" id="txtdatepost" class="form-control"></td>
 						</tr>
 					</table>
 				</div>

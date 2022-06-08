@@ -47,6 +47,13 @@ switch ($_POST["param"]) {
         echo $dz;
         break;
 
+    case 'envoieannee':
+        $z = $affect->envoieannee($_POST["annee"]);
+        $dz = json_encode($z);
+        echo $dz;
+        break;
+
+
         case 'lance_reporting':
             $z = $affect->lance_reporting($_POST["manager"], $_POST["cdm_fr"], $_POST["type_ma"],$_POST["dectect"]);
             $dz = json_encode($z);

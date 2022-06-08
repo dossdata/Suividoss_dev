@@ -343,20 +343,27 @@ $(function () {
   $(document).on("click", "#click_parsup", function () {
     $("#optio_critere").html($(this).html());
     $(".par_sup").show(60);
-    $(".par_Equipe,.par_gestionEquipe").hide(60);
+    $(".par_Equipe,.par_gestionEquipe,#tbody_gevo,.par_evo").hide(60);
   });
 
   $(document).on("click", "#click_parequip", function () {
     $("#optio_critere").html($(this).html());
     $(".par_Equipe, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip").show(60);
-    $(".par_sup,.validgraphsup_parcdm,#head_parcdm,#tbody_parcdm,#tbody_gestion_equipe,.par_gestionEquipe").hide(60);
+    $(".par_sup,.validgraphsup_parcdm,#head_parcdm,#tbody_parcdm,#tbody_gestion_equipe,.par_gestionEquipe,.par_evo,#tbody_gevo").hide(60);
   });
 
   $(document).on("click", "#gestion_equipe", function () {
     $("#optio_critere").html($(this).html());
     $('#tbody_gestion_equipe,.par_gestionEquipe').show(60)
     $(".par_Equipe, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip").hide(60);
-    $(".par_sup,.validgraphsup_parcdm,#head_parcdm,#tbody_parcdm").hide(60);
+    $(".par_sup,.validgraphsup_parcdm,#head_parcdm,#tbody_parcdm,.par_evo,#tbody_gevo").hide(60);
+  });
+
+  $(document).on("click", "#click_evolu", function () {
+    $("#optio_critere").html($(this).html());
+    $('#tbody_gevo,.par_evo').show(60)
+    $(".par_Equipe, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip,#tbody_gestion_equipe").hide(60);
+    $(".par_sup,.validgraphsup_parcdm,#head_parcdm,#tbody_parcdm,.par_gestionEquipe").hide(60);
   });
 
   
@@ -364,7 +371,7 @@ $(function () {
   $(document).on("click", "#click_parcdm", function () {
     $("#optio_critere").html($(this).html());
     $(".par_Equipe, .validgraphsup_parcdm,#head_parcdm,#tbody_parcdm").show(60);
-    $(".par_sup, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip,#tbody_gestion_equipe,.par_gestionEquipe").hide(60);
+    $(".par_sup, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip,#tbody_gestion_equipe,.par_gestionEquipe,#tbody_gevo,.par_evo").hide(60);
   });
 
   $(document).on("click", "#reporting_social", function () {
@@ -382,8 +389,95 @@ $(function () {
     }
   });
 
+  $(document).on("change", "#select_evo", function () {
+    $('.anne_select').html($(this).val());
+    $.ajax({
+      url:'route.php',
+      type:'POST',
+      dataType:'json',
+      data:{
+        param:'envoieannee',
+        annee:$('#select_evo').val()
 
+      },
+      success:function(data){
+        console.log(data);
 
+        for(var x = 0; x < $('.anne_select').length; x++){
+          if( parseInt(data[x]["nbcde"][0][0]) > 0){
+            $(".anne_select:eq("+x+")").closest("tr").find('.col2').html("<a href='#' class='dt_nb'>" +data[x]["nbcde"][0][0] + "</a>");
+          }else{
+            $(".anne_select:eq("+x+")").closest("tr").find('.col2').html(0);
+          }          
+        }
+
+        for(var z = 0; z < $('.entrer_user').length; z++){
+          $(".entrer_user:eq("+z+")").closest("tr").find('.col2').html("<a href='#' class='dt_nb'>" +data[z].entrerenbcde + "</a>");          
+        }
+
+        for(var z = 0; z < $('.sortie_user').length; z++){
+          $(".sortie_user:eq("+z+")").closest("tr").find('.col2').html("<a href='#' class='dt_nb'>" +data[z].srotieenbcde +"</a>");          
+        }
+
+        for(var z = 0; z < $('.variation_user').length; z++){
+          $(".variation_user:eq("+z+")").closest("tr").find('.col2').html("<i style='color:red'>" +("<b>" + (data[z].entrerenbcde - data[z].srotieenbcde)) + "</i></b>");          
+        }
+
+        //---------------------------cdm------------------
+
+        for(var x = 0; x < $('.anne_select').length; x++){
+          if( parseInt(data[x]["nbcde"][0][0]) > 0){
+            $(".anne_select:eq("+x+")").closest("tr").find('.col3').html("<a href='#' class='dt_nb'>" + data[x]["nbcdm"][0][0] + "</a>");
+          }else{
+            $(".anne_select:eq("+x+")").closest("tr").find('.col3').html(0);
+          }          
+        }
+
+        for(var z = 0; z < $('.entrer_user').length; z++){
+          $(".entrer_user:eq("+z+")").closest("tr").find('.col3').html( "<a href='#' class='dt_nb'>" +data[z].entrerenbcdm + "</a>");          
+        }
+
+        for(var z = 0; z < $('.sortie_user').length; z++){
+          $(".sortie_user:eq("+z+")").closest("tr").find('.col3').html("<a href='#' class='dt_nb'>" + data[z].srotieenbcdm + "</a>");          
+        }
+
+        for(var z = 0; z < $('.variation_user').length; z++){
+          $(".variation_user:eq("+z+")").closest("tr").find('.col3').html("<i style='color:red'>" +( "<b>" + (data[z].entrerenbcdm - data[z].srotieenbcdm)) + "</i></b>");          
+        }
+        
+
+        
+        //---------------------------ass------------------
+
+        for(var x = 0; x < $('.anne_select').length; x++){
+          if( parseInt(data[x]["nbcde"][0][0]) > 0){
+            $(".anne_select:eq("+x+")").closest("tr").find('.col4').html( "<a href='#' class='dt_nb'>" +data[x]["nbass"][0][0] + "</a>");
+          }else{
+            $(".anne_select:eq("+x+")").closest("tr").find('.col4').html(0);
+          }          
+        }
+
+        for(var z = 0; z < $('.entrer_user').length; z++){
+          $(".entrer_user:eq("+z+")").closest("tr").find('.col4').html("<a href='#' class='dt_nb'>" + data[z].entrerenbass +"</a>");          
+        }
+
+        for(var z = 0; z < $('.sortie_user').length; z++){
+          $(".sortie_user:eq("+z+")").closest("tr").find('.col4').html("<a href='#' class='dt_nb'>" + data[z].srotieenbass+ "</a>");          
+        }
+
+        for(var z = 0; z < $('.variation_user').length; z++){
+          $(".variation_user:eq("+z+")").closest("tr").find('.col4').html("<i style='color:red'>" +((data[z].entrerenbass - data[z].srotieenbass)) + "</i>");          
+        }
+        
+        
+      }
+    })
+  });
+  
+  $(document).on("click", ".dt_nb", function () {
+    document.getElementsByClassName('id03')[0].style.display='block';
+  })
+  
   $(document).on("dblclick", ".niveau_etp", function () {
     return_id = "";
     var liste = "";
@@ -434,13 +528,15 @@ $(function () {
       success: function (data) {
         if(detection == "button"){
           $('#sup_k').html("");
-          $("#table_ass_list,#table_cdm_list").html("");
+          $("#table_ass_list,#table_cdm_list,#table_technique_list").html("");
+          
           $('#sup_k').html(data[0]["nom_sup_mada"][0].nom);
           $('#mat_su').html(data[0]["nom_sup_mada"][0].prenom);
           
           var list_ass = "";
           var list_cdm = "";
           var list_cde = "";
+          var list_ref = "";
         if(data[0]["total_dossier"].length > 0){
         $('.total_dossier_select').html(data[0]["total_dossier"][0].total_dossier)
 
@@ -467,6 +563,13 @@ $(function () {
         }
         $("#table_cde_list").html( tete + list_cde);
 
+        for(var ttt = 0; ttt < data[0]["nom_ref"].length; ttt++){
+          var anci = "";
+          if(data[0]["nom_ref"][ttt].ancienter != null){anci =  ("  "+ data[0]["nom_ref"][ttt].ancienter / 12 | 0) + " ans  " + data[0]["nom_ref"][ttt].ancienter % 12 +" mois";}          
+          list_ref += "<tr><th>"+data[0]["nom_ref"][ttt].prenom_mail+"<th>"+data[0]["nom_ref"][ttt].prenom +"</th><th class='id_ref recupere_id'>"+data[0]["nom_ref"][ttt].id_ref+"</th><th class='click_dts'><b>" + data[0]["nom_ref"][ttt].total + "</b></th><th>"+anci.replace("0 ans ","").replace(" 0 mois","")+"</th><th class='niveau_etp'>"+data[0]["nom_ref"][ttt].niveau_etp+"</th></tr>"
+        }
+        $("#table_technique_list").html( tete + list_ref);        
+
 
         }else{
           $('.total_dossier_select').html("0");
@@ -492,23 +595,24 @@ $(function () {
     {
       __lance_cout_detail("_ass",$(this).closest("tr").find(".recupere_id").html());
     }
-  })
 
-  $(document).on('click','.click_dts', function(){
     if($(this).closest("tr").find(".recupere_id").hasClass("id_cdm") == true)
     {
       __lance_cout_detail("_cdm",$(this).closest("tr").find(".recupere_id").html());
     }
     
-  })
-  
-  $(document).on('click','.click_dts', function(){
     if($(this).closest("tr").find(".recupere_id").hasClass("id_cde") == true)
     {
       __lance_cout_detail("_cde",$(this).closest("tr").find(".recupere_id").html());
     }
-    
-  })  
+
+    if($(this).closest("tr").find(".recupere_id").hasClass("id_ref") == true)
+    {
+      __lance_cout_detail("_ref",$(this).closest("tr").find(".recupere_id").html());
+    }    
+  })
+
+
 
   $(document).on('click','.click_attrib', function(){
     $('#doss_select').html("")
@@ -569,7 +673,7 @@ $(function () {
        if(data.length >0){
         var mytable = "";
         for(var z = 0; z < data.length; z++){
-          mytable += "<tr class='click_attrib'><td>"+ (z +1) +"</td><td class='id_dossier_'>"+data[z].id+"</td><td>"+ data[z].code + "</td>" + "<td>"+ data[z].nom + "</td>" + "<td>"+ data[z].idsituation_dossier + "</td>" + "<td>"+ data[z].date_cloturation + "</td>" + "<td>"+ data[z].etat_bilan + "</td></tr>"
+          mytable += "<tr class='click_attrib'><td>"+ (z +1) +"</td><td class='id_dossier_'>"+data[z].id+"</td><td>"+ data[z].code + "</td>" + "<td>"+ data[z].nom + "</td>" + "<td>"+ data[z].idsituation_dossier + "</td>" + "<td>"+ data[z].date_cloturation + "</td></tr>"
         }
         $('#reponsemytable').html(mytable);
         document.getElementById('id01').style.display='block';
