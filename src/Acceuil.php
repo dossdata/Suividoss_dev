@@ -1778,7 +1778,39 @@ class Acceuil extends Connection
         return $val;
     }
 
-    public function __det__click($manager, $cdm_fr, $type, $collab,$_id)
+    
+
+    public function select_an_post($metier, $aneselect,$type_s)
+    {
+
+        $select_form = 'nom_mail,prenom_mail,prenom,'.$this->date_retour("date_d_entrer") .' niveau_etp';
+        if($type_s == "1"){
+        $sql_entrer = 'SELECT '.$select_form .' FROM suividossdb.utilisateur where post_id =:post_id and pays_id = 5   and date_changement_post  like "' . $aneselect . '%"';
+        $res_entre = $this->Getconnexion()->prepare($sql_entrer);
+        $res_entre->execute(['post_id' =>$metier]);
+        $resultat_entre = $res_entre->fetchAll();     
+        return $resultat_entre;   
+        }
+
+        if($type_s == "2"){
+           $sql_entrer = 'SELECT '.$select_form .' FROM suividossdb.utilisateur where post_id =:post_id and pays_id = 5 and  date_changement_post like "' . $aneselect . '%"';
+        $res_entre = $this->Getconnexion()->prepare($sql_entrer);
+        $res_entre->execute(['post_id' =>$metier]);
+        $resultat_entre = $res_entre->fetchAll();     
+        return $resultat_entre;           
+        }
+
+        
+        if($type_s == "3"){
+            $sql_entrer = 'SELECT '.$select_form .'  FROM suividossdb.utilisateur where post_id =:post_id and pays_id = 5 and  date_d_sortie  like "' . $aneselect . '%"';
+         $res_entre = $this->Getconnexion()->prepare($sql_entrer);
+         $res_entre->execute(['post_id' =>$metier]);
+         $resultat_entre = $res_entre->fetchAll();     
+         return $resultat_entre;           
+         }        
+    }
+
+    public function __det__click($manager, $cdm_fr, $type, $collab, $_id)
     {
         if ($type == "true") {
             $type_d = " and s.idsituation_dossier  <> '' and s.idsituation_dossier is not null and s.idsituation_dossier <> 'MA'";
@@ -1789,7 +1821,11 @@ class Acceuil extends Connection
 
         if ($collab == "_ass") {
             $cond = "";
-            if($_id == "null"){$cond = " d.ass is null ";}else{ $cond = "d.ass = '$_id'";}
+            if ($_id == "null") {
+                $cond = " d.ass is null ";
+            } else {
+                $cond = "d.ass = '$_id'";
+            }
             $sql_ass = "select distinct d.id, e.code,d.nom,s.idsituation_dossier,tmp.dern_date as date_cloturation from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
         LEFT JOIN utilisateur u on(u.id = d.ass) 
         LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
@@ -1804,11 +1840,15 @@ class Acceuil extends Connection
 
 
         if ($collab == "_cdm") {
-            if($_id == "null"){$cond = " d.cdm is null ";}else{ $cond = "d.cdm = '$_id'";}
+            if ($_id == "null") {
+                $cond = " d.cdm is null ";
+            } else {
+                $cond = "d.cdm = '$_id'";
+            }
             $sql_cdm = "select distinct d.id, e.code,d.nom,s.idsituation_dossier,tmp.dern_date as date_cloturation from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
             LEFT JOIN utilisateur u on(u.id = d.cdm) 
             LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
-                ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where  $cond and tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d ;
+                ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where  $cond and tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d;
             $res_cdm = $this->Getconnexion()->prepare($sql_cdm);
             $res_cdm->execute(array(
                 'manger_fr' => $manager,
@@ -1819,11 +1859,15 @@ class Acceuil extends Connection
 
 
         if ($collab == "_cde") {
-            if($_id == "null"){$cond = " d.ll is null ";}else{ $cond = "d.ll = '$_id'";}
+            if ($_id == "null") {
+                $cond = " d.ll is null ";
+            } else {
+                $cond = "d.ll = '$_id'";
+            }
             $sql_cde = "select distinct d.id, e.code,d.nom,s.idsituation_dossier,tmp.dern_date as date_cloturation from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
                 LEFT JOIN utilisateur u on(u.id = d.ll) 
                 LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
-                    ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where $cond and tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d ;
+                    ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where $cond and tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d;
             $res_cde = $this->Getconnexion()->prepare($sql_cde);
             $res_cde->execute(array(
                 'manger_fr' => $manager,
@@ -1833,29 +1877,34 @@ class Acceuil extends Connection
         }
 
         if ($collab == "_ref") {
-            if($_id == "null"){$cond = " d.reference_t is null ";}else{ $cond = "d.reference_t = '$_id'";}
+            if ($_id == "null") {
+                $cond = " d.reference_t is null ";
+            } else {
+                $cond = "d.reference_t = '$_id'";
+            }
             $sql_cde = "select distinct d.id, e.code,d.nom,s.idsituation_dossier,tmp.dern_date as date_cloturation from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
                 LEFT JOIN utilisateur u on(u.id = d.reference_t) 
                 LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
-                    ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where $cond and tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d ;
+                    ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where $cond and tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d;
             $res_cde = $this->Getconnexion()->prepare($sql_cde);
             $res_cde->execute(array(
                 'manger_fr' => $manager,
                 'cmd_fr' => $cdm_fr,
             ));
             return $res_cde->fetchAll();
-        }        
+        }
     }
 
-    public function date_retour($date_start){
-        return ' YEAR(date(now()))*12 + MONTH(date(now())) - (YEAR('.$date_start.')*12 + MONTH('.$date_start.')) as ancienter ,';
+    public function date_retour($date_start)
+    {
+        return ' YEAR(date(now()))*12 + MONTH(date(now())) - (YEAR(' . $date_start . ')*12 + MONTH(' . $date_start . ')) as ancienter ,';
     }
     public function lance_reporting($manager, $cdm_fr, $type, $dectect)
     {
         $type_d = "";
         $plus = "";
         $total_resultat = [];
-        
+
         if ($type == "true") {
             $type_d = " and s.idsituation_dossier  <> '' and s.idsituation_dossier is not null and s.idsituation_dossier <> 'MA'";
         } else {
@@ -1892,7 +1941,7 @@ class Acceuil extends Connection
         $resultat = $res->fetchAll();
 
 
-        $sql_ass = "select u.prenom, u.niveau_etp, ". $this->date_retour("date_d_entrer") ." d.ass as id_ass, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
+        $sql_ass = "select u.prenom, u.niveau_etp, " . $this->date_retour("date_d_entrer") . " d.ass as id_ass, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
         LEFT JOIN utilisateur u on(u.id = d.ass) 
         LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
             ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d . " GROUP BY u.prenom_mail ";
@@ -1905,7 +1954,7 @@ class Acceuil extends Connection
 
 
 
-        $sql_cdm = "select u.prenom, u.niveau_etp, ". $this->date_retour("date_d_entrer") ." d.cdm as id_cdm, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
+        $sql_cdm = "select u.prenom, u.niveau_etp, " . $this->date_retour("date_d_entrer") . " d.cdm as id_cdm, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
             LEFT JOIN utilisateur u on(u.id = d.cdm) 
             LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
                 ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d . " GROUP BY u.prenom_mail ";
@@ -1917,7 +1966,7 @@ class Acceuil extends Connection
         $resultat_cdm = $res_cdm->fetchAll();
 
 
-        $sql_cde = "select u.prenom, u.niveau_etp, ". $this->date_retour("date_d_entrer") ." d.ll as id_cde, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
+        $sql_cde = "select u.prenom, u.niveau_etp, " . $this->date_retour("date_d_entrer") . " d.ll as id_cde, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
                 LEFT JOIN utilisateur u on(u.id = d.ll) 
                 LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
                     ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d . " GROUP BY u.prenom_mail ";
@@ -1929,7 +1978,7 @@ class Acceuil extends Connection
         $resultat_cde = $res_cde->fetchAll();
 
 
-        $sql_ref = "select u.prenom, u.niveau_etp, ". $this->date_retour("date_d_entrer") ." d.reference_t as id_ref, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
+        $sql_ref = "select u.prenom, u.niveau_etp, " . $this->date_retour("date_d_entrer") . " d.reference_t as id_ref, u.prenom_mail, count(distinct(d.nom)) as total from dossier d left join equipe e on(e.id = equip_id) left join situation_par_portfeuil s on(s.iddoss = d.id) 
                 LEFT JOIN utilisateur u on(u.id = d.reference_t) 
                 LEFT JOIN(SELECT iddoss , MAX(date_cloturation) AS dern_date FROM suividossdb.situation_par_portfeuil GROUP BY iddoss) tmp 
                     ON (tmp.iddoss = s.iddoss And tmp.dern_date = s.date_cloturation ) where tmp.dern_date is not null and d.manger_fr=:manger_fr and  e.id=:cmd_fr " . $type_d . " GROUP BY u.prenom_mail ";
@@ -1938,7 +1987,7 @@ class Acceuil extends Connection
             'manger_fr' => $manager,
             'cmd_fr' => $cdm_fr,
         ));
-        $resultat_ref = $res_ref->fetchAll();        
+        $resultat_ref = $res_ref->fetchAll();
 
 
         array_push($total_resultat, [
@@ -1947,7 +1996,7 @@ class Acceuil extends Connection
             "nom_cdm" => $resultat_cdm,
             "nom_cde" => $resultat_cde,
             "nom_sup_mada" => $resultat0,
-            "nom_ref" =>$resultat_ref
+            "nom_ref" => $resultat_ref
         ]);
 
         return $total_resultat;
@@ -1974,71 +2023,94 @@ class Acceuil extends Connection
         $cde = [];
         $date_poste = "date_changement_post";
 
-        for($i = 1; $i< 13; $i ++){
-            if($i < 11){$i = "0".$i;}
+        for ($i = 1; $i < 13; $i++) {
+            if ($i < 11) {
+                $i = "0" . $i;
+            }
             //encours......
             $sql = "SELECT (count(*) - 
-            (SELECT count(*) FROM suividossdb.utilisateur where post_id = 9 and pays_id = 5 and (date_d_sortie like '".$annee."-".$i."%')))
-              FROM suividossdb.utilisateur where post_id = 9 and pays_id = 5 and ($date_poste like '".$annee."-".$i."%');";
+            (SELECT count(*) FROM suividossdb.utilisateur where post_id = 9 and pays_id = 5 and (date_d_sortie like '" . $annee . "-" . $i . "%')))
+              FROM suividossdb.utilisateur where post_id = 9 and pays_id = 5 and ($date_poste like '" . $annee . "-" . $i . "%');";
             $res = $this->Getconnexion()->prepare($sql);
             $res->execute();
             $resultat = $res->fetchAll();
-    
-            $sql_entrercde = 'SELECT * FROM suividossdb.utilisateur where post_id = 9 and pays_id = 5 and  '.$date_poste.'  like "'. $annee. "-".$i.'%"';
+
+            $sql_entrercde = 'SELECT * FROM suividossdb.utilisateur where post_id = 9 and pays_id = 5 and  ' . $date_poste . '  like "' . $annee . "-" . $i . '%"';
             $res_entrecde = $this->Getconnexion()->prepare($sql_entrercde);
             $res_entrecde->execute();
             $resultat_entre_cde = $res_entrecde->fetchAll();
-    
-    
-            $sql_sortiecde = 'SELECT * FROM suividossdb.utilisateur where post_id = 9 and pays_id = 5 and  date_d_sortie  like "'. $annee. "-".$i.'%"';
+
+
+            $sql_sortiecde = 'SELECT * FROM suividossdb.utilisateur where post_id = 9 and pays_id = 5 and  date_d_sortie  like "' . $annee . "-" . $i . '%"';
             $res_soritecde = $this->Getconnexion()->prepare($sql_sortiecde);
             $res_soritecde->execute();
-            $resultat_sortie_cde = $res_soritecde->fetchAll();   
+            $resultat_sortie_cde = $res_soritecde->fetchAll();
             //-----------------------cdm----------------
-            
+
             $sql_cdm = "SELECT (count(*) - 
-            (SELECT count(*) FROM suividossdb.utilisateur where post_id = 1 and pays_id = 5 and (date_d_sortie like '".$annee."-".$i."%')))
-              FROM suividossdb.utilisateur where post_id = 1 and pays_id = 5 and ($date_poste like '".$annee."-".$i."%');";
+            (SELECT count(*) FROM suividossdb.utilisateur where post_id = 1 and pays_id = 5 and (date_d_sortie like '" . $annee . "-" . $i . "%')))
+              FROM suividossdb.utilisateur where post_id = 1 and pays_id = 5 and ($date_poste like '" . $annee . "-" . $i . "%');";
             $res_cdm = $this->Getconnexion()->prepare($sql_cdm);
             $res_cdm->execute();
             $resultat_cdm = $res_cdm->fetchAll();
-    
-            $sql_entrercdm = 'SELECT * FROM suividossdb.utilisateur where post_id = 1 and pays_id = 5 and  '.$date_poste.'  like "'. $annee. "-".$i.'%"';
+
+            $sql_entrercdm = 'SELECT * FROM suividossdb.utilisateur where post_id = 1 and pays_id = 5 and  ' . $date_poste . '  like "' . $annee . "-" . $i . '%"';
             $res_entrecdm = $this->Getconnexion()->prepare($sql_entrercdm);
             $res_entrecdm->execute();
             $resultat_entre_cdm = $res_entrecdm->fetchAll();
-    
-    
-            $sql_sortiecdm = 'SELECT * FROM suividossdb.utilisateur where post_id = 1 and pays_id = 5 and  date_d_sortie  like "'. $annee. "-".$i.'%"';
+
+
+            $sql_sortiecdm = 'SELECT * FROM suividossdb.utilisateur where post_id = 1 and pays_id = 5 and  date_d_sortie  like "' . $annee . "-" . $i . '%"';
             $res_soritecdm = $this->Getconnexion()->prepare($sql_sortiecdm);
             $res_soritecdm->execute();
-            $resultat_sortie_cdm = $res_soritecdm->fetchAll();   
+            $resultat_sortie_cdm = $res_soritecdm->fetchAll();
 
 
             //-----------------------ASS----------------
 
             $sql_ass = "SELECT (count(*) - 
-            (SELECT count(*) FROM suividossdb.utilisateur where post_id = 4 and pays_id = 5 and (date_d_sortie like '".$annee."-".$i."%')))
-              FROM suividossdb.utilisateur where post_id = 4 and pays_id = 5 and ($date_poste like '".$annee."-".$i."%');";
+            (SELECT count(*) FROM suividossdb.utilisateur where post_id = 4 and pays_id = 5 and (date_d_sortie like '" . $annee . "-" . $i . "%')))
+              FROM suividossdb.utilisateur where post_id = 4 and pays_id = 5 and ($date_poste like '" . $annee . "-" . $i . "%');";
             $res_ass = $this->Getconnexion()->prepare($sql_ass);
             $res_ass->execute();
             $resultat_ass = $res_ass->fetchAll();
-    
-            $sql_entrerass = 'SELECT * FROM suividossdb.utilisateur where post_id = 4 and pays_id = 5 and  '.$date_poste.'  like "'. $annee. "-".$i.'%"';
+
+            $sql_entrerass = 'SELECT * FROM suividossdb.utilisateur where post_id = 4 and pays_id = 5 and  ' . $date_poste . '  like "' . $annee . "-" . $i . '%"';
             $res_entreass = $this->Getconnexion()->prepare($sql_entrerass);
             $res_entreass->execute();
             $resultat_entre_ass = $res_entreass->fetchAll();
-    
-    
-            $sql_sortieass = 'SELECT * FROM suividossdb.utilisateur where post_id = 4 and pays_id = 5 and  date_d_sortie  like "'. $annee. "-".$i.'%"';
+
+
+            $sql_sortieass = 'SELECT * FROM suividossdb.utilisateur where post_id = 4 and pays_id = 5 and  date_d_sortie  like "' . $annee . "-" . $i . '%"';
             $res_soriteass = $this->Getconnexion()->prepare($sql_sortieass);
             $res_soriteass->execute();
-            $resultat_sortie_ass = $res_soriteass->fetchAll();  
+            $resultat_sortie_ass = $res_soriteass->fetchAll();
+
+
+            //-----------------------REF----------------
+
+            $sql_ref = "SELECT (count(*) - 
+                       (SELECT count(*) FROM suividossdb.utilisateur where post_id = 8 and pays_id = 5 and (date_d_sortie like '" . $annee . "-" . $i . "%')))
+                         FROM suividossdb.utilisateur where post_id = 8 and pays_id = 5 and ($date_poste like '" . $annee . "-" . $i . "%');";
+            $res_ref = $this->Getconnexion()->prepare($sql_ref);
+            $res_ref->execute();
+            $resultat_ref = $res_ref->fetchAll();
+
+            $sql_entrerref = 'SELECT * FROM suividossdb.utilisateur where post_id = 8 and pays_id = 5 and  ' . $date_poste . '  like "' . $annee . "-" . $i . '%"';
+            $res_entreref = $this->Getconnexion()->prepare($sql_entrerref);
+            $res_entreref->execute();
+            $resultat_entre_ref = $res_entreref->fetchAll();
+
+
+            $sql_sortieref = 'SELECT * FROM suividossdb.utilisateur where post_id = 8 and pays_id = 5 and  date_d_sortie  like "' . $annee . "-" . $i . '%"';
+            $res_soriteref = $this->Getconnexion()->prepare($sql_sortieref);
+            $res_soriteass->execute();
+            $resultat_sortie_ref = $res_soriteref->fetchAll();
 
 
 
 
-            array_push($cde,[
+            array_push($cde, [
                 "nbcde" => $resultat,
                 "entrerenbcde" => count($resultat_entre_cde),
                 "srotieenbcde" => count($resultat_sortie_cde),
@@ -2049,15 +2121,19 @@ class Acceuil extends Connection
 
                 "nbass" => $resultat_ass,
                 "entrerenbass" => count($resultat_entre_ass),
-                "srotieenbass" => count($resultat_sortie_ass),                
-                
+                "srotieenbass" => count($resultat_sortie_ass),
+
+                "nbref" => $resultat_ref,
+                "entrerenbref" => count($resultat_entre_ref),
+                "srotieenbref" => count($resultat_sortie_ref),
+
             ]);
         }
 
-        
+
         return $cde;
     }
-    
+
 
     public function selectsonportfeuil2($id)
     {
@@ -2108,7 +2184,7 @@ class Acceuil extends Connection
         return $resultat;
     }
 
-    
+
 
     public function statGeneralsups_graphique($date_bilan, $llportfeuil)
     {
@@ -3368,7 +3444,7 @@ class Acceuil extends Connection
             "id" => $user_id,
         ));
     }
-    
+
 
     public function update_valeur_alert_pes($id_situation, $valeur)
     {

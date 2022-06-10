@@ -401,22 +401,45 @@ $(function () {
 
       },
       success:function(data){
-        console.log(data);
+        //console.log(data);
+
+        
+        for(var x = 0; x < $('.anne_select').length; x++){
+          if( parseInt(data[x]["nbcde"][0][0]) > 0){
+            $(".anne_select:eq("+x+")").closest("tr").find('.col1').html(".encours.");
+          }else{
+            $(".anne_select:eq("+x+")").closest("tr").find('.col1').html(0);
+          }          
+        }
+
+        for(var z = 0; z < $('.entrer_user').length; z++){
+          $(".entrer_user:eq("+z+")").closest("tr").find('.col1').html("encours");          
+        }
+
+        for(var z = 0; z < $('.sortie_user').length; z++){
+          $(".sortie_user:eq("+z+")").closest("tr").find('.col1').html("encours");          
+        }
+
+        for(var z = 0; z < $('.variation_user').length; z++){
+          $(".variation_user:eq("+z+")").closest("tr").find('.col1').html("encours");          
+        }
+
+        //---------------------------------------------
 
         for(var x = 0; x < $('.anne_select').length; x++){
           if( parseInt(data[x]["nbcde"][0][0]) > 0){
-            $(".anne_select:eq("+x+")").closest("tr").find('.col2').html("<a href='#' class='dt_nb'>" +data[x]["nbcde"][0][0] + "</a>");
+            $(".anne_select:eq("+x+")").closest("tr").find('.col2').html("<a href='#' class='dt_nb' data='9' data_s='1'>" +data[x]["nbcde"][0][0] + "</a>");
           }else{
             $(".anne_select:eq("+x+")").closest("tr").find('.col2').html(0);
           }          
         }
 
         for(var z = 0; z < $('.entrer_user').length; z++){
-          $(".entrer_user:eq("+z+")").closest("tr").find('.col2').html("<a href='#' class='dt_nb'>" +data[z].entrerenbcde + "</a>");          
+          $(".entrer_user:eq("+z+")").closest("tr").find('.col2').html("<a href='#' class='dt_nb' data='9' data_s='2'>" +data[z].entrerenbcde + "</a>");          
         }
 
         for(var z = 0; z < $('.sortie_user').length; z++){
-          $(".sortie_user:eq("+z+")").closest("tr").find('.col2').html("<a href='#' class='dt_nb'>" +data[z].srotieenbcde +"</a>");          
+          $(".sortie_user:eq("+z+")").closest("tr").find('.col2').html("<a href='#' class='dt_nb' data='9' data_s='3'>" +data[z].srotieenbcde +"</a>");          
         }
 
         for(var z = 0; z < $('.variation_user').length; z++){
@@ -426,19 +449,19 @@ $(function () {
         //---------------------------cdm------------------
 
         for(var x = 0; x < $('.anne_select').length; x++){
-          if( parseInt(data[x]["nbcde"][0][0]) > 0){
-            $(".anne_select:eq("+x+")").closest("tr").find('.col3').html("<a href='#' class='dt_nb'>" + data[x]["nbcdm"][0][0] + "</a>");
+          if( parseInt(data[x]["nbcdm"][0][0]) > 0){
+            $(".anne_select:eq("+x+")").closest("tr").find('.col3').html("<a href='#' class='dt_nb' data='1' data_s='1'>" + data[x]["nbcdm"][0][0] + "</a>");
           }else{
             $(".anne_select:eq("+x+")").closest("tr").find('.col3').html(0);
           }          
         }
 
         for(var z = 0; z < $('.entrer_user').length; z++){
-          $(".entrer_user:eq("+z+")").closest("tr").find('.col3').html( "<a href='#' class='dt_nb'>" +data[z].entrerenbcdm + "</a>");          
+          $(".entrer_user:eq("+z+")").closest("tr").find('.col3').html( "<a href='#' class='dt_nb' data='1 data_s='2''>" +data[z].entrerenbcdm + "</a>");          
         }
 
         for(var z = 0; z < $('.sortie_user').length; z++){
-          $(".sortie_user:eq("+z+")").closest("tr").find('.col3').html("<a href='#' class='dt_nb'>" + data[z].srotieenbcdm + "</a>");          
+          $(".sortie_user:eq("+z+")").closest("tr").find('.col3').html("<a href='#' class='dt_nb' data='1' data_s='3'>" + data[z].srotieenbcdm + "</a>");          
         }
 
         for(var z = 0; z < $('.variation_user').length; z++){
@@ -450,25 +473,47 @@ $(function () {
         //---------------------------ass------------------
 
         for(var x = 0; x < $('.anne_select').length; x++){
-          if( parseInt(data[x]["nbcde"][0][0]) > 0){
-            $(".anne_select:eq("+x+")").closest("tr").find('.col4').html( "<a href='#' class='dt_nb'>" +data[x]["nbass"][0][0] + "</a>");
+          if( parseInt(data[x]["nbass"][0][0]) > 0){
+            $(".anne_select:eq("+x+")").closest("tr").find('.col4').html( "<a href='#' class='dt_nb' data='4' data_s='1'>" +data[x]["nbass"][0][0] + "</a>");
           }else{
             $(".anne_select:eq("+x+")").closest("tr").find('.col4').html(0);
           }          
         }
 
         for(var z = 0; z < $('.entrer_user').length; z++){
-          $(".entrer_user:eq("+z+")").closest("tr").find('.col4').html("<a href='#' class='dt_nb'>" + data[z].entrerenbass +"</a>");          
+          $(".entrer_user:eq("+z+")").closest("tr").find('.col4').html("<a href='#' class='dt_nb' data='4' data_s='2'>" + data[z].entrerenbass +"</a>");          
         }
 
         for(var z = 0; z < $('.sortie_user').length; z++){
-          $(".sortie_user:eq("+z+")").closest("tr").find('.col4').html("<a href='#' class='dt_nb'>" + data[z].srotieenbass+ "</a>");          
+          $(".sortie_user:eq("+z+")").closest("tr").find('.col4').html("<a href='#' class='dt_nb' data='4' data_s='3'>" + data[z].srotieenbass+ "</a>");          
         }
 
         for(var z = 0; z < $('.variation_user').length; z++){
           $(".variation_user:eq("+z+")").closest("tr").find('.col4').html("<i style='color:red'>" +((data[z].entrerenbass - data[z].srotieenbass)) + "</i>");          
         }
         
+
+               //--------------------------reference------------------
+
+               for(var x = 0; x < $('.anne_select').length; x++){
+                if( parseInt(data[x]["nbref"][0][0]) > 0){
+                  $(".anne_select:eq("+x+")").closest("tr").find('.col5').html( "<a href='#' class='dt_nb' data='8' data_s='1'>" +data[x]["nbref"][0][0] + "</a>");
+                }else{
+                  $(".anne_select:eq("+x+")").closest("tr").find('.col5').html(0);
+                }          
+              }
+      
+              for(var z = 0; z < $('.entrer_user').length; z++){
+                $(".entrer_user:eq("+z+")").closest("tr").find('.col5').html("<a href='#' class='dt_nb' data='8' data_s='2'>" + data[z].entrerenbref +"</a>");          
+              }
+      
+              for(var z = 0; z < $('.sortie_user').length; z++){
+                $(".sortie_user:eq("+z+")").closest("tr").find('.col5').html("<a href='#' class='dt_nb' data='8' data_s='3'>" + data[z].srotieenbref+ "</a>");          
+              }
+      
+              for(var z = 0; z < $('.variation_user').length; z++){
+                $(".variation_user:eq("+z+")").closest("tr").find('.col5').html("<i style='color:red'>" +((data[z].entrerenbref - data[z].srotieenbref)) + "</i>");          
+              }
         
       }
     })
@@ -476,6 +521,32 @@ $(function () {
   
   $(document).on("click", ".dt_nb", function () {
     document.getElementsByClassName('id03')[0].style.display='block';
+    $.ajax({
+      url: "route.php",
+      type: "POST",
+      dataType: "json",
+      data: {
+        param: "select_an_post",
+        metier:  $(this).closest("a").attr("data"),
+        type_s: $(this).closest("a").attr("data_s"),
+        aneselect:  $('#select_evo').val() + "-" + $(this).closest("tr").find(".date_rch").html()
+      },
+      success: function (data) {
+        var tbodd = "";
+       $('#sbod').html("");
+        if(data.length > 0){
+          for(var x =0; x<data.length; x++){
+            var anci = ("  "+ data[x].ancienter / 12 | 0) + " ans  " + data[x].ancienter % 12 +" mois";            
+            tbodd += "<tr><td>"+data[x].nom_mail+"</td><td>"+data[x].prenom_mail+"</td><td>"+data[x].prenom+"</td><td>"+anci.replace("0 ans ","").replace(" 0 mois","")+"</td><td>"+data[x].niveau_etp+"</td></tr>";
+          }
+          $('#sbod').html(tbodd);
+          document.getElementsByClassName('id03')[0].style.display='block';
+        }
+        
+      }
+    });
+
+
   })
   
   $(document).on("dblclick", ".niveau_etp", function () {

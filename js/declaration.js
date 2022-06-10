@@ -323,7 +323,7 @@ $(function(){
             //declartion(bilan_select);
             recuper_v_d(id_situation,$(this).closest('tr').find('td:eq(16)').html(),$(this).closest('tr').find('td:eq(25)').html(),$(this).closest('tr').find('td:eq(26)').html());
 
-           /* var cvae_select = {param:'cvae_select',id_situation:id_situation}
+            var cvae_select = {param:'cvae_select',id_situation:id_situation}
             declartion(cvae_select);
 
             var acompt_tva_st_select = {param:'acompt_tva_st_select',id_situation:id_situation}
@@ -344,7 +344,7 @@ $(function(){
             declartion(liquidation_is);
 
             var cpte_cfe = {param:'cpte_cfe',id_situation:id_situation}
-            declartion(cpte_cfe);*/
+            declartion(cpte_cfe);
 
     })
 

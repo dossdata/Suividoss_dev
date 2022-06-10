@@ -398,7 +398,7 @@
       text-align:center
 
     }
-    .col2,.col3,.col4{
+    .col2,.col3,.col4,.col5{
       font-size:15px;
       font-weight: bold;
 
@@ -414,15 +414,16 @@
                 <th>Nombre de directeur de mission</th>
                 <th>Nombre de CDM Karlit</th>
                 <th>Nombre d'Assistant Karlit</th>
+                <th>Nombre Reference technique</th>
               </tr>  
               </thead>
               <tbody id="tbodevo">
               {% set mois_array = ["Janvier","Fevrier","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Decembre"] %}
-              {% for mois in mois_array %}
-                  <tr><td><h5>Période {{mois}} <i class="anne_select"></i></h5></td>{% for col in 1..4 %}<td class='col{{col}}'></td>{% endfor %}</tr>
-                  <tr><td class='entrer_user'>Entrée</td>{% for col in 1..4 %}<td class='col{{col}}'></td>{% endfor %}</tr>
-                  <tr><td class="sortie_user">Sortie</td>{% for col in 1..4 %}<td class='col{{col}}'></td>{% endfor %}</tr>
-                  <tr><td class="variation_user">Variation</td>{% for col in 1..4 %}<td class='col{{col}}'></td>{% endfor %}</tr>
+              {% for index,mois in mois_array %}
+                  <tr><td><b style="display:none" class="date_rch">{% if index < 9 %}0{{(index + 1)}}{% else %}{{(index + 1)}}{% endif %}</b><h5>Période {{mois}} <i class="anne_select"></i></h5></td>{% for col in 1..5 %}<td class='col{{col}}'></td>{% endfor %}</tr>
+                  <tr><td class='entrer_user'><b style="display:none" class="date_rch">{% if index < 9 %}0{{(index + 1)}}{% else %}{{(index + 1)}}{% endif %}</b>Entrée</td>{% for col in 1..5 %}<td class='col{{col}}'></td>{% endfor %}</tr>
+                  <tr><td class="sortie_user"><b style="display:none" class="date_rch">{% if index < 9 %}0{{(index + 1)}}{% else %}{{(index + 1)}}{% endif %}</b>Sortie</td>{% for col in 1..5 %}<td class='col{{col}}'></td>{% endfor %}</tr>
+                  <tr><td class="variation_user">Variation</td>{% for col in 1..5 %}<td class='col{{col}}'></td>{% endfor %}</tr>
               {% endfor %}
               </tbody>   
             </table>
@@ -537,9 +538,10 @@
                     <th>NOM</th>
                     <th>PRENOM</th>
                     <th>MATRICULE</th>
-                    <th>POSTE</th>
                     <th>ANCIENTER</th>
-                    <th>NIVEAU ETP</th>                
+                    <th>NIVEAU ETP</th>    
+                    <tbody id="sbod">
+                    </tbody>            
                 </table>               
               </div>
               <footer class="w3-container w3-light-blue">

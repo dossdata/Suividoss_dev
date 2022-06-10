@@ -33,13 +33,13 @@ switch ($_POST["param"]) {
         echo $dz;
         break;
 
-        case 'selectsup_2':
-            $z = $affect->selectsup_2($_POST["valeur_id"]);
-            $dz = json_encode($z);
-            echo $dz;
-            break;        
+    case 'selectsup_2':
+        $z = $affect->selectsup_2($_POST["valeur_id"]);
+        $dz = json_encode($z);
+        echo $dz;
+        break;
 
-        
+
 
     case 'selectall_ptf':
         $z = $affect->selectall_ptf($_POST["select_mm"], $_POST["select_aa"]);
@@ -54,31 +54,38 @@ switch ($_POST["param"]) {
         break;
 
 
-        case 'lance_reporting':
-            $z = $affect->lance_reporting($_POST["manager"], $_POST["cdm_fr"], $_POST["type_ma"],$_POST["dectect"]);
-            $dz = json_encode($z);
-            echo $dz;
-            break; 
+    case 'lance_reporting':
+        $z = $affect->lance_reporting($_POST["manager"], $_POST["cdm_fr"], $_POST["type_ma"], $_POST["dectect"]);
+        $dz = json_encode($z);
+        echo $dz;
+        break;
 
-            case '__attrib':
-                $z = $affect->__attrib($_POST["iddossier"]);
-                echo json_encode($z);
-                break; 
-           
-            
-            case '_update_niveau_etp':
-                $z = $affect->_update_niveau_etp($_POST["id_user"], $_POST["niveau"]);
-                break;              
-            
-            
 
-        case '__det__click':
-            $z = $affect->__det__click($_POST["manager"], $_POST["cdm_fr"], $_POST["type_ma"],$_POST["collab"],$_POST["id"]);
-            $dz = json_encode($z);
-            echo $dz;
-            break;               
 
-        
+    case '__attrib':
+        $z = $affect->__attrib($_POST["iddossier"]);
+        echo json_encode($z);
+        break;
+
+    case 'select_an_post':
+        $z = $affect->select_an_post($_POST["metier"],$_POST["aneselect"],$_POST["type_s"]);
+        echo json_encode($z);
+        break;
+
+
+    case '_update_niveau_etp':
+        $z = $affect->_update_niveau_etp($_POST["id_user"], $_POST["niveau"]);
+        break;
+
+
+
+    case '__det__click':
+        $z = $affect->__det__click($_POST["manager"], $_POST["cdm_fr"], $_POST["type_ma"], $_POST["collab"], $_POST["id"]);
+        $dz = json_encode($z);
+        echo $dz;
+        break;
+
+
 
     case 'selectall_ptf_cdm':
         $z = $affect->selectall_ptf_cdm($_POST["select_mm"], $_POST["select_aa"]);
@@ -92,11 +99,11 @@ switch ($_POST["param"]) {
         echo $dz;
         break;
 
-        case 'selectsonportfeuil2':
-            $z = $affect->selectsonportfeuil2($_POST["id"]);
-            $dz = json_encode($z);
-            echo $dz;
-            break;        
+    case 'selectsonportfeuil2':
+        $z = $affect->selectsonportfeuil2($_POST["id"]);
+        $dz = json_encode($z);
+        echo $dz;
+        break;
 
 
 
@@ -529,17 +536,17 @@ switch ($_POST["param"]) {
         break;
 
     case 'liststattotal';
-        $list = $affect->totalequipes($_POST["alllistequipe"],$_POST["condition"]);
+        $list = $affect->totalequipes($_POST["alllistequipe"], $_POST["condition"]);
         $dz = json_encode($list);
         echo ($dz);
         break;
 
-        case 'listclick_det';
-        $list = $affect->listclick_det($_POST["id_equipe"],$_POST["date_bilan"],$_POST["condition"]);
+    case 'listclick_det';
+        $list = $affect->listclick_det($_POST["id_equipe"], $_POST["date_bilan"], $_POST["condition"]);
         $dz = json_encode($list);
         echo ($dz);
-        break;        
-        
+        break;
+
 
     case 'stat_tva_l';
         $list = $affect->stat_tva_s($_POST["alllistequipe"], $_POST["condition"]);

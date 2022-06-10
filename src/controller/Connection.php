@@ -22,11 +22,11 @@ class Connection
       $this->port = 3306;
 
       
-      /* $this->server = "localhost";
-      $this->base = "suividossdb";
-      $this->password = "Lougaroup1root4321";
-      $this->root = "root";
-      $this->port = 3306;*/
+      //  $this->server = "localhost";
+      // $this->base = "suividossdb";
+      // $this->password = "Lougaroup1root4321";
+      // $this->root = "root";
+      // $this->port = 3306;
 
       try {
          $dsn = "mysql:host=". $this->server .";dbname=". $this->base.";charset=utf8";
