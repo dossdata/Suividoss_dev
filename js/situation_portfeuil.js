@@ -655,7 +655,7 @@ function recherche_espace(valeur){
 }
 
     $(document).on('click','#btn-reseignement_juridique', function(){
-        if(recherche_espace($('#frmj_sieret').val()) > -1 || recherche_espace($('#frmj_siren').val()) > -1){
+        if(recherche_espace($('#frmj_sieret').val().trim()) > -1 || recherche_espace($('#frmj_siren').val().trim()) > -1){
             alert("attention siren ou Siret incorect ! ");
             return;
         }
