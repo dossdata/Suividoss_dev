@@ -413,15 +413,15 @@ $(function () {
         }
 
         for(var z = 0; z < $('.entrer_user').length; z++){
-          $(".entrer_user:eq("+z+")").closest("tr").find('.col1').html("encours");          
+          $(".entrer_user:eq("+z+")").closest("tr").find('.col1').html("#NA");          
         }
 
         for(var z = 0; z < $('.sortie_user').length; z++){
-          $(".sortie_user:eq("+z+")").closest("tr").find('.col1').html("encours");          
+          $(".sortie_user:eq("+z+")").closest("tr").find('.col1').html("#NA");          
         }
 
         for(var z = 0; z < $('.variation_user').length; z++){
-          $(".variation_user:eq("+z+")").closest("tr").find('.col1').html("encours");          
+          $(".variation_user:eq("+z+")").closest("tr").find('.col1').html("#NA");          
         }
 
         //---------------------------------------------

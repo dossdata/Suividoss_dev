@@ -650,9 +650,15 @@ $(function(){
       
     })
     
-
+function recherche_espace(valeur){
+    return valeur.indexOf(" ");
+}
 
     $(document).on('click','#btn-reseignement_juridique', function(){
+        if(recherche_espace($('#frmj_sieret').val()) > -1 || recherche_espace($('#frmj_siren').val()) > -1){
+            alert("attention siren ou Siret incorect ! ");
+            return;
+        }
         $.ajax({
             url: "route_Situation_portfeuille.php",
             type: 'POST',
