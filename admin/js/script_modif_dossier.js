@@ -201,12 +201,17 @@ $(document).on('dblclick','#myoptions',function(){
     	
     })    
 
+	
+
+
 
     $(document).on('click','#saveListdossier',function(){
 	if(parseInt($('#tbdonnerexcel br').size()) > 65){
 		alert("import liste dossiers doivent inferieur ou egale 65");
 		return;		
 	}
+
+	
 	
     	$.ajax({
 	        url: "php/script_modif_dossier.php",
@@ -248,19 +253,62 @@ var json = JSON.stringify(eval("(" + str + ")"));
 			ttab += "<tr><td class='id_e' style='display:none'>"+ opSelected +"</td><td>"+ $(this).val() + '</td><td><input class="form-check-input exampleRadios1" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked></td></tr>';
 			})
 			$("#tsequipe").html("<textarea class='form-control' id='exampleFormControlTextarea1' rows='3' disabled>"+dnom +"</textarea><b style='color:red'> Deplacer vers : </b><div style='overflow:auto;height:450px'><table>"+ ttab  + "</table></div>");
+			$('#validtransfer').show();
+			$('#btnequippop').click();
+		}
+
+		if(m == "fold2"){
+			var dossier = dnom.split(";")[0];
+			$("#tsequipe").html(
+				"<b style='display;none' id='original'>"+dossier+"</b><input id='dossiermodif' value='"+dossier+"' type='text' class='form-control'>"+
+			"<br><button id='modif_nom' class='btn btn-primary'>Enregistrer la modification</button>");
+			$('#validtransfer').hide();
 			$('#btnequippop').click();
 		}
               
             },
             items: {
             "fold1": {
-                "name": "transferer", "icon": "edit"  },
+                "name": "transferer", "icon": "edit"  
+			},
             "sep1": "---------",
             "quit": {"name": "Quitter", "icon": "quit"},
+			
+			
+			
+			"fold2": {
+                "name": "Modifier", "icon": "edit"  
+			},
+			
 
      
         }
     });
+
+
+	$(document).on('click','#modif_nom',function(){
+	if($('#dossiermodif').val() != ""){
+		$.ajax({
+			url: "php/script_modif_dossier.php",
+			type:'POST',
+			dataType:'json',
+			data:{
+				param:'nomdossier_modif',
+				original:$('#original').html(),
+				nom_doss:$('#dossiermodif').val(),
+			},
+			success: function(data){
+				if(data.length > 0){
+					alert("le nom " + data[0].nom +  " est dèjà existe dans l\' Equipe :" + data[0].code ) 		;
+				}else{
+					$('.close').click();
+					location.reload();
+				}
+			},
+		});
+
+	}
+	})
 
 	var id_equi_transfert = "";
 

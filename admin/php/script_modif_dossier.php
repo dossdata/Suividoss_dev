@@ -148,6 +148,35 @@ if($param == "ListdossierAjout"){
 
 
 
+if($param == "nomdossier_modif"){
+	$nom_doss = $_POST['nom_doss'];
+	$original = $_POST['original'];
+
+	if(count(total_doss($nom_doss )) < 1)
+	{
+		$sql = "UPDATE dossier SET nom =:change WHERE nom =:nom";
+		$res = $dbo->prepare($sql);
+			$res->execute(array(
+				'nom' =>$original,
+				'change'=>$nom_doss,
+		));
+
+		echo json_encode(total_doss($nom_doss ));	
+	}else{
+		echo json_encode(total_doss($nom_doss ));		
+	}
+}
+
+
+function total_doss($nom){
+	include "../class/connect.php";
+	$sql = "SELECT  e.code,d.nom FROM suividossdb.dossier d left join equipe e on(e.id = d.equip_id) where d.nom=:nom";
+	$res = $dbo->prepare($sql);
+	$res->execute(array('nom' => $nom,));
+	$resultat = $res->fetchAll();
+	return $resultat;
+}
+
 
 function recuperidoss($nom){
 	include "../class/connect.php";
