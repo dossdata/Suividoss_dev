@@ -401,7 +401,7 @@ $(function () {
 
       },
       success:function(data){
-        console.log(data);
+//        console.log(data);
 
         
         for(var x = 0; x < $('.anne_select').length; x++){
