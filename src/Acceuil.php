@@ -2042,8 +2042,7 @@ class Acceuil extends Connection
         //------------------------------------------------X---------------------------------------------
 
 
-            //encours......
-            $sql = "SELECT (count(*) - 
+                    $sql = "SELECT (count(*) - 
             (SELECT count(*) FROM suividossdb.utilisateur where post_id = 9 and pays_id = 5 and (date_d_sortie like '" . $annee . "-" . $i . "%')))
               FROM suividossdb.utilisateur where post_id = 9 and pays_id = 5 and ($date_poste like '" . $annee . "-" . $i . "%');";
             $res = $this->Getconnexion()->prepare($sql);
