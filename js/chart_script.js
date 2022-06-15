@@ -401,15 +401,16 @@ $(function () {
 
       },
       success:function(data){
-        //console.log(data);
+        console.log(data);
 
         
         for(var x = 0; x < $('.anne_select').length; x++){
-          if( parseInt(data[x]["nbcde"][0][0]) > 0){
-            $(".anne_select:eq("+x+")").closest("tr").find('.col1').html(".encours.");
+          if(data[x]["va_mens"].length > 0){
+            $(".anne_select:eq("+x+")").closest("tr").find('.col1').html("<a href='#' class='dt_nb' data=''>" + data[x]["va_mens"][0].total_dossier + "</a>");
           }else{
             $(".anne_select:eq("+x+")").closest("tr").find('.col1').html(0);
-          }          
+          }
+               
         }
 
         for(var z = 0; z < $('.entrer_user').length; z++){

@@ -2028,18 +2028,16 @@ class Acceuil extends Connection
                 $i = "0" . $i;
             }
 
+        $va_mens = [];
+
         //encours......
-        $sql = "SELECT (count(*) - 
-        (SELECT count(*) FROM suividossdb.utilisateur where post_id = 9 and pays_id = 5 and (date_d_sortie like '" . $annee . "-" . $i . "%')))
-          FROM suividossdb.utilisateur where post_id = 9 and pays_id = 5 and ($date_poste like '" . $annee . "-" . $i . "%');";
-
-
-
-
-          
-        $res = $this->Getconnexion()->prepare($sql);
-        $res->execute();
-        $resultat = $res->fetchAll();
+        $sql_mens = "SELECT * FROM suividossdb.mens_dossier where (mois like '" . $annee . "-" . $i . "%')";
+        $res_mens = $this->Getconnexion()->prepare($sql_mens);
+        $res_mens->execute();
+        $resultat_mens = $res_mens->fetchAll();
+        if(count($resultat_mens) > 0){
+            $va_mens = $resultat_mens ;
+        }
         
         //------------------------------------------------X---------------------------------------------
 
@@ -2128,6 +2126,7 @@ class Acceuil extends Connection
 
 
             array_push($cde, [
+                "va_mens" => $va_mens,
                 "nbcde" => $resultat,
                 "entrerenbcde" => count($resultat_entre_cde),
                 "srotieenbcde" => count($resultat_sortie_cde),
