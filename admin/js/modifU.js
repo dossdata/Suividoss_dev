@@ -118,6 +118,7 @@ $(function() {
         var supervision = $('#supervision').val();
         var niveau_etp = $('#txtniveauetp').val();
         var date_poste = $('#txtdatepost').val();
+        var txtsortie = $('#txtsortie').val();
 
         $.ajax({
             url: "php/script_s_modif_utilisateur.php",
@@ -134,6 +135,7 @@ $(function() {
                 sexe: sexe,
                 date_de_naissance: date_de_naissance,
                 date_d_entree: date_d_entree,
+                txtsortie:txtsortie,
                 supervision: supervision,
                 niveau_etp: niveau_etp,
                 txmail:txmail,

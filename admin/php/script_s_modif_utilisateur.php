@@ -46,7 +46,7 @@ if ($param == "recuperListlike") {
     U.date_changement_post 
     FROM suividossdb.utilisateur U LEFT JOIN pays p on(p.id = U.pays_id)
     left join utilisateur usup on(U.son_superviseur = usup.id) 
-     left join poste pt on (pt.id = U.post_id) WHERE /*(pt.nom <> 'SUPERVISEUR' and pt.nom <> 'CHEF D EQUIPE') AND */ (U.nom LIKE '" . $text . "%' or U.login LIKE '%" . $text . "%' or U.nom LIKE '" .  $text . "%' or U.login LIKE '%" . $text . "%')";
+     left join poste pt on (pt.id = U.post_id) WHERE /*(pt.nom <> 'SUPERVISEUR' and pt.nom <> 'CHEF D EQUIPE') AND */ (U.nom LIKE '" . $text . "%' or U.login LIKE '%" . $text . "%' or U.nom LIKE '" .  $text . "%' or U.login LIKE '%" . $text . "%' or U.nom LIKE '" .  $text . "%' or usup.login LIKE '%" . $text . "%')";
     $res = $dbo->prepare($sql);
     $res->execute();
     $resultat = $res->fetchAll();
@@ -113,6 +113,9 @@ if ($param == "updatelogin") {
     $txmail= $_POST["txmail"];
     $idlogin= $_POST["idlogin"];
     $date_poste=$_POST["date_poste"];
+    $datesortie = $_POST["txtsortie"];
+    if($datesortie == ""){$datesortie = null;}
+    if($date_poste == ""){$date_poste = null;}
     if($niveau_etp == ""){$niveau_etp = null;}
     if($date_d_entree == ""){$date_d_entree = null;}
     if($date_de_naissance == ""){$date_de_naissance = null;}
@@ -123,7 +126,7 @@ if ($param == "updatelogin") {
     $sql = "UPDATE suividossdb.utilisateur SET 
     nom=:nom,prenom=:prenom,login=:login,password=:password,pays_id=:pays_id,post_id=:post_id,sexe=:sexe,
     date_de_naissance=:date_de_naissance,date_d_entrer=:date_d_entrer,son_superviseur=:son_superviseur,
-    niveau_etp=:niveau_etp,nom_mail=:nom_mail,prenom_mail=:prenom_mail,mail=:mail,date_changement_post=:date_changement_post 
+    niveau_etp=:niveau_etp,nom_mail=:nom_mail,prenom_mail=:prenom_mail,mail=:mail,date_changement_post=:date_changement_post,date_d_sortie=:date_d_sortie 
     WHERE id=:idlogin";
     
     $res = $dbo->prepare($sql);
@@ -143,6 +146,7 @@ if ($param == "updatelogin") {
         'prenom_mail'=>$prenom,
         'mail'=>$txmail,
         'date_changement_post' => $date_poste,
+        'date_d_sortie' => $datesortie,
         'idlogin' => $idlogin
     ));
 }
