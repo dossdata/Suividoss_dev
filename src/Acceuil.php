@@ -263,7 +263,7 @@ class Acceuil extends Connection
 
     public function bilan_detailtab1($date_bilan, $id__eq)
     {
-        $sql = 'SELECT S.id as id_situation ,S.etat_bilan,E.code,  D.NOM as nomdossier,S.idsituation_dossier,S.date_cloturation,S.date_envoie_bilan_karlit 
+        $sql = 'SELECT S.id as id_situation ,S.etat_bilan,E.code,  D.nom as nomdossier,S.idsituation_dossier,S.date_cloturation,S.date_envoie_bilan_karlit,S.cmtKarlit  
             FROM suividossdb.equipe E  LEFT JOIN suividossdb.dossier D on(D.equip_id = E.id) 
             LEFT JOIN suividossdb.situation_par_portfeuil S on(S.iddoss = D.id) 
              WHERE S.idsituation_dossier <> "MA" and S.idsituation_dossier <> "MS"  
@@ -276,7 +276,7 @@ class Acceuil extends Connection
 
     public function bilan_detailtab2($date_bilan, $id__eq)
     {
-        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit 
+        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit,SP.cmtKarlit 
         FROM suividossdb.situation_par_portfeuil SP LEFT JOIN 
         suividossdb.dossier d2  on(SP.iddoss = d2.id) LEFT JOIN 
         suividossdb.equipe e on(e.id = d2.equip_id)  left join suividossdb.utilisateur u on(u.id = SP.utilisateur_id) 
@@ -290,7 +290,7 @@ class Acceuil extends Connection
 
     public function bilan_detailtab3($date_bilan, $id__eq)
     {
-        $sql = 'SELECT SP.id as id_situation,SP.etat_bilan, e.code,  d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit 
+        $sql = 'SELECT SP.id as id_situation,SP.etat_bilan, e.code,  d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit,SP.cmtKarlit 
     FROM suividossdb.situation_par_portfeuil SP LEFT JOIN suividossdb.dossier d2  on(SP.iddoss = d2.id) 
     LEFT JOIN suividossdb.equipe e on(e.id = d2.equip_id)
      WHERE SP.idsituation_dossier <> "MA" and SP.idsituation_dossier <> "MS" and SP.affiche_dans_stat is null and e.id=:equip_id and SP.date_cloturation 
@@ -3249,7 +3249,7 @@ class Acceuil extends Connection
 
     public function bilan_expert($date_bilan, $id__eq)
     {
-        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,
+        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,SP.cmtKarlit,
        u.nom as responsable, SP.reviseur_id,SP.date_modif_revu,SP.date_expert  FROM suividossdb.situation_par_portfeuil SP LEFT JOIN 
           suividossdb.dossier d2  on(SP.iddoss = d2.id) LEFT JOIN 
           suividossdb.equipe e on(e.id = d2.equip_id)  left join suividossdb.utilisateur u on(u.id = SP.reviseur_id) 
@@ -3263,7 +3263,7 @@ class Acceuil extends Connection
 
     public function bilan_expert_v($date_bilan, $id__eq)
     {
-        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,
+        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,SP.cmtKarlit,
        u.nom as responsable, SP.reviseur_id,SP.date_modif_revu,SP.date_expert  FROM suividossdb.situation_par_portfeuil SP LEFT JOIN 
           suividossdb.dossier d2  on(SP.iddoss = d2.id) LEFT JOIN 
           suividossdb.equipe e on(e.id = d2.equip_id)  left join suividossdb.utilisateur u on(u.id = SP.reviseur_id) 
@@ -3279,7 +3279,7 @@ class Acceuil extends Connection
 
     public function bilan_expert_fait($date_bilan, $id__eq)
     {
-        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,
+        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,SP.cmtKarlit,
        u.nom as responsable, SP.reviseur_id,SP.date_modif_revu,SP.date_expert  FROM suividossdb.situation_par_portfeuil SP LEFT JOIN 
           suividossdb.dossier d2  on(SP.iddoss = d2.id) LEFT JOIN 
           suividossdb.equipe e on(e.id = d2.equip_id)  left join suividossdb.utilisateur u on(u.id = SP.reviseur_id) 
@@ -3294,7 +3294,7 @@ class Acceuil extends Connection
 
     public function bilan_expert_v_fait($date_bilan, $id__eq)
     {
-        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,
+        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,SP.cmtKarlit,
        u.nom as nom_expert, SP.reviseur_id,SP.date_expert  FROM suividossdb.situation_par_portfeuil SP LEFT JOIN 
           suividossdb.dossier d2  on(SP.iddoss = d2.id) LEFT JOIN 
           suividossdb.equipe e on(e.id = d2.equip_id)  left join suividossdb.utilisateur u on(u.id = SP.expert_id) 
@@ -3308,7 +3308,7 @@ class Acceuil extends Connection
 
     public function pt_envclik_bl_restant($date_bilan, $id__eq)
     {
-        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,
+        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,SP.cmtKarlit,
        u.nom as nom_expert, SP.reviseur_id,SP.date_modif_revu,SP.date_expert  FROM suividossdb.situation_par_portfeuil SP LEFT JOIN 
           suividossdb.dossier d2  on(SP.iddoss = d2.id) LEFT JOIN 
           suividossdb.equipe e on(e.id = d2.equip_id)  left join suividossdb.utilisateur u on(u.id = SP.expert_id) 
@@ -3323,7 +3323,7 @@ class Acceuil extends Connection
 
     public function click_pt_fait_tous($date_bilan, $id__eq)
     {
-        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,
+        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,SP.cmtKarlit,
        u.nom as nom_valid,z.*, SP.reviseur_id,SP.date_modif_revu,SP.date_expert FROM suividossdb.situation_par_portfeuil SP LEFT JOIN 
           suividossdb.dossier d2  on(SP.iddoss = d2.id) LEFT JOIN 
           suividossdb.equipe e on(e.id = d2.equip_id)  left join suividossdb.zz_com_client_cdm_fr z on(z.id_situation = SP.id) 
@@ -3339,7 +3339,7 @@ class Acceuil extends Connection
 
     public function click_val_fait_tous($date_bilan, $id__eq, $test)
     {
-        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,
+        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,SP.cmtKarlit,
        u.nom as nom_valid,z.*, SP.reviseur_id,SP.date_modif_revu,SP.date_expert FROM suividossdb.situation_par_portfeuil SP LEFT JOIN 
           suividossdb.dossier d2  on(SP.iddoss = d2.id) LEFT JOIN 
           suividossdb.equipe e on(e.id = d2.equip_id)  left join suividossdb.zz_com_client_cdm_fr z on(z.id_situation = SP.id) 
@@ -3356,7 +3356,7 @@ class Acceuil extends Connection
 
     public function click_manager_fait_tous($date_bilan, $id__eq, $test)
     {
-        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,
+        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,SP.cmtKarlit,
        u.nom as nom_valid,z.*, SP.reviseur_id,SP.date_modif_revu,SP.date_expert FROM suividossdb.situation_par_portfeuil SP LEFT JOIN 
           suividossdb.dossier d2  on(SP.iddoss = d2.id) LEFT JOIN 
           suividossdb.equipe e on(e.id = d2.equip_id)  left join suividossdb.zz_com_client_cdm_fr z on(z.id_situation = SP.id) 
@@ -3373,7 +3373,7 @@ class Acceuil extends Connection
 
     public function click_teletrans_fait_tous($date_bilan, $id__eq, $test)
     {
-        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,
+        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,SP.cmtKarlit,
        u.nom as nom_valid,z.*, SP.reviseur_id,SP.date_modif_revu,SP.date_expert FROM suividossdb.situation_par_portfeuil SP LEFT JOIN 
           suividossdb.dossier d2  on(SP.iddoss = d2.id) LEFT JOIN 
           suividossdb.equipe e on(e.id = d2.equip_id)  left join suividossdb.zz_com_client_cdm_fr z on(z.id_situation = SP.id) 
@@ -3392,7 +3392,7 @@ class Acceuil extends Connection
 
     public function click_edi_fait_tous($date_bilan, $id__eq, $test)
     {
-        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,
+        $sql = 'SELECT SP.id as id_situation , SP.etat_bilan, e.code, d2.nom as nomdossier,SP.idsituation_dossier,SP.date_cloturation,SP.date_envoie_bilan_karlit ,SP.cmtKarlit,
         u.nom as nom_valid,z.*, SP.reviseur_id,SP.date_modif_revu,SP.date_expert FROM suividossdb.situation_par_portfeuil SP LEFT JOIN 
            suividossdb.dossier d2  on(SP.iddoss = d2.id) LEFT JOIN 
            suividossdb.equipe e on(e.id = d2.equip_id)  left join suividossdb.zz_com_client_cdm_fr z on(z.id_situation = SP.id) 

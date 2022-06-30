@@ -179,6 +179,7 @@ switch ($_POST["param"]) {
                 "etat_bilan" => $value["etat_bilan"],
                 "date_cloturation" => $value["date_cloturation"],
                 "date_envoie_bilan_karlit" => $value["date_envoie_bilan_karlit"],
+                "cmtKarlit"=>$value["cmtKarlit"],
             ]);
         }
         $dz = json_encode($repons);
@@ -199,6 +200,7 @@ switch ($_POST["param"]) {
                 "date_cloturation" => $value["date_cloturation"],
                 "date_envoie_bilan_karlit" => $value["date_envoie_bilan_karlit"],
                 "id_situation" => $value["id_situation"],
+                "cmtKarlit"=>$value["cmtKarlit"],
             ]);
         }
         $dz = json_encode($repons);
@@ -242,6 +244,7 @@ switch ($_POST["param"]) {
                 "com_client_cdm_fr" => $value["liase_fiscal"],
                 "nom_valid" => $value["nom_valid"],
                 "date_expert" => $value["date_expert"],
+                "cmtKarlit"=>$value["cmtKarlit"],
             ]);
         }
         $dz = json_encode($repons);
@@ -269,6 +272,7 @@ switch ($_POST["param"]) {
                 "com_client_cdm_fr" => $value["liase_fiscal"],
                 "nom_valid" => $value["nom_valid"],
                 "date_expert" => $value["date_expert"],
+                "cmtKarlit"=>$value["cmtKarlit"],
             ]);
         }
         $dz = json_encode($repons);
@@ -291,6 +295,7 @@ switch ($_POST["param"]) {
                 "com_client_cdm_fr" => $value["liase_fiscal"],
                 "nom_valid" => $value["nom_valid"],
                 "date_expert" => $value["date_expert"],
+                "cmtKarlit"=>$value["cmtKarlit"],
             ]);
         }
         $dz = json_encode($repons);
@@ -313,6 +318,7 @@ switch ($_POST["param"]) {
                 "com_client_cdm_fr" => $value["liase_fiscal"],
                 "nom_valid" => $value["nom_valid"],
                 "date_expert" => $value["date_expert"],
+                "cmtKarlit"=>$value["cmtKarlit"],
             ]);
         }
         $dz = json_encode($repons);
@@ -336,6 +342,7 @@ switch ($_POST["param"]) {
                 "com_client_cdm_fr" => $value["liase_fiscal"],
                 "nom_valid" => $value["nom_valid"],
                 "date_expert" => $value["date_expert"],
+                "cmtKarlit"=>$value["cmtKarlit"],
             ]);
         }
         $dz = json_encode($repons);
@@ -358,6 +365,7 @@ switch ($_POST["param"]) {
                 "date_cloturation" => $value["date_cloturation"],
                 "date_envoie_bilan_karlit" => $value["date_envoie_bilan_karlit"],
                 "id_situation" => $value["id_situation"],
+                "cmtKarlit"=>$value["cmtKarlit"],
             ]);
         }
         $dz = json_encode($repons);
@@ -379,6 +387,8 @@ switch ($_POST["param"]) {
                 "id_situation" => $value["id_situation"],
                 "date_modif_revu" => $value["date_modif_revu"],
                 "responsable" => $value["responsable"],
+                "cmtKarlit"=>$value["cmtKarlit"],
+                
             ]);
         }
         $dz = json_encode($repons);
@@ -403,6 +413,7 @@ switch ($_POST["param"]) {
                 "id_situation" => $value["id_situation"],
                 "date_modif_revu" => $value["date_modif_revu"],
                 "responsable" => $value["responsable"],
+                "cmtKarlit"=>$value["cmtKarlit"],
             ]);
         }
         $dz = json_encode($repons);
@@ -425,6 +436,7 @@ switch ($_POST["param"]) {
                 "id_situation" => $value["id_situation"],
                 "date_expert" => $value["date_expert"],
                 "nom_expert" => $value["nom_expert"],
+                "cmtKarlit"=>$value["cmtKarlit"],
             ]);
         }
         $dz = json_encode($repons);
@@ -447,6 +459,7 @@ switch ($_POST["param"]) {
                 "etat_bilan" => $value["etat_bilan"],
                 "date_cloturation" => $value["date_cloturation"],
                 "date_envoie_bilan_karlit" => $value["date_envoie_bilan_karlit"],
+                "cmtKarlit"=>$value["cmtKarlit"],
             ]);
         }
         $dz = json_encode($repons);

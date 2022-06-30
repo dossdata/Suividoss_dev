@@ -614,7 +614,8 @@ $(function(){
                         '<th style="display:none">Date d\'envoie bilan</th>'+
                         "<th style='display:none'></th>" +
                         "<th class='cd' >Date modif</th>" +
-                        "<th class='cd'>Responsable</th></tr>" +
+                        "<th class='cd'>Responsable</th>" +
+                        "<th class='cd'>cmt</th></tr>" +
                       '</tr>'+
                     '</thead>'+
                     '<tbody style="zoom:80%">';
@@ -632,7 +633,9 @@ $(function(){
                         "<td class='cd dt_bl_com_cdm_frm'  style='display:none'>"+data[i].date_envoie_bilan_karlit+"</td>"+
                    "<td class='cd date_revue_e' style='background: #20a0bd;color:white;display:none'>"+data[i].date_modif_revu+"</td>" +
                    "<td class='cd date_validat_e'  style='background: #20a0bd;color:white'>"+data[i].date_expert+"</td>" +
-                        "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].nom_expert+"</td></tr>" ;
+                        "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].nom_expert+"</td>"+
+                        "<td class='cd' style='white-space:nowrap;width:30%' >"+data[i].cmtKarlit+"</td>" +
+                        "</tr>" ;
              
                     }
                     
@@ -682,6 +685,7 @@ $(function(){
                         "<th class='cd' >COMM ° CLIENT</th>" +
                         "<th class='cd'>Responsable</th>" +
                         "<th style='display:none'>date_expert</th>" +
+                        "<th >cmt</th>" +
                       '</tr>'+
                     '</thead>'+
                     '<tbody style="zoom:80%">';
@@ -701,6 +705,7 @@ $(function(){
                    "<td class='cd com_client_cdm_fr'  style='background: #20a0bd;color:white'>"+data[i].com_client_cdm_fr+"</td>" +
                         "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].nom_valid+"</td>"+
                         "<td class='cd date_validat_e'  style='background: #20a0bd;color:white;display:none'>"+data[i].date_expert+"</td>" +
+                        "<td class='cd' style='white-space:nowrap;width:30%' >"+data[i].cmtKarlit+"</td>" +
                         "</tr>" ;
              
                     }
@@ -752,6 +757,7 @@ $(function(){
                         "<th class='cd' >COMM ° CLIENT</th>" +
                         "<th class='cd'>Responsable</th>" +
                         "<th style='display:none'>date_expert</th>" +
+                        "<th style=''>cmt</th>" +
                       '</tr>'+
                     '</thead>'+
                     '<tbody style="zoom:80%">';
@@ -771,6 +777,7 @@ $(function(){
                    "<td class='cd com_client_cdm_fr'  style='background: #20a0bd;color:white'>"+data[i].com_client_cdm_fr+"</td>" +
                         "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].nom_valid+"</td>"+
                         "<td class='cd date_validat_e'  style='background: #20a0bd;color:white;display:none'>"+data[i].date_expert+"</td>" +
+                        "<td class='cd' style='white-space:nowrap;width:30%' >"+data[i].cmtKarlit+"</td>" +
                         "</tr>" ;
              
                     }
@@ -821,6 +828,7 @@ $(function(){
                         "<th class='cd' >COMM ° CLIENT</th>" +
                         "<th class='cd'>Responsable</th>" +
                         "<th style='display:none'>date_expert</th>" +
+                        "<th style=''>cmt</th>" +
                       '</tr>'+
                     '</thead>'+
                     '<tbody style="zoom:80%">';
@@ -840,6 +848,7 @@ $(function(){
                    "<td class='cd com_client_cdm_fr'  style='background: #20a0bd;color:white'>"+data[i].com_client_cdm_fr+"</td>" +
                         "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].nom_valid+"</td>"+
                         "<td class='cd date_validat_e'  style='background: #20a0bd;color:white;display:none'>"+data[i].date_expert+"</td>" +
+                        "<td class='cd' style='white-space:nowrap;width:30%' >"+data[i].cmtKarlit+"</td>" +
                         "</tr>" ;
              
                     }
@@ -891,6 +900,7 @@ $(function(){
                         "<th class='cd' >COMM ° CLIENT</th>" +
                         "<th class='cd'>Responsable</th>" +
                         "<th style='display:none'>date_expert</th>" +
+                        "<th style=''>cmt</th>" +
                       '</tr>'+
                     '</thead>'+
                     '<tbody style="zoom:80%">';
@@ -910,6 +920,7 @@ $(function(){
                    "<td class='cd com_client_cdm_fr'  style='background: #20a0bd;color:white'>"+data[i].com_client_cdm_fr+"</td>" +
                         "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].nom_valid+"</td>"+
                         "<td class='cd date_validat_e'  style='background: #20a0bd;color:white;display:none'>"+data[i].date_expert+"</td>" +
+                        "<td class='cd' style='white-space:nowrap;width:30%' >"+data[i].cmtKarlit+"</td>" +
                         "</tr>" ;
              
                     }
@@ -960,6 +971,7 @@ $(function(){
                         "<th class='cd' >COMM ° CLIENT</th>" +
                         "<th class='cd'>Responsable</th>" +
                         "<th style='display:none'>date_expert</th>" +
+                        "<th style=''>cmt</th>" +
                       '</tr>'+
                     '</thead>'+
                     '<tbody style="zoom:80%">';
@@ -979,6 +991,7 @@ $(function(){
                    "<td class='cd com_client_cdm_fr'  style='background: #20a0bd;color:white'>"+data[i].com_client_cdm_fr+"</td>" +
                         "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].nom_valid+"</td>"+
                         "<td class='cd date_validat_e'  style='background: #20a0bd;color:white;display:none'>"+data[i].date_expert+"</td>" +
+                        "<td class='cd' style='white-space:nowrap;width:30%' >"+data[i].cmtKarlit+"</td>" +
                         "</tr>" ;
              
                     }
@@ -1021,6 +1034,7 @@ $(function(){
                             '<th>Situation dossier</th>'+
                             '<th style="display:none">Etat bilan</th>'+
                             '<th>Date cloture</th>'+
+                            '<th>cmt</th>'+
                             '<th style="display:none">Date d\'envoie bilan</th>'+
                             "<td class='cd' style='display:none'>-</td>" +
                             "<td class='cd'style='display:none'>-</td></tr>" +
@@ -1037,6 +1051,7 @@ $(function(){
                         "<td class='cd'  style='display:none'>"+data[i].etat_bilan+"</td>" +
                         "<td class='cd'>"+data[i].idsituation_dossier+"</td>" +
                         "<td class='cd'>"+data[i].date_cloturation+"</td>" +
+                        "<td class='cd' style='white-space:nowrap;width:30%' >"+data[i].cmtKarlit+"</td>" +
                         "<td class='cd'  style='display:none'>"+data[i].date_envoie_bilan_karlit+"</td>"+
                         "<td class='cd' style='display:none'>-</td>" +
                         "<td class='cd'  style='display:none'>-</td>"+
@@ -1082,6 +1097,7 @@ $(function(){
                         '<th>Situation dossier</th>'+
                         '<th style="display:none">Etat bilan</th>'+
                         '<th>Date cloture</th>'+
+                        '<th>Cmt</th>'+
                         '<th style="display:none">Date d\'envoie bilan</th>'+
                         "<td class='cd' style='display:none'>-</td>" +
                         "<td class='cd'style='display:none'>-</td></tr>" +
@@ -1098,6 +1114,7 @@ $(function(){
                         "<td class='cd'  style='display:none'>"+data[i].etat_bilan+"</td>" +
                         "<td class='cd'>"+data[i].idsituation_dossier+"</td>" +
                         "<td class='cd'>"+data[i].date_cloturation+"</td>" +
+                        "<td class='cd' style='white-space:nowrap;width:30%' >"+data[i].cmtKarlit+"</td>" +
                         "<td class='cd'  style='display:none'>"+data[i].date_envoie_bilan_karlit+"</td>"+
                         "<td class='cd' style='display:none'>-</td>" +
                         "<td class='cd'style='display:none'>-</td></tr>" ;
@@ -1142,6 +1159,7 @@ $(function(){
                         '<th>Situation dossier</th>'+
                         '<th style="display:none">Etat bilan</th>'+
                         '<th>Date cloture</th>'+
+                        '<th>Cmt</th>'+
                         '<th style="display:none">Date d\'envoie bilan</th>'+
                         "<th class='cd' >Date modif</th>" +
                         "<th class='cd'>Responsable</th></tr>" +
@@ -1157,6 +1175,7 @@ $(function(){
                         "<td class='cd'  style='display:none'>"+data[i].etat_bilan+"</td>" +
                         "<td class='cd'>"+data[i].idsituation_dossier+"</td>" +
                         "<td class='cd'>"+data[i].date_cloturation+"</td>" +
+                        "<td class='cd' style='white-space:nowrap;width:30%' >"+data[i].cmtKarlit+"</td>" +
                         "<td class='cd'  style='display:none'>"+data[i].date_envoie_bilan_karlit+"</td>"+
                         "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].date_modif_revu+"</td>" +
                         "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].responsable+"</td></tr>" ;
@@ -1202,7 +1221,8 @@ $(function(){
                         '<th>Date cloture</th>'+
                         '<th style="display:none">Date d\'envoie bilan</th>'+
                         "<th class='cd' >Date modif</th>" +
-                        "<th class='cd'>Responsable</th></tr>" +
+                        "<th class='cd'>Responsable</th>" +
+                        "<th class='cd'>cmt</th>" +
                       '</tr>'+
                     '</thead>'+
                     '<tbody style="zoom:80%">';
@@ -1215,6 +1235,7 @@ $(function(){
                         "<td class='cd'  style='display:none'>"+data[i].etat_bilan+"</td>" +
                         "<td class='cd' >"+data[i].idsituation_dossier+"</td>" +
                         "<td class='cd' >"+data[i].date_cloturation+"</td>" +
+                        "<td class='cd' style='white-space:nowrap;width:30%' >"+data[i].cmtKarlit+"</td>" +
                         "<td class='cd'  style='display:none'>"+data[i].date_envoie_bilan_karlit+"</td>"+
                         "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].date_modif_revu+"</td>" +
                         "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].responsable+"</td></tr>" ;
@@ -1261,7 +1282,8 @@ $(function(){
                         '<th>Date cloture</th>'+
                         '<th style="display:none">Date d\'envoie bilan</th>'+
                         "<th class='cd' >Date modif</th>" +
-                        "<th class='cd'>Responsable</th></tr>" +
+                        "<th class='cd'>Responsable</th>" +
+                        "<th class='cd'>cmt</th></tr>" +
                       '</tr>'+
                     '</thead>'+
                     '<tbody style="zoom:80%">';
@@ -1277,7 +1299,8 @@ $(function(){
                         "<td class='cd' >"+data[i].date_cloturation+"</td>" +
                         "<td class='cd'  style='display:none'>"+data[i].date_envoie_bilan_karlit+"</td>"+
                         "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].date_expert+"</td>" +
-                        "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].nom_expert+"</td></tr>" ;
+                        "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].nom_expert+"</td>"+
+                        "<td class='cd' style='white-space:nowrap;width:30%'>"+data[i].cmtKarlit+"</td></tr>" 
              
                     }
                     $('#choix_exp_autre').html( "<a href='#' id ='click_"+nom_table+"'><i class='fas fa-file-excel'></i>&nbsp;Export</a>");
@@ -1320,7 +1343,8 @@ $(function(){
                         '<th>Date cloture</th>'+
                         '<th style="display:none">Date d\'envoie bilan</th>'+
                         "<th class='cd' >Date modif</th>" +
-                        "<th class='cd'>Responsable</th></tr>" +
+                        "<th class='cd'>Responsable</th>" +
+                        "<th class='cd'>cmt</th></tr>" +
                       '</tr>'+
                     '</thead>'+
                     '<tbody style="zoom:80%">';
@@ -1335,7 +1359,8 @@ $(function(){
                         "<td class='cd' >"+data[i].date_cloturation+"</td>" +
                         "<td class='cd'  style='display:none'>"+data[i].date_envoie_bilan_karlit+"</td>"+
                         "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].date_expert+"</td>" +
-                        "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].nom_expert+"</td></tr>" ;
+                        "<td class='cd' style='background: #20a0bd;color:white'>"+data[i].nom_expert+"</td>" +
+                        "<td class='cd' style='white-space:nowrap;width:30%'>"+data[i].cmtKarlit+"</td></tr>" ;
              
                     }
                     $('#choix_exp_autre').html( "<a href='#' id ='click_"+nom_table+"'><i class='fas fa-file-excel'></i>&nbsp;Export</a>");
@@ -1378,6 +1403,7 @@ $(function(){
                             '<th>Etat bilan</th>'+
                             '<th>Date cloture</th>'+
                             '<th>Date d\'envoie bilan</th>'+
+                            '<th>cmt</th>'+
                           '</tr>'+
                         '</thead>'+
                         '<tbody style="zoom:80%" class="mytableau">';
@@ -1391,7 +1417,9 @@ $(function(){
                             "<td class='cd'>"+data[i].etat_bilan+"</td>" +
                             "<td class='cd'>"+data[i].idsituation_dossier+"</td>" +
                             "<td class='cd'>"+data[i].date_cloturation+"</td>" +
-                            "<td class='cd'>"+data[i].date_envoie_bilan_karlit+"</td></tr>";
+                            "<td class='cd'>"+data[i].date_envoie_bilan_karlit+"</td>"+
+                            "<td class='cd' style='white-space:nowrap;width:30%'>"+data[i].cmtKarlit+"</td>"+
+                            "</tr>";
                          
                  
                         }
