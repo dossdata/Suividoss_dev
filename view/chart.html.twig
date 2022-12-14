@@ -116,10 +116,18 @@
                   <span class="title">Par Equipe</span>
                 </a>
               </li>
+              
               <li>
                 <a href="#" id="click_parcdm">
                   <i class="fas fa-chart-pie"></i>&nbsp;
                   <span class="title">Par Cdm</span>
+                </a>
+              </li>
+
+              <li>
+                <a href="#" id="parametrage_cdm">
+                  <i class="fas fa-chart-pie"></i>&nbsp;
+                  <span class="title">Doss Sem</span>
                 </a>
               </li>
 
@@ -377,6 +385,108 @@
                   </dl>
                 </div>
               </div>
+            </div>
+            <style>
+              .view {
+                margin: auto;
+                width: 600px;
+              }
+              
+              .wrapper {
+                position: relative;
+                overflow: auto;
+                border: 1px solid black;
+                white-space: nowrap;
+              }
+              
+              .sticky-col {
+                position: -webkit-sticky;
+                position: sticky;
+                background-color: rgb(226, 216, 216);
+              }
+              
+              .first-col {
+                width: 100px;
+                min-width: 100px;
+                max-width: 100px;
+                left: -20px;
+              }
+              
+              .second-col {
+                width: 150px;
+                min-width: 150px;
+                max-width: 150px;
+                left: 100px;
+              }              
+
+              #parametragecd {
+                overflow-y: auto;
+                height: 106px;
+              }
+              #parametragecd thead th {
+                position: sticky;
+                top: -20px;
+                background-color: #b9ceeb;
+              }
+              table {
+                border-collapse: collapse;
+                width: 100%;
+              }
+            </style>
+
+            <div class="item" id="parametragecd" style="display: none; overflow:auto;width:100%;height: 500px">
+              <table border="1" class="text-center">
+                <thead>
+                    <tr>
+                    <th class="sticky-col" style="background: #dd6975!important">MANAGER</th>
+                    <th>EQUIPE</th>
+                    <th>BILAN À FAIRE</th>
+                    <th>FAIT</th>
+                    <th>RESTANT</th>
+                    <th style="color: #dc3545;">% BILAN</th>
+
+                    <th>REVISION À FAIRE</th>
+                    <th>FAIT</th>
+                    <th>RESTANT</th>
+                    <th style="color: #dc3545;">% REVISION</th>
+
+                    <th>VALIDAT° BILAN A FAIRE</th>
+                    <th>FAIT</th>
+                    <th>RESTANT</th>
+                    <th style="color: #dc3545;">% VALIDAT°</th>
+
+                    <th>ENVOI CLIENT</th>
+                    <th>FAIT</th>
+                    <th>RESTANT</th>
+                    <th style="color: #dc3545;">% ENVOI CLIENT</th>
+
+                    <th>VALIDAT° CLIENT A FAIRE</th>
+                    <th>FAIT</th>
+                    <th>RESTANT</th>
+                    <th style="color: #dc3545;">% VALIDAT° CLIENT</th>
+
+
+                    <th>VALIDAT° MANAGER À FAIRE</th>
+                    <th>FAIT</th>
+                    <th>RESTANT</th>
+                    <th style="color: #dc3545;">% VALIDAT° MANAGER</th>
+
+                    <th>TÉLÉTRANSMISSION À FAIRE</th>
+                    <th>FAIT</th>
+                    <th>RESTANT</th>
+                    <th style="color: #dc3545;">% TÉLÉTRANSMISSION</th>
+
+                    <th>CONTRÔLE EDI À FAIRE</th>
+                    <th>FAIT</th>
+                    <th>RESTANT</th>
+                    <th style="color: #dc3545;">% VALIDAT° EDI</th>                    
+                    
+
+
+                  </tr>
+                </thead>
+                  <tbody id="list_mana_bl_karlit" style="text-align:center"></tbody>
+              </table>
             </div>
 
   <style>

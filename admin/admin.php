@@ -57,6 +57,7 @@ body { background-color: #e6e6e6;zoom: 92%; }
                 <div class="panel-body" style="background-color:#ddd;">
                     <div class="row">
                           <div >
+                          <a href="Parametrage_par_cdm.php" class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-user"></span> <br/>Parametrage par CDM</a>
                           <a href="access_portfeuil.php" class="btn btn-danger btn-lg" role="button"><span class="glyphicon glyphicon-user"></span> <br/>Acces portfeuil</a>
                           <a href="modif_utilisateur.php" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-user"></span> <br/>Modif Utilisateurs</a>
                           <a href="ajout_utilisateur.php" class="btn btn-info btn-lg" role="button"><span class="glyphicon glyphicon-file"></span> <br/>Ajout utilisateur</a>

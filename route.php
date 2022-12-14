@@ -113,6 +113,14 @@ switch ($_POST["param"]) {
         echo $dz;
         break;
 
+        case 'parametrage_cdm':
+            $z = $affect->select_param_cdm();
+            $dz = json_encode($z);
+            echo $dz;
+            break;
+
+        
+
     case 'supstatg':
         $z = $affect->statGeneralsup($_POST["annee"], $_POST["Allportfeuil"]);
         $dz = json_encode($z);

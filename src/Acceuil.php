@@ -150,8 +150,6 @@ class Acceuil extends Connection
             $manager_fait->execute(array('equip_id' => $id__eq,));
             $resultat_manager_fait = count($manager_fait->fetchAll());
 
-
-
             $teletransmission_restantf = 'SELECT SP.date_envoie_bilan_karlit  FROM suividossdb.situation_par_portfeuil SP LEFT JOIN 
               suividossdb.dossier d2  on(SP.iddoss = d2.id) LEFT JOIN suividossdb.equipe e on(e.id = d2.equip_id) LEFT JOIN suividossdb.utilisateur u on(u.id = SP.expert_id) LEFT JOIN zz_com_client_cdm_fr z on(z.id_situation = SP.id) 
               LEFT JOIN zz_valid_client_cdm_fr vf on(vf.id_situation = z.id_situation) 
@@ -2171,6 +2169,29 @@ class Acceuil extends Connection
         $resultat = $res->fetchAll();
 
         return $this->statGeneralsups_graphique($aneselect, $resultat[0]["sonportfeuilles"]);
+    }
+
+    public function select_param_cdm()
+    {
+        return [
+            "bilan_fait_karlit" => $this->myrequete("bilan_fait_karlit"),
+            "revision" => $this->myrequete("revision"),
+            "validation_ec" => $this->myrequete("validation_ec"),
+            "envoie_client" => $this->myrequete("envoie_client"),
+            "validation_client" => $this->myrequete("validation_client"),
+            "validation_manager_fr" => $this->myrequete("validation_manager_fr"),
+            "teletransmission" => $this->myrequete("teletransmission"),
+            "control_edi" => $this->myrequete("control_edi"),
+        ];
+    }
+
+
+    public function myrequete($mytable){
+        $sql = "SELECT e.code as manager, b.code,b.total_bilan, b.fait, b.restant, b.pourcent FROM $mytable b inner join par_manager p on(p.lists = b.id) inner join equipe e on(e.id = p.manager)";
+        $res = $this->Getconnexion()->prepare($sql);
+        $res->execute();
+        $resultat = $res->fetchAll();
+        return $resultat;
     }
 
     public function __attrib($id)

@@ -343,27 +343,27 @@ $(function () {
   $(document).on("click", "#click_parsup", function () {
     $("#optio_critere").html($(this).html());
     $(".par_sup").show(60);
-    $(".par_Equipe,.par_gestionEquipe,#tbody_gevo,.par_evo").hide(60);
+    $(".par_Equipe,.par_gestionEquipe,#tbody_gevo,.par_evo,#parametragecd").hide(60);
   });
 
   $(document).on("click", "#click_parequip", function () {
     $("#optio_critere").html($(this).html());
     $(".par_Equipe, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip").show(60);
-    $(".par_sup,.validgraphsup_parcdm,#head_parcdm,#tbody_parcdm,#tbody_gestion_equipe,.par_gestionEquipe,.par_evo,#tbody_gevo").hide(60);
+    $(".par_sup,.validgraphsup_parcdm,#head_parcdm,#tbody_parcdm,#tbody_gestion_equipe,.par_gestionEquipe,.par_evo,#tbody_gevo,#parametragecd").hide(60);
   });
 
   $(document).on("click", "#gestion_equipe", function () {
     $("#optio_critere").html($(this).html());
     $('#tbody_gestion_equipe,.par_gestionEquipe').show(60)
     $(".par_Equipe, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip").hide(60);
-    $(".par_sup,.validgraphsup_parcdm,#head_parcdm,#tbody_parcdm,.par_evo,#tbody_gevo").hide(60);
+    $(".par_sup,.validgraphsup_parcdm,#head_parcdm,#tbody_parcdm,.par_evo,#tbody_gevo,#parametragecd").hide(60);
   });
 
   $(document).on("click", "#click_evolu", function () {
     $("#optio_critere").html($(this).html());
     $('#tbody_gevo,.par_evo').show(60)
     $(".par_Equipe, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip,#tbody_gestion_equipe").hide(60);
-    $(".par_sup,.validgraphsup_parcdm,#head_parcdm,#tbody_parcdm,.par_gestionEquipe").hide(60);
+    $(".par_sup,.validgraphsup_parcdm,#head_parcdm,#tbody_parcdm,.par_gestionEquipe,#parametragecd").hide(60);
   });
 
   
@@ -371,8 +371,119 @@ $(function () {
   $(document).on("click", "#click_parcdm", function () {
     $("#optio_critere").html($(this).html());
     $(".par_Equipe, .validgraphsup_parcdm,#head_parcdm,#tbody_parcdm").show(60);
-    $(".par_sup, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip,#tbody_gestion_equipe,.par_gestionEquipe,#tbody_gevo,.par_evo").hide(60);
+    $(".par_sup, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip,#tbody_gestion_equipe,.par_gestionEquipe,#tbody_gevo,.par_evo,#parametragecd").hide(60);
   });
+
+  $(document).on("click", "#parametrage_cdm", function () {
+    $("#parametragecd").show(60);
+    $(".par_Equipe,.par_sup, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip,#tbody_gestion_equipe,.par_gestionEquipe,#tbody_gevo,.par_evo,#chartContainertableau").hide(60);
+    $('#list_mana_bl_karlit').html("Chargement encours ........");
+    $.ajax({
+      url: "route.php",
+      type: "POST",
+      dataType: "json",
+      data: {
+        param: "parametrage_cdm",
+
+      },
+      success: function (data) {
+        var bilan_fait_karlit = data.bilan_fait_karlit;
+        var revision = data.revision;
+        var validation_ec = data.validation_ec;
+        var envoie_client = data.envoie_client;
+        var validation_client = data.validation_client;
+        var validation_manager_fr = data.validation_manager_fr;
+        var teletransmission = data.teletransmission;
+        var control_edi = data.control_edi;
+        
+        var bilan_fait_karlit_list = "";
+        var bfr = 0;
+        var bft = 0;
+        var prb = 0;
+        
+        for(var a = 0; a < validation_manager_fr.length; a++ ){
+          $('#list_mana_bl_karlit').html("Chargement encours ....");
+
+          bilan_fait_karlit_list += "" +
+          decoupage_table(bfr,bft,prb,a,data.bilan_fait_karlit,"bilan_fait_karlit") +
+           "</tr>";
+
+
+          bilan_fait_karlit_list += 
+          "<tr><td class='sticky-col first-col'>"+bilan_fait_karlit[a].manager+
+          "</td><td>"+bilan_fait_karlit[a].code+
+          "</td><td>"+bilan_fait_karlit[a].total_bilan+
+          "</td><td>"+bilan_fait_karlit[a].fait+
+          "</td><td>"+bilan_fait_karlit[a].restant+
+          "</td><td style='color: #dc3545;'>"+bilan_fait_karlit[a].pourcent+
+
+          " %</td><td>"+revision[a].total_bilan+
+          "</td><td>"+revision[a].fait+
+          "</td><td>"+revision[a].restant+
+          "</td><td style='color: #dc3545;'>"+revision[a].pourcent+
+
+          " %</td><td>"+validation_ec[a].total_bilan+
+          "</td><td>"+validation_ec[a].fait+
+          "</td><td>"+validation_ec[a].restant+
+          "</td><td style='color: #dc3545;'>"+validation_ec[a].pourcent+
+
+          " %</td><td>"+envoie_client[a].total_bilan+
+          "</td><td>"+envoie_client[a].fait+
+          "</td><td>"+envoie_client[a].restant+
+          "</td><td style='color: #dc3545;'>"+envoie_client[a].pourcent+
+
+          " %</td><td>"+validation_client[a].total_bilan+
+          "</td><td>"+validation_client[a].fait+
+          "</td><td>"+validation_client[a].restant+
+          "</td><td style='color: #dc3545;'>"+validation_client[a].pourcent+
+
+          " %</td><td>"+validation_manager_fr[a].total_bilan+
+          "</td><td>"+validation_manager_fr[a].fait+
+          "</td><td>"+validation_manager_fr[a].restant+
+          "</td><td style='color: #dc3545;'>"+validation_manager_fr[a].pourcent+
+
+          " %</td><td>"+teletransmission[a].total_bilan+
+          "</td><td>"+teletransmission[a].fait+
+          "</td><td>"+teletransmission[a].restant+
+          "</td><td style='color: #dc3545;'>"+teletransmission[a].pourcent+  
+          
+          " %</td><td>"+control_edi[a].total_bilan+
+          "</td><td>"+control_edi[a].fait+
+          "</td><td>"+control_edi[a].restant+
+          "</td><td style='color: #dc3545;'>"+control_edi[a].pourcent+           
+
+          
+
+          " %</td></tr>";
+        }
+        $('#list_mana_bl_karlit').html(bilan_fait_karlit_list);
+        
+      }
+    });
+    
+  });
+
+  function decoupage_table(bfr,bft,prb,x, nom_table,dectetion){
+    var list_table = "";
+    if(x > 0){
+      bfr = parseInt(bfr) + parseInt(nom_table[x - 1].total_bilan);            
+      bft = parseInt(bft) + parseInt(nom_table[x - 1].fait); 
+      prb =   ((parseInt(bft) * 100) /  parseInt(bfr)).toFixed(2) ;
+      
+      if(nom_table[x - 1].manager != nom_table[x].manager){
+       var d = dectetion == "bilan_fait_karlit" ? "<td colspan='2'>Total "+ nom_table[x].manager +"</td>" : null 
+        list_table +=
+        d +
+        "<td style='color:red'>"+ bfr +"</td>"+
+        "<td style='color:red'>"+ bft +"</td>"+
+        "<td style='color:red'>"+ (bfr - bft) +"</td>"+
+        "<td style='color:red'>"+ prb +" %</td>";
+        bfr = 0;
+        bft = 0;
+      }
+      return list_table;  
+    }      
+  }
 
   $(document).on("click", "#reporting_social", function () {
     $('#tbody_gestion_equipe').hide(20);
