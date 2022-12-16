@@ -2187,7 +2187,13 @@ class Acceuil extends Connection
 
 
     public function myrequete($mytable){
-        $sql = "SELECT e.code as manager, b.code,b.total_bilan, b.fait, b.restant, b.pourcent FROM $mytable b inner join par_manager p on(p.lists = b.id) inner join equipe e on(e.id = p.manager)";
+        $sql = "SELECT 
+        e.code as manager, 
+        ifnull(r.code,'-') as code,ifnull(r.total_bilan,0) as total_bilan,
+        ifnull(r.fait,0) as fait,ifnull(r.restant,0) as restant,
+        ifnull(r.pourcent,0) as pourcent
+        FROM suividossdb.par_manager m left join $mytable r on(m.lists = r.id) left join equipe e on(e.id = m.manager);        
+        ORDER BY e.code ASC ";
         $res = $this->Getconnexion()->prepare($sql);
         $res->execute();
         $resultat = $res->fetchAll();

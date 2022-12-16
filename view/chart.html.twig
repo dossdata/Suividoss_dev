@@ -299,7 +299,7 @@
               </div>
             </div>
           </div>
-          <div class="item">
+          <div class="item pfbref">
             <div class="par_sup" style="display:none">
               <a href="#" class="imprime">
                 <i class="fas fa-print"></i>&nbsp;Imprimer</a>
@@ -421,7 +421,6 @@
 
               #parametragecd {
                 overflow-y: auto;
-                height: 106px;
               }
               #parametragecd thead th {
                 position: sticky;
@@ -434,11 +433,107 @@
               }
             </style>
 
-            <div class="item" id="parametragecd" style="display: none; overflow:auto;width:100%;height: 500px">
-              <table border="1" class="text-center">
-                <thead>
+            <div class="item" id="parametragecd" style="display: none; overflow:auto;width:100%;height: 600px">
+              <div style="display:block">
+                <table border="1" class="text-center">
+                  <thead>
                     <tr>
-                    <th class="sticky-col" style="background: #dd6975!important">MANAGER</th>
+                      <th style="background: #e6e2e2!important">
+                        .
+                      </th>
+                      <th style="background: #e6e2e2!important" colspan="4">BILAN FAIT KARLIT</th>
+                      <th style="background: #e9e3f3!important" colspan="4">REVISION</th>
+                      <th style="background: #e9e3f3!important" colspan="4">VALIDATION EC</th>  
+                      <th style="background: #e9e3f3!important" colspan="4">ENVOI CLIENT</th>
+                      <th style="background: #e1d5f5!important" colspan="4">VALIDATION CLIENT</th>
+                      <th style="background: #b0a1c9!important" colspan="4">VALIDATION MANAGER</th>
+                      <th style="background: #e9e3f3!important" colspan="4">TÉLÉTRANSMISSION</th>
+                      <th style="background: #e9e3f3!important" colspan="4">CONTROL EDI</th>
+  
+                    </tr>
+                      <tr>
+                      <th>.</th>
+                      <th>BILAN À FAIRE</th>
+                      <th>FAIT</th>
+                      <th>RESTANT</th>
+                      <th style="color: #dc3545;">% BILAN</th>
+  
+                      <th>REVISION À FAIRE</th>
+                      <th>FAIT</th>
+                      <th>RESTANT</th>
+                      <th style="color: #dc3545;">% REVISION</th>
+  
+                      <th>VALIDAT° BILAN A FAIRE</th>
+                      <th>FAIT</th>
+                      <th>RESTANT</th>
+                      <th style="color: #dc3545;">% VALIDAT°</th>
+  
+                      <th>ENVOI CLIENT</th>
+                      <th>FAIT</th>
+                      <th>RESTANT</th>
+                      <th style="color: #dc3545;">% ENVOI CLIENT</th>
+  
+                      <th>VALIDAT° CLIENT A FAIRE</th>
+                      <th>FAIT</th>
+                      <th>RESTANT</th>
+                      <th style="color: #dc3545;">% VALIDAT° CLIENT</th>
+  
+  
+                      <th>VALIDAT° MANAGER À FAIRE</th>
+                      <th>FAIT</th>
+                      <th>RESTANT</th>
+                      <th style="color: #dc3545;">% VALIDAT° MANAGER</th>
+  
+                      <th>TÉLÉTRANSMISSION À FAIRE</th>
+                      <th>FAIT</th>
+                      <th>RESTANT</th>
+                      <th style="color: #dc3545;">% TÉLÉTRANSMISSION</th>
+  
+                      <th>CONTRÔLE EDI À FAIRE</th>
+                      <th>FAIT</th>
+                      <th>RESTANT</th>
+                      <th style="color: #dc3545;">% VALIDAT° EDI</th>                    
+                        </tr>
+                        <tr>
+                          <td style="background: #82cbe7!important">TOTAL Avancemant</td>
+                          {% for row in 1..32 %}
+                            <td class="rep_{{row}}">0</td>
+                          {% endfor %}
+                        </tr>
+                        <tr>
+                          <td style="background: #82cbe7!important">Synthese Volume Global</td>
+                          {% for row in 1..8 %}
+                            <td colspan="4" id="srow{{row}}">0</td>
+                          {% endfor %}
+                        </tr>
+                  </thead>
+                    <tbody id="" style="text-align:center"> 
+                    </tbody>
+                </table>
+                <hr></hr>
+                <hr></hr>
+              </div>
+
+              <table border="1" class="text-center" id="sm8">
+                <thead>
+                  <tr>
+                    <th style="background: #c8e7bc!important;font-size:18px;font-weight: bold;">
+                      PF 22 
+                      CLÔTURE 31/12/2021
+                    </th>
+                    <th style="background: #e6e2e2!important" colspan="5">BILAN FAIT KARLIT</th>
+                    <th style="background: #e9e3f3!important" colspan="4">REVISION</th>
+                    <th style="background: #e9e3f3!important" colspan="4">VALIDATION EC</th>
+
+                    <th style="background: #e9e3f3!important" colspan="4">ENVOI CLIENT</th>
+                    <th style="background: #e9e3f3!important" colspan="4">VALIDATION CLIENT</th>
+                    <th style="background: #e9e3f3!important" colspan="4">VALIDATION MANAGER</th>
+                    <th style="background: #e9e3f3!important" colspan="4">TÉLÉTRANSMISSION</th>
+                    <th style="background: #e9e3f3!important" colspan="4">CONTROL EDI</th>
+
+                  </tr>
+                    <tr class="sticky-col" >
+                    <th style="background: #dd6975!important">MANAGER</th>
                     <th>EQUIPE</th>
                     <th>BILAN À FAIRE</th>
                     <th>FAIT</th>

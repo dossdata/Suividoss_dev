@@ -343,25 +343,25 @@ $(function () {
   $(document).on("click", "#click_parsup", function () {
     $("#optio_critere").html($(this).html());
     $(".par_sup").show(60);
-    $(".par_Equipe,.par_gestionEquipe,#tbody_gevo,.par_evo,#parametragecd").hide(60);
+    $(".par_Equipe,.par_gestionEquipe,#tbody_gevo,.par_evo,#parametragecd,.pfbref").hide(60);
   });
 
   $(document).on("click", "#click_parequip", function () {
     $("#optio_critere").html($(this).html());
-    $(".par_Equipe, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip").show(60);
+    $(".par_Equipe, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip,.pfbref").show(60);
     $(".par_sup,.validgraphsup_parcdm,#head_parcdm,#tbody_parcdm,#tbody_gestion_equipe,.par_gestionEquipe,.par_evo,#tbody_gevo,#parametragecd").hide(60);
   });
 
   $(document).on("click", "#gestion_equipe", function () {
     $("#optio_critere").html($(this).html());
-    $('#tbody_gestion_equipe,.par_gestionEquipe').show(60)
+    $('#tbody_gestion_equipe,.par_gestionEquipe,.pfbref').show(60)
     $(".par_Equipe, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip").hide(60);
     $(".par_sup,.validgraphsup_parcdm,#head_parcdm,#tbody_parcdm,.par_evo,#tbody_gevo,#parametragecd").hide(60);
   });
 
   $(document).on("click", "#click_evolu", function () {
     $("#optio_critere").html($(this).html());
-    $('#tbody_gevo,.par_evo').show(60)
+    $('#tbody_gevo,.par_evo,.pfbref').show(60)
     $(".par_Equipe, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip,#tbody_gestion_equipe").hide(60);
     $(".par_sup,.validgraphsup_parcdm,#head_parcdm,#tbody_parcdm,.par_gestionEquipe,#parametragecd").hide(60);
   });
@@ -370,14 +370,20 @@ $(function () {
 
   $(document).on("click", "#click_parcdm", function () {
     $("#optio_critere").html($(this).html());
-    $(".par_Equipe, .validgraphsup_parcdm,#head_parcdm,#tbody_parcdm").show(60);
+    $(".par_Equipe, .validgraphsup_parcdm,#head_parcdm,#tbody_parcdm,.pfbref").show(60);
     $(".par_sup, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip,#tbody_gestion_equipe,.par_gestionEquipe,#tbody_gevo,.par_evo,#parametragecd").hide(60);
   });
 
   $(document).on("click", "#parametrage_cdm", function () {
     $("#parametragecd").show(60);
-    $(".par_Equipe,.par_sup, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip,#tbody_gestion_equipe,.par_gestionEquipe,#tbody_gevo,.par_evo,#chartContainertableau").hide(60);
-    $('#list_mana_bl_karlit').html("Chargement encours ........");
+    $(".pfbref,.par_Equipe,.par_sup, .validgraphsup_all_equipe,#head_parequipe,#tbody_parequip,#tbody_gestion_equipe,.par_gestionEquipe,#tbody_gevo,.par_evo,#chartContainertableau").hide(60);
+    for(var i = 1 ; i < 33 ; i++){
+      $('.rep_' + i).html(0);
+    }
+    for(var x = 1; x < 9; x++){
+      $('#srow' + x).html('0%')
+    }
+    $('#list_mana_bl_karlit').html("<tr><td colspan='20' style='font-size:18px;color:blue'>Chargement encours ........</td></tr>");
     $.ajax({
       url: "route.php",
       type: "POST",
@@ -397,17 +403,112 @@ $(function () {
         var control_edi = data.control_edi;
         
         var bilan_fait_karlit_list = "";
-        var bfr = 0;
-        var bft = 0;
-        var prb = 0;
-        
-        for(var a = 0; a < validation_manager_fr.length; a++ ){
+        var bfr = [0,0,0,0,0,0,0,0,0,0,0,0];
+        var bft = [0,0,0,0,0,0,0,0,0,0,0];
+        var prb = [0,0,0,0,0,0,0,0];
+        var pdr = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        try {
+          
+       
+        for(var a = 0; a < bilan_fait_karlit.length; a++ ){
           $('#list_mana_bl_karlit').html("Chargement encours ....");
+           if(a > 0){
+             bfr[0] = parseInt(bfr[0]) + parseInt(bilan_fait_karlit[a - 1].total_bilan);            
+             bft[0] = parseInt(bft[0]) + parseInt(bilan_fait_karlit[a - 1].fait); 
+             prb[0] =   ((parseInt(bft[0]) * 100) /  parseInt(bfr[0])).toFixed(2) ;
 
-          bilan_fait_karlit_list += "" +
-          decoupage_table(bfr,bft,prb,a,data.bilan_fait_karlit,"bilan_fait_karlit") +
-           "</tr>";
+             bfr[1] = parseInt(bfr[1]) + parseInt(revision[a - 1].total_bilan);            
+             bft[1] = parseInt(bft[1]) + parseInt(revision[a - 1].fait); 
+             prb[1] =   ((parseInt(bft[1]) * 100) /  parseInt(bfr[1])).toFixed(2) ;
 
+             bfr[2] = parseInt(bfr[2]) + parseInt(validation_ec[a - 1].total_bilan);            
+             bft[2] = parseInt(bft[2]) + parseInt(validation_ec[a - 1].fait); 
+             prb[2] =   ((parseInt(bft[2]) * 100) /  parseInt(bfr[2])).toFixed(2) ;
+
+             bfr[3] = parseInt(bfr[3]) + parseInt(envoie_client[a - 1].total_bilan);            
+             bft[3] = parseInt(bft[3]) + parseInt(envoie_client[a - 1].fait); 
+             prb[3] =   ((parseInt(bft[3]) * 100) /  parseInt(bfr[3])).toFixed(2) ;
+
+             bfr[4] = parseInt(bfr[4]) + parseInt(validation_client[a - 1].total_bilan);            
+             bft[4] = parseInt(bft[4]) + parseInt(validation_client[a - 1].fait); 
+             prb[4] =   ((parseInt(bft[4]) * 100) /  parseInt(bfr[4])).toFixed(2) ;
+
+             bfr[5] = parseInt(bfr[5]) + parseInt(validation_manager_fr[a - 1].total_bilan);            
+             bft[5] = parseInt(bft[5]) + parseInt(validation_manager_fr[a - 1].fait); 
+             prb[5] =   ((parseInt(bft[5]) * 100) /  parseInt(bfr[5])).toFixed(2) ;
+
+             bfr[6] = parseInt(bfr[6]) + parseInt(teletransmission[a - 1].total_bilan);            
+             bft[6] = parseInt(bft[6]) + parseInt(teletransmission[a - 1].fait); 
+             prb[6] =   ((parseInt(bft[6]) * 100) /  parseInt(bfr[6])).toFixed(2) ;
+
+             
+             bfr[7] = parseInt(bfr[7]) + parseInt(control_edi[a - 1].total_bilan);            
+             bft[7] = parseInt(bft[7]) + parseInt(control_edi[a - 1].fait); 
+             prb[7] =   ((parseInt(bft[7]) * 100) /  parseInt(bfr[7])).toFixed(2) ;
+
+       
+             bft[8] = parseInt(bft[8]) + parseInt(control_edi[a - 1].fait); 
+
+             pdr[0] = bfr[0];pdr[1] = bft[0];
+             pdr[2] = bfr[1];pdr[3] = bft[1];
+             pdr[4] = bfr[3];
+             pdr[5] = bfr[4];
+             pdr[6] = bfr[5];
+             pdr[7] = bfr[6];
+             pdr[8] = bfr[7];
+             pdr[9] = bft[8];
+
+             if(bilan_fait_karlit[a - 1].manager != bilan_fait_karlit[a].manager){
+              //var d = dectetion == "bilan_fait_karlit" ? "<td colspan='2'>Total "+ bilan_fait_karlit[a].manager +"</td>" : null 
+              bilan_fait_karlit_list += 
+              ("<tr class='click_index'><td class='sticky-col first-col' style='background:#c4bfcd' colspan='2' > TOTAL "+bilan_fait_karlit[a-1].manager+
+               "</td><td style='font-weight: bold;background:#e9e3f3' class='total_bilan_s'>"+ bfr[0] +"</td>"+
+               "<td style='font-weight: bold;background:#e9e3f3' class='total_fait_s'>"+ bft[0] +"</td>"+
+               "<td style='font-weight: bold;background:#e9e3f3'>"+ (bfr[0] - bft[0]) +"</td>"+
+               "<td style='color:red;background:#e9e3f3'>"+ prb[0] +" %</td>"+ 
+
+               "<td style='font-weight: bold;background:#e9e3f3'>"+ bfr[1] +"</td>"+
+               "<td style='font-weight: bold;background:#e9e3f3' class='total_fait_rev'>"+ bft[1] +"</td>"+
+               "<td style='font-weight: bold;background:#e9e3f3'>"+ (bfr[1] - bft[1]) +"</td>"+
+               "<td style='color:red;background:#e9e3f3'>"+ prb[1] +" %</td>"+
+
+               "<td style='font-weight: bold;background:#e9e3f3'>"+ bfr[2] +"</td>"+
+               "<td style='font-weight: bold;background:#e9e3f3' class='total_vc_rev'>"+ bft[2] +"</td>"+
+               "<td style='font-weight: bold;background:#e9e3f3'>"+ (bfr[2] - bft[2]) +"</td>"+
+               "<td style='color:red;background:#e9e3f3'>"+ prb[2] +" %</td>"+
+
+               "<td style='font-weight: bold;background:#e9e3f3'>"+ bfr[3] +"</td>"+
+               "<td style='font-weight: bold;background:#e9e3f3' class='total_ev_rev'>"+ bft[3] +"</td>"+
+               "<td style='font-weight: bold;background:#e9e3f3'>"+ (bfr[3] - bft[3]) +"</td>"+
+               "<td style='color:red;background:#e9e3f3'>"+ prb[3] +" %</td>" +
+               
+               
+               "<td style='font-weight: bold;background:#e9e3f3'>"+ bfr[4] +"</td>"+
+               "<td style='font-weight: bold;background:#e9e3f3' class='total_cv_rev'>"+ bft[4] +"</td>"+
+               "<td style='font-weight: bold;background:#e9e3f3'>"+ (bfr[4] - bft[4]) +"</td>"+
+               "<td style='color:red'>"+ prb[4] +" %</td>"+
+
+               
+               "<td style='font-weight: bold;background:#e9e3f3'>"+ bfr[5] +"</td>"+
+               "<td style='font-weight: bold;background:#e9e3f3' class='total_mgr_rev'>"+ bft[5] +"</td>"+
+               "<td style='font-weight: bold;background:#e9e3f3' >"+ (bfr[5] - bft[5]) +"</td>"+
+               "<td style='color:red;background:#e9e3f3'>"+ prb[5] +" %</td>"+
+
+               
+               "<td style='font-weight: bold;background:#e9e3f3'>"+ bfr[6] +"</td>"+
+               "<td style='font-weight: bold;background:#e9e3f3' class='total_tr_rev'>"+ bft[6] +"</td>"+
+               "<td style='font-weight: bold;background:#e9e3f3'>"+ (bfr[6] - bft[6]) +"</td>"+
+               "<td style='color:red;background:#e9e3f3'>"+ prb[6] +" %</td>"+ 
+               
+               "<td style='font-weight: bold;background:#e9e3f3'>"+ bfr[7] +"</td>"+
+               "<td style='font-weight: bold;background:#e9e3f3' class='total_vi_rev'>"+ bft[7] +"</td>"+
+               "<td style='font-weight: bold;background:#e9e3f3'>"+ (bfr[7] - bft[7]) +"</td>"+
+               "<td style='color:red;background:#e9e3f3'>"+ prb[7] +" %</td></tr>");  
+               bfr = [0,0,0,0,0,0,0,0,0,0,0];
+               bft = [0,0,0,0,0,0,0,0,0,0,0];
+               prb = [0,0,0,0,0,0,0,0,0,0,0];
+             }
+            }
 
           bilan_fait_karlit_list += 
           "<tr><td class='sticky-col first-col'>"+bilan_fait_karlit[a].manager+
@@ -452,38 +553,145 @@ $(function () {
           "</td><td>"+control_edi[a].restant+
           "</td><td style='color: #dc3545;'>"+control_edi[a].pourcent+           
 
-          
-
           " %</td></tr>";
+          
         }
-        $('#list_mana_bl_karlit').html(bilan_fait_karlit_list);
-        
+      } catch (error) {
+          
       }
+
+
+        $('#list_mana_bl_karlit').html(bilan_fait_karlit_list);
+        pdr[0] = pdr[0] + parseInt($('#list_mana_bl_karlit tr:last td:eq(2)').html());
+        pdr[1] = pdr[1] + parseInt($('#list_mana_bl_karlit tr:last td:eq(3)').html());
+
+        pdr[2] = pdr[2] + parseInt($('#list_mana_bl_karlit tr:last td:eq(6)').html());
+        pdr[3] = pdr[3] + parseInt($('#list_mana_bl_karlit tr:last td:eq(7)').html());
+
+        pdr[4] = pdr[4] + parseInt($('#list_mana_bl_karlit tr:last td:eq(10)').html());
+        pdr[5] = pdr[5] + parseInt($('#list_mana_bl_karlit tr:last td:eq(11)').html());
+
+        pdr[6] = pdr[6] + parseInt($('#list_mana_bl_karlit tr:last td:eq(22)').html());
+        pdr[7] = pdr[7] + parseInt($('#list_mana_bl_karlit tr:last td:eq(23)').html());
+        pdr[8] = pdr[8] + parseInt($('#list_mana_bl_karlit tr:last td:eq(30)').html());
+        pdr[9] = pdr[9] + parseInt($('#list_mana_bl_karlit tr:last td:eq(31)').html());
+
+        $('#sm8').append('<tr style="background:#c4bfcd" class="click_index"><td colspan="2" class="sticky-col first-col" style="background:#c4bfcd!important">TOTAL '+bilan_fait_karlit[a - 1].manager+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold" class="total_bilan_s" >'+pdr[0]+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold" class="total_fait_s">'+pdr[1]+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold">'+ (parseInt(pdr[0]) - parseInt(pdr[1]))  + '</td>'+
+            '<td style="color: #dc3545">'+ ((parseInt(pdr[1]) * 100 ) / parseInt(pdr[0])).toFixed(2)  +' %</td>'+
+
+            '<td style="background:#c4bfcd;font-weight: bold">'+pdr[2]+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold" class="total_fait_rev">'+pdr[3]+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold">'+ (parseInt(pdr[2]) - parseInt(pdr[3]))  + '</td>'+
+            '<td style="color: #dc3545">'+ ((parseInt(pdr[3]) * 100 ) / parseInt(pdr[2])).toFixed(2)  +' %</td>'+
+
+
+            '<td style="background:#c4bfcd;font-weight: bold">'+pdr[3]+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold" class="total_vc_rev">'+pdr[4]+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold">'+(parseInt(pdr[3]) - parseInt(pdr[4]))+'</td>'+
+            '<td style="color: #dc3545">'+ ((parseInt(pdr[4]) * 100 ) / parseInt(pdr[3])).toFixed(2)  +' %</td>'+
+
+            '<td style="background:#c4bfcd;font-weight: bold">'+pdr[4]+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold" class="total_ev_rev">'+pdr[5]+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold">'+(parseInt(pdr[4]) - parseInt(pdr[5]))+'</td>'+
+            '<td style="color: #dc3545">'+ ((parseInt(pdr[5]) * 100 ) / parseInt(pdr[4])).toFixed(2)  +' %</td>'+
+
+            
+            '<td style="background:#c4bfcd;font-weight: bold">'+pdr[5]+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold" class="total_cv_rev">'+pdr[6]+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold">'+(parseInt(pdr[5]) - parseInt(pdr[6]))+'</td>'+
+            '<td style="color: #dc3545">'+ ((parseInt(pdr[6]) * 100 ) / parseInt(pdr[5])).toFixed(2)  +' %</td>'+
+
+
+            
+            '<td style="background:#c4bfcd;font-weight: bold">'+pdr[6]+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold" class="total_mgr_rev">'+pdr[7]+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold">'+(parseInt(pdr[6]) - parseInt(pdr[7]))+'</td>'+
+            '<td style="color: #dc3545">'+ ((parseInt(pdr[7]) * 100 ) / parseInt(pdr[6])).toFixed(2)  +' %</td>'+
+
+            '<td style="background:#c4bfcd;font-weight: bold">'+pdr[7]+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold" class="total_tr_rev">'+pdr[8]+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold">'+(parseInt(pdr[7]) - parseInt(pdr[8]))+'</td>'+
+            '<td style="color: #dc3545">'+ ((parseInt(pdr[8]) * 100 ) / parseInt(pdr[7])).toFixed(2)  +' %</td>'+
+
+            '<td style="background:#c4bfcd;font-weight: bold">'+pdr[8]+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold" class="total_vi_rev">'+pdr[9]+'</td>'+
+            '<td style="background:#c4bfcd;font-weight: bold">'+(parseInt(pdr[8]) - parseInt(pdr[9]))+'</td>'+
+            '<td style="color: #dc3545">'+ ((parseInt(pdr[9]) * 100 ) / parseInt(pdr[8])).toFixed(2)  +' %</td>'+
+        '</tr>');
+        //
+        $('.total_bilan_s').each(function(aa,value){$('.rep_1').html( parseInt($('.rep_1').html()) + parseInt($(value).html()))});
+        $('.total_fait_s').each(function(aa,value){$('.rep_2').html( parseInt($('.rep_2').html()) + parseInt($(value).html()))});
+        $('.rep_3').html(parseInt($('.rep_1').html()) - parseInt($('.rep_2').html()));
+        $('.rep_4').html( "<b style='color:red'>"  + ((parseInt($('.rep_2').html()) * 100) / parseInt($('.rep_1').html())).toFixed(2) + " %" + "</b>" )
+        
+        $('.rep_5').html($('.rep_2').html());
+        $('.total_fait_rev').each(function(aa,value){$('.rep_6').html( parseInt($('.rep_6').html()) + parseInt($(value).html()))});
+        $('.rep_7').html(parseInt($('.rep_5').html()) - parseInt($('.rep_6').html()));
+        $('.rep_8').html( "<b style='color:red'>"  + ((parseInt($('.rep_6').html()) * 100) / parseInt($('.rep_5').html())).toFixed(2) + " %" + "</b>" )
+      
+        $('.rep_9').html($('.rep_6').html());
+        $('.total_vc_rev').each(function(aa,value){$('.rep_10').html( parseInt($('.rep_10').html()) + parseInt($(value).html()))});
+        $('.rep_11').html(parseInt($('.rep_9').html()) - parseInt($('.rep_10').html()));
+        $('.rep_12').html( "<b style='color:red'>"  + ((parseInt($('.rep_10').html()) * 100) / parseInt($('.rep_9').html())).toFixed(2) + " %" + "</b>" )
+
+
+
+
+        $('.rep_13').html($('.rep_10').html());
+        $('.total_ev_rev').each(function(aa,value){$('.rep_14').html( parseInt($('.rep_14').html()) + parseInt($(value).html()))});
+        $('.rep_15').html(parseInt($('.rep_13').html()) - parseInt($('.rep_14').html()));
+        $('.rep_16').html( "<b style='color:red'>"  + ((parseInt($('.rep_14').html()) * 100) / parseInt($('.rep_13').html())).toFixed(2) + " %" + "</b>" )
+        
+        $('.rep_17').html($('.rep_14').html());
+        $('.total_cv_rev').each(function(aa,value){$('.rep_18').html( parseInt($('.rep_18').html()) + parseInt($(value).html()))});
+        $('.rep_19').html(parseInt($('.rep_17').html()) - parseInt($('.rep_18').html()));
+        $('.rep_20').html( "<b style='color:red'>"  + ((parseInt($('.rep_18').html()) * 100) / parseInt($('.rep_17').html())).toFixed(2) + " %" + "</b>" )
+
+        $('.rep_21').html(  $('.rep_18').html());
+        $('.total_mgr_rev').each(function(aa,value){$('.rep_22').html( parseInt($('.rep_22').html()) + parseInt($(value).html()))});
+        $('.rep_23').html(parseInt($('.rep_21').html()) - parseInt($('.rep_22').html()));
+        $('.rep_24').html( "<b style='color:red'>"  + ((parseInt($('.rep_22').html()) * 100) / parseInt($('.rep_21').html())).toFixed(2) + " %" + "</b>" )
+        
+
+        $('.rep_25').html(  $('.rep_22').html());
+        $('.total_tr_rev').each(function(aa,value){$('.rep_26').html( parseInt($('.rep_26').html()) + parseInt($(value).html()))});
+        $('.rep_27').html(parseInt($('.rep_25').html()) - parseInt($('.rep_26').html()));
+        $('.rep_28').html( "<b style='color:red'>"  + ((parseInt($('.rep_26').html()) * 100) / parseInt($('.rep_25').html())).toFixed(2) + " %" + "</b>" )
+        
+
+        $('.rep_29').html(  $('.rep_26').html());
+        $('.total_vi_rev').each(function(aa,value){$('.rep_30').html( parseInt($('.rep_30').html()) + parseInt($(value).html()))});
+        $('.rep_31').html(parseInt($('.rep_29').html()) - parseInt($('.rep_30').html()));
+        $('.rep_32').html( "<b style='color:red'>"  + ((parseInt($('.rep_30').html()) * 100) / parseInt($('.rep_29').html())).toFixed(2) + " %" + "</b>" )
+
+
+        $('#srow1').html($('.rep_4').html());
+        $('#srow2').html( "<b style='color:red'>"  +  ((parseInt($('.rep_6').html()) / parseInt($('.rep_1').html())) * 100).toFixed(2) + " %" + "</b>");
+        $('#srow3').html( "<b style='color:red'>"  +  ((parseInt($('.rep_10').html()) / parseInt($('.rep_1').html())) * 100).toFixed(2) + " %" + "</b>");
+        $('#srow4').html( "<b style='color:red'>"  +  ((parseInt($('.rep_14').html()) / parseInt($('.rep_1').html())) * 100).toFixed(2) + " %" + "</b>");
+        $('#srow5').html( "<b style='color:red'>"  +  ((parseInt($('.rep_18').html()) / parseInt($('.rep_1').html())) * 100).toFixed(2) + " %" + "</b>");
+        $('#srow6').html( "<b style='color:red'>"  +  ((parseInt($('.rep_22').html()) / parseInt($('.rep_1').html())) * 100).toFixed(2) + " %" + "</b>");
+        $('#srow7').html( "<b style='color:red'>"  +  ((parseInt($('.rep_26').html()) / parseInt($('.rep_1').html())) * 100).toFixed(2) + " %" + "</b>");
+        $('#srow8').html( "<b style='color:red'>"  +  ((parseInt($('.rep_30').html()) / parseInt($('.rep_1').html())) * 100).toFixed(2) + " %" + "</b>");
+
+        
+
+      }
+
     });
-    
+      
   });
 
-  function decoupage_table(bfr,bft,prb,x, nom_table,dectetion){
-    var list_table = "";
-    if(x > 0){
-      bfr = parseInt(bfr) + parseInt(nom_table[x - 1].total_bilan);            
-      bft = parseInt(bft) + parseInt(nom_table[x - 1].fait); 
-      prb =   ((parseInt(bft) * 100) /  parseInt(bfr)).toFixed(2) ;
-      
-      if(nom_table[x - 1].manager != nom_table[x].manager){
-       var d = dectetion == "bilan_fait_karlit" ? "<td colspan='2'>Total "+ nom_table[x].manager +"</td>" : null 
-        list_table +=
-        d +
-        "<td style='color:red'>"+ bfr +"</td>"+
-        "<td style='color:red'>"+ bft +"</td>"+
-        "<td style='color:red'>"+ (bfr - bft) +"</td>"+
-        "<td style='color:red'>"+ prb +" %</td>";
-        bfr = 0;
-        bft = 0;
-      }
-      return list_table;  
-    }      
-  }
+  
+
+  $(document).on('click','.click_index td', function(){
+        alert($(this).index());
+  })
+
+ 
 
   $(document).on("click", "#reporting_social", function () {
     $('#tbody_gestion_equipe').hide(20);
